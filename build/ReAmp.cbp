@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="ReAmp" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="OgreApp">
+         <Option output="/home/mike/code/reamp/build/dist/bin/OgreApp" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/mike/code/reamp/build/dist/bin" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/OIS" />
+            <Add directory="/usr/include/OGRE" />
+            <Add directory="/usr/local/share/OGRE/samples/Common/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; OgreApp" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="OgreApp/fast">
+         <Option output="/home/mike/code/reamp/build/dist/bin/OgreApp" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/mike/code/reamp/build/dist/bin" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/OIS" />
+            <Add directory="/usr/include/OGRE" />
+            <Add directory="/usr/local/share/OGRE/samples/Common/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; OgreApp/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; install" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/strip">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; install/strip" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="list_install_components">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/mike/code/reamp/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/mike/code/reamp/build/Makefile&quot; clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/mike/code/reamp/src/BaseApplication.cpp">
+      </Unit>
+      <Unit filename="/home/mike/code/reamp/src/TutorialApplication.cpp">
+      </Unit>
+      <Unit filename="/home/mike/code/reamp/src/BaseApplication.h">
+      </Unit>
+      <Unit filename="/home/mike/code/reamp/src/TutorialApplication.h">
+      </Unit>
+      <Unit filename="/home/mike/code/reamp/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
