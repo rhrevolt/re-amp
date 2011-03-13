@@ -10,3 +10,4 @@ Contributors
 ------------
 * Nicholas Kamper (kampernj AT rose-hulman DOT edu)
 * Nathan Weir     (weirnc AT rose-hulman DOT edu)
+* Greg LaPrest    (lapresga AT rose-hulman DOT edu)
