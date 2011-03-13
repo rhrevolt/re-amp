@@ -4,12 +4,12 @@ Filename:    BaseApplication.cpp
 -----------------------------------------------------------------------------
 
 This source file is part of the
-   ___                 __    __ _ _    _ 
+   ___                 __    __ _ _    _
   /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
  //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
 / \_// (_| | | |  __/  \  /\  /| |   <| |
 \___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-      |___/                              
+      |___/
       Tutorial Framework
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
@@ -50,20 +50,20 @@ BaseApplication::~BaseApplication(void)
 //-------------------------------------------------------------------------------------
 bool BaseApplication::configure(void)
 {
-    // Show the configuration dialog and initialise the system
-    // You can skip this and use root.restoreConfig() to load configuration
-    // settings if you were sure there are valid ones saved in ogre.cfg
-    if(mRoot->showConfigDialog())
-    {
-        // If returned true, user clicked OK so initialise
-        // Here we choose to let the system create a default rendering window by passing 'true'
-        mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
+    // Check if we have a config file. If so, load that..if not, show the config dialog.
+    if (!mRoot->restoreConfig()) {
+        if(mRoot->showConfigDialog())
+        {
+            // If returned true, user clicked OK so initialise
+            // Here we choose to let the system create a default rendering window by passing 'true'
+            mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
 
-        return true;
-    }
-    else
-    {
-        return false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 //-------------------------------------------------------------------------------------
