@@ -1,3 +1,6 @@
+# Log files
+*.log
+
 # C++
 *.slo
 *.lo
@@ -66,6 +69,10 @@ tramp
 *.tmproj
 *.tmproject
 tmtags
+
+# Code::Blocks
+*.cbp
+*.layout
 
 # Not sure how one of these would get in here..
 .svn/
