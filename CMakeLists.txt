@@ -134,13 +134,13 @@ if(WIN32)
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
     
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-WIN32
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME plugins.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/resources.cfg-WIN32
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg-WIN32
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME resources.cfg
@@ -197,13 +197,13 @@ if(UNIX)
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
     
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-LINUX
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME plugins.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/resources.cfg-LINUX
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg-LINUX
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME resources.cfg
