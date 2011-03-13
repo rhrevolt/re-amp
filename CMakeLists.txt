@@ -78,7 +78,7 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 		find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
 	endif()
 	find_package(Boost QUIET)
-    
+
     # Set up referencing of Boost
 	include_directories(${Boost_INCLUDE_DIR})
 	add_definitions(-DBOOST_ALL_NO_LIB)
@@ -89,12 +89,12 @@ set(SOURCE_DIR ./src)
 
 set(HDRS
 	${SOURCE_DIR}/BaseApplication.h
-	${SOURCE_DIR}/TutorialApplication.h
+	${SOURCE_DIR}/Application.h
 )
 
 set(SRCS
 	${SOURCE_DIR}/BaseApplication.cpp
-	${SOURCE_DIR}/TutorialApplication.cpp
+	${SOURCE_DIR}/Application.cpp
 )
 
 include_directories( ${OIS_INCLUDE_DIRS}
@@ -128,13 +128,15 @@ if(WIN32)
     install(TARGETS OgreApp
 		RUNTIME DESTINATION bin
 		CONFIGURATIONS All)
-        
+
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/Media
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
     
     install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
+
+    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-WIN32
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME plugins.cfg
@@ -146,13 +148,13 @@ if(WIN32)
 		RENAME resources.cfg
         )
 
-    
+
     install(FILES ${CMAKE_SOURCE_DIR}/dist/bin/plugins_d.cfg
 		${CMAKE_SOURCE_DIR}/dist/bin/resources_d.cfg
 		DESTINATION bin
 		CONFIGURATIONS Debug
 	)
-    
+
     # NOTE: for the 1.7.1 sdk the OIS dll is called OIS.dll instead of libOIS.dll
         # so you'll have to change that to make it work with 1.7.1
 	install(FILES ${OGRE_PLUGIN_DIR_REL}/OgreMain.dll
@@ -162,7 +164,7 @@ if(WIN32)
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 	)
-    
+
     install(FILES ${OGRE_PLUGIN_DIR_DBG}/OgreMain_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_Direct3D9_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_GL_d.dll
@@ -170,7 +172,7 @@ if(WIN32)
 		DESTINATION bin
 		CONFIGURATIONS Debug
 	)
-    
+
     # as of sdk 1.7.2 we need to copy the boost dll's as well
    # because they're not linked statically (it worked with 1.7.1 though)
    install(FILES ${Boost_DATE_TIME_LIBRARY_RELEASE}
@@ -178,7 +180,7 @@ if(WIN32)
       DESTINATION bin
       CONFIGURATIONS Release RelWithDebInfo
    )
-   
+
    install(FILES ${Boost_DATE_TIME_LIBRARY_DEBUG}
       ${Boost_THREAD_LIBRARY_DEBUG}
       DESTINATION bin
@@ -191,13 +193,15 @@ if(UNIX)
     install(TARGETS OgreApp
 		RUNTIME DESTINATION bin
 		CONFIGURATIONS All)
-        
+
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/media
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
     
     install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-LINUX
+
+    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME plugins.cfg
@@ -208,5 +212,5 @@ if(UNIX)
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME resources.cfg
 	)
-    
+
 endif(UNIX)
