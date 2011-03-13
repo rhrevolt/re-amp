@@ -1,7 +1,12 @@
-The RHRevolt Project -- it's a tenative name
-============================================
+ReAmp
+=====
+This is ReAmp, a "Re-Volt" inspired RC car racing game.
+Produced for CSSE490: Video Game Development at the Rose-Hulman Institute of Technology
+
+The Code::Blocks project file can be found at build/ReAmp.cbp
+Executables are stored in /build/dist/bin
 
 Contributors
 ------------
-* Nicholas Kamper (kampernj@rose-hulman.edu)
-* Nathan Weir     (weirnc@rose-hulman.edu)
+* Nicholas Kamper (kampernj AT rose-hulman DOT edu)
+* Nathan Weir     (weirnc AT rose-hulman DOT edu)
