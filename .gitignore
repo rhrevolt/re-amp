@@ -1,3 +1,6 @@
+# Log files
+*.log
+
 # C++
 *.slo
 *.lo
