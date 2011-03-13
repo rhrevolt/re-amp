@@ -12,3 +12,4 @@ Contributors
 * Nathan Weir     (weirnc AT rose-hulman DOT edu)
 * Bennie Waters   (watersbt AT rose-hulman DOT edu)
 * Greg LaPrest    (lapresga AT rose-hulman DOT edu)
+* Jonathon Strauser (strausjc AT rose-hulman DOT edu)
