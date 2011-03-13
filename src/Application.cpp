@@ -1,32 +1,16 @@
-/*
------------------------------------------------------------------------------
-Filename:    TutorialApplication.cpp
------------------------------------------------------------------------------
-
-This source file is part of the
-   ___                 __    __ _ _    _
-  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
- //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-/ \_// (_| | | |  __/  \  /\  /| |   <| |
-\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-      |___/
-      Tutorial Framework
-      http://www.ogre3d.org/tikiwiki/
------------------------------------------------------------------------------
-*/
-#include "TutorialApplication.h"
+#include "Application.h"
 
 //-------------------------------------------------------------------------------------
-TutorialApplication::TutorialApplication(void)
+Application::Application(void)
 {
 }
 //-------------------------------------------------------------------------------------
-TutorialApplication::~TutorialApplication(void)
+Application::~Application(void)
 {
 }
 
 //-------------------------------------------------------------------------------------
-void TutorialApplication::createScene(void)
+void Application::createScene(void)
 {
     Ogre::Entity* ogreHead = mSceneMgr->createEntity("Head", "ogrehead.mesh");
 
@@ -59,7 +43,7 @@ extern "C" {
 #endif
     {
         // Create application object
-        TutorialApplication app;
+        Application app;
 
         try {
             app.go();
