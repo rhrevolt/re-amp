@@ -193,13 +193,9 @@ void BaseApplication::loadResources(void)
 //-------------------------------------------------------------------------------------
 void BaseApplication::go(void)
 {
-#ifdef _DEBUG
-    mResourcesCfg = "resources_d.cfg";
-    mPluginsCfg = "plugins_d.cfg";
-#else
+
     mResourcesCfg = "resources.cfg";
     mPluginsCfg = "plugins.cfg";
-#endif
 
     if (!setup())
         return;
