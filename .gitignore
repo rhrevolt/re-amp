@@ -9,6 +9,7 @@
 *.lai
 *.la
 *.a
+*.gch
 
 # CMake
 CMakeCache.txt
@@ -72,6 +73,9 @@ tmtags
 # Code::Blocks
 *.cbp
 *.layout
+
+# Geany
+*.geany
 
 # Not sure how one of these would get in here..
 .svn/
