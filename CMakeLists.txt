@@ -6,7 +6,14 @@
 #
 
 cmake_minimum_required(VERSION 2.6)
+### PROJECT VARIABLES ###
 project(ReAmp)
+set(PRODUCT_NAME "ReAmp")
+set(PRODUCT_VERSION_MAJOR 0)
+set(PRODUCT_VERSION_MINOR 1)
+set(PRODUCT_VERSION_TYPE "git")
+set(PRODUCT_VERSION_STRING "${PRODUCT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}-${PRODUCT_VERSION_TYPE}")
+set(PRODUCT_STRING "${PRODUCT_NAME} v${PRODUCT_VERSION_STRING}")
 
 ###############################
 ###### PLATFORM VARIABLE ######
@@ -56,9 +63,12 @@ set(CMAKE_DEBUG_POSTFIX "_d")
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
 ## C++/headers location
-set(SOURCE_DIR ./src)
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+set(HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
 
-FILE(GLOB HDRS ${SOURCE_DIR}/*.h)
+include_directories(${HEADER_DIR})
+
+FILE(GLOB HDRS ${HEADER_DIR}/*.h)
 
 FILE(GLOB SRCS ${SOURCE_DIR}/*.cpp)
 
@@ -120,7 +130,7 @@ include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
 )
 
-add_executable(${PROJECT_EXEC} WIN32 ${HDRS} ${SRCS})
+add_executable(${PROJECT_EXEC} WIN32 ${SRCS})
 
 set_target_properties(${PROJECT_EXEC} PROPERTIES DEBUG_POSTFIX _d)
 
