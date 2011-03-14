@@ -198,7 +198,7 @@ if(UNIX)
 		RENAME plugins.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg-LINUX
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME resources.cfg
