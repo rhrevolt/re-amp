@@ -45,17 +45,9 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 ## C++/headers location
 set(SOURCE_DIR ./src)
 
-set(HDRS
-	${SOURCE_DIR}/main.h
-	${SOURCE_DIR}/BaseApplication.h
-	${SOURCE_DIR}/Application.h
-)
+FILE(GLOB HDRS ${SOURCE_DIR}/*.h)
 
-set(SRCS
-	${SOURCE_DIR}/main.cpp
-	${SOURCE_DIR}/BaseApplication.cpp
-	${SOURCE_DIR}/Application.cpp
-)
+FILE(GLOB SRCS ${SOURCE_DIR}/*.cpp)
 
 ###################################
 ###### REQUIRED DEPENDENCIES ######
