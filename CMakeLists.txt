@@ -6,7 +6,7 @@
 #
 
 cmake_minimum_required(VERSION 2.6)
-project(reamp)
+project(ReAmp)
 
 ###############################
 ###### PLATFORM VARIABLE ######
@@ -141,18 +141,18 @@ install(TARGETS ${PROJECT_EXEC}
 	RUNTIME DESTINATION bin
 	CONFIGURATIONS All)
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/media
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/build/dist/media
 	DESTINATION ./
 	CONFIGURATIONS Release RelWithDebInfo Debug
 )
 
-install(FILES ${CMAKE_SOURCE_DIR}${PLUGINS_PATH}
+install(FILES ${CMAKE_SOURCE_DIR}/${PLUGINS_PATH}
 	DESTINATION bin
 	CONFIGURATIONS Release RelWithDebInfo Debug
 	RENAME plugins.cfg
 )
 
-install(FILES ${CMAKE_SOURCE_DIR}${RESOURCES_PATH}
+install(FILES ${CMAKE_SOURCE_DIR}/${RESOURCES_PATH}
 	DESTINATION bin
 	CONFIGURATIONS Release RelWithDebInfo Debug
 	RENAME resources.cfg
