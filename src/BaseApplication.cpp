@@ -212,8 +212,10 @@ bool BaseApplication::setup(void)
 
     setupResources();
 
-    bool carryOn = configure();
-    if (!carryOn) return false;
+    if (!configure()) {
+            Ogre::LogManager::getSingletonPtr()->logMessage("*** configure() call failed -- aborting");
+            return false;
+    }
 
     chooseSceneManager();
     createCamera();
