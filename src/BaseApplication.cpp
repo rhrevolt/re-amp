@@ -197,9 +197,11 @@ void BaseApplication::go(void)
     mResourcesCfg = "resources.cfg";
     mPluginsCfg = "plugins.cfg";
 
-    if (!setup())
+    if (!setup()) {
+		Ogre::LogManager::getSingletonPtr()->logMessage("*** setup() call failed -- aborting");
         return;
-
+	}
+	
     mRoot->startRendering();
 
     // clean up
