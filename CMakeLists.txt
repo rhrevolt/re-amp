@@ -8,11 +8,23 @@
 cmake_minimum_required(VERSION 2.6)
 project(ReAmp)
 
+###############################
+###### PLATFORM VARIABLE ######
+###############################
+if(WIN32)
+	set(REAMP_PLATFORM "WIN32")
+endif(WIN32)
+
+if(UNIX)
+	set(REAMP_PLATFORM "LINUX")
+endif(UNIX)
+
 #####################################
 ###### CONFIGURATION VARIABLES ######
 #####################################
 
 set(RESOURCES_PATH "cfg/resources.cfg")
+set(PLUGINS_PATH "cfg/plugins.cfg-${REAMP_PLATFORM}")
 set(REQUIRED_OGRE_VERSION_NUMBER 1.7)
 set(REQUIRED_OGRE_VERSION_NAME "Cthugha")
 
@@ -21,8 +33,6 @@ if(WIN32)
 	set(OGRE_SAMPLES_INCLUDEPATH
 		$ENV{OGRE_HOME}/Samples/include
 	)
-	set(PLUGINS_PATH "cfg/plugins.cfg-WIN32")
-
 endif(WIN32)
 
 if(UNIX)
@@ -30,8 +40,8 @@ if(UNIX)
 	set(OGRE_SAMPLES_INCLUDEPATH
 		/usr/local/share/OGRE/samples/Common/include/
 	)
-	set(PLUGINS_PATH "cfg/plugins.cfg-LINUX")
 endif(UNIX)
+
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
 	# Set the default build type to Release w/ Debug info
