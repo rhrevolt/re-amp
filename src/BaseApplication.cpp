@@ -56,7 +56,7 @@ bool BaseApplication::configure(void)
         {
             // Save the config file
             mRoot->saveConfig();
-            Ogre::LogManager::getSingletonPtr()->logMessage("*** Saved Configuration File ***");
+            Ogre::LogManager::getSingletonPtr()->logMessage("*** Saved Configuration File");
 
         } else {
             // User clicked cancel, abort.

@@ -88,11 +88,13 @@ endif()
 set(SOURCE_DIR ./src)
 
 set(HDRS
+	${SOURCE_DIR}/main.h
 	${SOURCE_DIR}/BaseApplication.h
 	${SOURCE_DIR}/Application.h
 )
 
 set(SRCS
+	${SOURCE_DIR}/main.cpp
 	${SOURCE_DIR}/BaseApplication.cpp
 	${SOURCE_DIR}/Application.cpp
 )
