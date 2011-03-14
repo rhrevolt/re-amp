@@ -12,6 +12,9 @@ project(reamp)
 ###### PLATFORM VARIABLE ######
 ###############################
 if(WIN32)
+	if (MSVC)
+		message("WARNING: reamp has not been tested to build with MSVC")
+	endif(MSVC)
 	set(REAMP_PLATFORM "WIN32")
 endif(WIN32)
 
