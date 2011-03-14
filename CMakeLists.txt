@@ -140,7 +140,7 @@ if(WIN32)
 		RENAME plugins.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg-WIN32
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME resources.cfg
@@ -152,7 +152,7 @@ if(WIN32)
 		RENAME plugins_d.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources_d.cfg-WIN32
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources_d.cfg
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME resources_d.cfg
