@@ -1,28 +1,28 @@
-#/*
-#-----------------------------------------------------------------------------
-#Filename:    CMakeLists.txt
-#-----------------------------------------------------------------------------
 #
-#This source file is part of the
-#   ___                 __    __ _ _    _
-#  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-# //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-#/ \_// (_| | | |  __/  \  /\  /| |   <| |
-#\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-#      |___/
-#      Tutorial Framework
-#      http://www.ogre3d.org/tikiwiki/
-#-----------------------------------------------------------------------------
-#*/
-cmake_minimum_required(VERSION 2.6)
+# -------------------
+# Re-Amp Project
+# Re-Amp Build System
+# -------------------
+#
 
+cmake_minimum_required(VERSION 2.6)
 project(ReAmp)
+
+#####################################
+###### CONFIGURATION VARIABLES ######
+#####################################
+
+set(RESOURCES_PATH "cfg/resources.cfg")
+set(REQUIRED_OGRE_VERSION_NUMBER 1.7)
+set(REQUIRED_OGRE_VERSION_NAME "Cthugha")
 
 if(WIN32)
 	set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
 	set(OGRE_SAMPLES_INCLUDEPATH
 		$ENV{OGRE_HOME}/Samples/include
 	)
+	set(PLUGINS_PATH "cfg/plugins.cfg-WIN32")
+
 endif(WIN32)
 
 if(UNIX)
@@ -30,24 +30,45 @@ if(UNIX)
 	set(OGRE_SAMPLES_INCLUDEPATH
 		/usr/local/share/OGRE/samples/Common/include/
 	)
+	set(PLUGINS_PATH "cfg/plugins.cfg-LINUX")
 endif(UNIX)
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
-  # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
-  # differentiation between debug and release builds.
-  set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+	# Set the default build type to Release w/ Debug info
+	set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif ()
 
 set(CMAKE_DEBUG_POSTFIX "_d")
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
+## C++/headers location
+set(SOURCE_DIR ./src)
+
+set(HDRS
+	${SOURCE_DIR}/main.h
+	${SOURCE_DIR}/BaseApplication.h
+	${SOURCE_DIR}/Application.h
+)
+
+set(SRCS
+	${SOURCE_DIR}/main.cpp
+	${SOURCE_DIR}/BaseApplication.cpp
+	${SOURCE_DIR}/Application.cpp
+)
+
+###################################
+###### REQUIRED DEPENDENCIES ######
+###################################
+
+# Find OGRE and check for 1.7
 find_package(OGRE REQUIRED)
 
-if(NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
-  message(SEND_ERROR "You need Ogre 1.7 Cthugha to build this.")
+if(NOT "${OGRE_VERSION_NAME}" STREQUAL ${REQUIRED_OGRE_VERSION_NAME})
+  message(SEND_ERROR "Failed to find OGRE '${REQUIRED_OGRE_VERSION_NAME}'.")
 endif()
 
+# Find OIS 
 find_package(OIS REQUIRED)
 
 if(NOT OIS_FOUND)
@@ -85,19 +106,9 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 	set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
-set(SOURCE_DIR ./src)
-
-set(HDRS
-	${SOURCE_DIR}/main.h
-	${SOURCE_DIR}/BaseApplication.h
-	${SOURCE_DIR}/Application.h
-)
-
-set(SRCS
-	${SOURCE_DIR}/main.cpp
-	${SOURCE_DIR}/BaseApplication.cpp
-	${SOURCE_DIR}/Application.cpp
-)
+##################
+## BUILD TARGET ##
+##################
 
 include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}
@@ -125,31 +136,36 @@ if(MINGW OR UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist/bin)
 endif(MINGW OR UNIX)
 
+###############################
+####### "install" TARGET ######
+###############################
+
+install(TARGETS OgreApp
+	RUNTIME DESTINATION bin
+	CONFIGURATIONS All)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/media
+	DESTINATION ./
+	CONFIGURATIONS Release RelWithDebInfo Debug
+)
+
+install(FILES ${CMAKE_SOURCE_DIR}${PLUGINS_PATH}
+	DESTINATION bin
+	CONFIGURATIONS Release RelWithDebInfo Debug
+	RENAME plugins.cfg
+)
+
+install(FILES ${CMAKE_SOURCE_DIR}${RESOURCES_PATH}
+	DESTINATION bin
+	CONFIGURATIONS Release RelWithDebInfo Debug
+	RENAME resources.cfg
+)
+
 if(WIN32)
-
-    install(TARGETS OgreApp
-		RUNTIME DESTINATION bin
-		CONFIGURATIONS All)
-
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/build/dist/media
-		DESTINATION ./
-		CONFIGURATIONS Release RelWithDebInfo Debug
-	)
-
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
-		DESTINATION bin
-		CONFIGURATIONS Release RelWithDebInfo
-		RENAME plugins.cfg
-	)
-
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg
-		DESTINATION bin
-		CONFIGURATIONS Release RelWithDebInfo
-		RENAME resources.cfg
-        )
-
-    # NOTE: for the 1.7.1 sdk the OIS dll is called OIS.dll instead of libOIS.dll
-        # so you'll have to change that to make it work with 1.7.1
+	################################################
+	## Copy some libraries required for Windows. ###
+	## Ogre, render plugins, BOOST, and OIS      ###
+	################################################
 	install(FILES ${OGRE_PLUGIN_DIR_REL}/OgreMain.dll
 		${OGRE_PLUGIN_DIR_REL}/RenderSystem_Direct3D9.dll
 		${OGRE_PLUGIN_DIR_REL}/RenderSystem_GL.dll
@@ -158,6 +174,7 @@ if(WIN32)
 		CONFIGURATIONS Release RelWithDebInfo
 	)
 
+	# Debug DLLs
     install(FILES ${OGRE_PLUGIN_DIR_DBG}/OgreMain_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_Direct3D9_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_GL_d.dll
@@ -166,42 +183,16 @@ if(WIN32)
 		CONFIGURATIONS Debug
 	)
 
-    # as of sdk 1.7.2 we need to copy the boost dll's as well
-   # because they're not linked statically (it worked with 1.7.1 though)
-   install(FILES ${Boost_DATE_TIME_LIBRARY_RELEASE}
-      ${Boost_THREAD_LIBRARY_RELEASE}
-      DESTINATION bin
-      CONFIGURATIONS Release RelWithDebInfo
-   )
+	# Copy BOOST DLLs
+	install(FILES ${Boost_DATE_TIME_LIBRARY_RELEASE}
+		${Boost_THREAD_LIBRARY_RELEASE}
+		DESTINATION bin
+		CONFIGURATIONS Release RelWithDebInfo
+	)
 
-   install(FILES ${Boost_DATE_TIME_LIBRARY_DEBUG}
-      ${Boost_THREAD_LIBRARY_DEBUG}
-      DESTINATION bin
-      CONFIGURATIONS Debug
-   )
+	install(FILES ${Boost_DATE_TIME_LIBRARY_DEBUG}
+		${Boost_THREAD_LIBRARY_DEBUG}
+		DESTINATION bin
+		CONFIGURATIONS Debug
+	)
 endif(WIN32)
-
-if(UNIX)
-
-    install(TARGETS OgreApp
-		RUNTIME DESTINATION bin
-		CONFIGURATIONS All)
-
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/media
-		DESTINATION ./
-		CONFIGURATIONS Release RelWithDebInfo Debug
-	)
-
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
-		DESTINATION bin
-		CONFIGURATIONS Release RelWithDebInfo Debug
-		RENAME plugins.cfg
-	)
-
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg
-		DESTINATION bin
-		CONFIGURATIONS Release RelWithDebInfo Debug
-		RENAME resources.cfg
-	)
-
-endif(UNIX)
