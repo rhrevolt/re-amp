@@ -6,7 +6,7 @@
 #
 
 cmake_minimum_required(VERSION 2.6)
-project(ReAmp)
+project(reamp)
 
 ###############################
 ###### PLATFORM VARIABLE ######
@@ -22,7 +22,7 @@ endif(UNIX)
 #####################################
 ###### CONFIGURATION VARIABLES ######
 #####################################
-
+set(PROJECT_EXEC "reamp")
 set(RESOURCES_PATH "cfg/resources.cfg")
 set(PLUGINS_PATH "cfg/plugins.cfg-${REAMP_PLATFORM}")
 set(REQUIRED_OGRE_VERSION_NUMBER 1.7)
@@ -117,22 +117,14 @@ include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
 )
 
-add_executable(OgreApp WIN32 ${HDRS} ${SRCS})
+add_executable(${PROJECT_EXEC} WIN32 ${HDRS} ${SRCS})
 
-set_target_properties(OgreApp PROPERTIES DEBUG_POSTFIX _d)
+set_target_properties(${PROJECT_EXEC} PROPERTIES DEBUG_POSTFIX _d)
 
-target_link_libraries(OgreApp ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
+target_link_libraries(${PROJECT_EXEC} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/bin)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/media)
-
-# post-build copy for win32
-if(WIN32 AND NOT MINGW)
-	add_custom_command( TARGET OgreApp PRE_BUILD
-		COMMAND if not exist .\\dist\\bin mkdir .\\dist\\bin )
-	add_custom_command( TARGET OgreApp POST_BUILD
-		COMMAND copy \"$(TargetPath)\" .\\dist\\bin )
-endif(WIN32 AND NOT MINGW)
 
 if(MINGW OR UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist/bin)
@@ -142,7 +134,7 @@ endif(MINGW OR UNIX)
 ####### "install" TARGET ######
 ###############################
 
-install(TARGETS OgreApp
+install(TARGETS ${PROJECT_EXEC}
 	RUNTIME DESTINATION bin
 	CONFIGURATIONS All)
 
@@ -177,7 +169,7 @@ if(WIN32)
 	)
 
 	# Debug DLLs
-    install(FILES ${OGRE_PLUGIN_DIR_DBG}/OgreMain_d.dll
+	install(FILES ${OGRE_PLUGIN_DIR_DBG}/OgreMain_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_Direct3D9_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/RenderSystem_GL_d.dll
 		${OGRE_PLUGIN_DIR_DBG}/libOIS_d.dll
