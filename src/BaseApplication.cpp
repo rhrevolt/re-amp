@@ -54,16 +54,19 @@ bool BaseApplication::configure(void)
     if (!mRoot->restoreConfig()) {
         if(mRoot->showConfigDialog())
         {
-            // If returned true, user clicked OK so initialise
-            // Here we choose to let the system create a default rendering window by passing 'true'
-            mWindow = mRoot->initialise(true, "Re-Amp");
-            return true;
-        }
-        else
-        {
+            // Save the config file
+            mRoot->saveConfig();
+            Ogre::LogManager::getSingletonPtr()->logMessage("*** Saved Configuration File ***");
+
+        } else {
+            // User clicked cancel, abort.
             return false;
         }
     }
+
+    // Here we choose to let the system create a default rendering window by passing 'true'
+    mWindow = mRoot->initialise(true, "Re-Amp");
+    return true;
 }
 //-------------------------------------------------------------------------------------
 void BaseApplication::chooseSceneManager(void)
