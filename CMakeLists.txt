@@ -133,8 +133,6 @@ if(WIN32)
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
-    
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
 
     install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-WIN32
 		DESTINATION bin
@@ -198,8 +196,6 @@ if(UNIX)
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
-    
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-LINUX
 
     install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
 		DESTINATION bin
