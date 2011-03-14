@@ -14,3 +14,4 @@ Contributors
 * Greg LaPrest    (lapresga AT rose-hulman DOT edu)
 * Jonathon Strauser (strausjc AT rose-hulman DOT edu)
 * Colin DeClue      (decluecm AT rose-hulman DOT edu)
+* Jacob Schuenke	    (schuenjr AT rose-hulman DOT edu)
