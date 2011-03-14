@@ -129,14 +129,12 @@ if(WIN32)
 		RUNTIME DESTINATION bin
 		CONFIGURATIONS All)
 
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/Media
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/build/dist/media
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
-    
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-WIN32
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-WIN32
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME plugins.cfg
@@ -147,13 +145,18 @@ if(WIN32)
 		CONFIGURATIONS Release RelWithDebInfo
 		RENAME resources.cfg
         )
-
-
-    install(FILES ${CMAKE_SOURCE_DIR}/dist/bin/plugins_d.cfg
-		${CMAKE_SOURCE_DIR}/dist/bin/resources_d.cfg
+        
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins_d.cfg-WIN32
 		DESTINATION bin
-		CONFIGURATIONS Debug
+		CONFIGURATIONS Release RelWithDebInfo
+		RENAME plugins_d.cfg
 	)
+
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources_d.cfg-WIN32
+		DESTINATION bin
+		CONFIGURATIONS Release RelWithDebInfo
+		RENAME resources_d.cfg
+        )
 
     # NOTE: for the 1.7.1 sdk the OIS dll is called OIS.dll instead of libOIS.dll
         # so you'll have to change that to make it work with 1.7.1
@@ -198,8 +201,6 @@ if(UNIX)
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
-    
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-LINUX
 
     install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
 		DESTINATION bin
