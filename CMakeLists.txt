@@ -197,7 +197,7 @@ if(UNIX)
 		RUNTIME DESTINATION bin
 		CONFIGURATIONS All)
 
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/dist/media
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/build/dist/media
 		DESTINATION ./
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
@@ -208,7 +208,7 @@ if(UNIX)
 		RENAME plugins.cfg
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg-LINUX
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/resources.cfg
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME resources.cfg

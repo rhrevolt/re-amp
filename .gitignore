@@ -36,7 +36,6 @@ Makefile.in
 *.rar
 *.tar
 *.tar.gz
-*.zip
 *.bzip
 
 # Eclipse *shutter*
