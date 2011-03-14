@@ -66,12 +66,6 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
 
-include_directories(${HEADER_DIR})
-
-FILE(GLOB HDRS ${HEADER_DIR}/*.h)
-
-FILE(GLOB SRCS ${SOURCE_DIR}/*.cpp)
-
 ###################################
 ###### REQUIRED DEPENDENCIES ######
 ###################################
@@ -125,12 +119,24 @@ endif()
 ## BUILD TARGET ##
 ##################
 
+## config.h.cmake
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
+# Sources and includes
+
+FILE(GLOB SRCS ${SOURCE_DIR}/*.cpp)
+FILE(GLOB HDRS ${HEADER_DIR}/*.h)
+
+
 include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
+	${HEADER_DIR}
+	${CMAKE_CURRENT_BINARY_DIR}/include
 )
 
-add_executable(${PROJECT_EXEC} WIN32 ${SRCS})
+
+
+add_executable(${PROJECT_EXEC} WIN32 ${SRCS} ${HDRS})
 
 set_target_properties(${PROJECT_EXEC} PROPERTIES DEBUG_POSTFIX _d)
 

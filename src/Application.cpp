@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "config.h"
 
 //-------------------------------------------------------------------------------------
 Application::Application(void)
