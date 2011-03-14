@@ -202,7 +202,7 @@ if(UNIX)
 		CONFIGURATIONS Release RelWithDebInfo Debug
 	)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/cfgs/plugins.cfg-LINUX
+    install(FILES ${CMAKE_SOURCE_DIR}/cfg/plugins.cfg-LINUX
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 		RENAME plugins.cfg
