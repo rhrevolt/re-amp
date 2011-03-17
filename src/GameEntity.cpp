@@ -6,7 +6,7 @@
  
 #include "GameEntity.h"
 
-bool compareComponents(GameComponent* first, GameComponent* second) 
+bool compareByPriority(GameComponent* first, GameComponent* second) 
 {
 	return first->getPriority() > second->getPriority();
 }
@@ -23,7 +23,9 @@ GameEntity::~GameEntity(void)
 
 bool GameEntity::update(void) {
 	// Iterate over the component list
-	for (std::list<GameComponent*>::iterator it = componentList.begin(); it != componentList.end(); it++) {
+	std::list<GameComponent*>::iterator it = componentList.begin();
+	std::list<GameComponent*>::iterator end = componentList.end();
+	for (; it != end; it++) {
 		(*it)->update();
 	}
 }
@@ -33,9 +35,21 @@ bool GameEntity::addComponent(GameComponent* component)
 	// Add the component
 	componentList.push_front(component);
 
-	// Resort the list
-	componentList.sort(compareComponents);
+	// Resort the list by priority
+	componentList.sort(compareByPriority);
 	
-	// Return success
+	// TODO: Add message bus firing here before returning.
 	return true;
 }
+
+bool GameEntity::removeComponent(GameComponent* component)
+{
+	// Try to remove the component
+	if (componentList.remove(component)) {
+		// TODO: Add message bus firing
+		return true;
+	}
+	
+	return false;
+}
+
