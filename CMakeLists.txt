@@ -1,9 +1,8 @@
 #
-# -------------------
 # Re-Amp Project
-# Re-Amp Build System
-# -------------------
-#
+# Build System
+# (C) 2011 Re-Amp Project Contributors
+# 
 
 cmake_minimum_required(VERSION 2.6)
 ### PROJECT VARIABLES ###
