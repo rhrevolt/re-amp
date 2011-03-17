@@ -16,11 +16,6 @@ GameComponent::~GameComponent(void)
 	
 }
 
-bool GameComponent::update(void)
-{
-
-}
-
 int GameComponent::getPriority(void)
 {
 	return priority;
