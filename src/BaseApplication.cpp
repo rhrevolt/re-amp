@@ -239,6 +239,11 @@ bool BaseApplication::setup(void)
     return true;
 };
 //-------------------------------------------------------------------------------------
+bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
+{
+    mainLoopPreRender();
+}
+
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
     if(mWindow->isClosed())
@@ -268,7 +273,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
     }
 
+    mainLoopPostRender();
+
     return true;
+}
+
+bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt)
+{
+    
 }
 //-------------------------------------------------------------------------------------
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )

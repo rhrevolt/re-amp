@@ -11,6 +11,8 @@ public:
 
 protected:
     virtual void createScene(void);
+    virtual void mainLoopPreRender(void); 
+    virtual void mainLoopPostRender(void);
 };
 
 #endif // #ifndef __Application_h_

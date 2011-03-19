@@ -4,6 +4,7 @@
 //-------------------------------------------------------------------------------------
 Application::Application(void)
 {
+	
 }
 //-------------------------------------------------------------------------------------
 Application::~Application(void)
@@ -26,4 +27,12 @@ void Application::createScene(void)
     l->setPosition(20,80,50);
 }
 
+void Application::mainLoopPreRender(void)
+{
+      
+}
 
+void Application::mainLoopPostRender(void)
+{
+    
+}
