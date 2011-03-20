@@ -25,6 +25,7 @@
 class InGameState: public GameState 
 {
 public:
+	InGameState();
 	~InGameState();
 	
 	virtual void tick();

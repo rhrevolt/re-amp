@@ -20,31 +20,27 @@
 #include "StateManager.h"
 #include "stdio.h"
 #include <stdlib.h>
-#include "boost/foreach.hpp"
-#include "EntityFactory.h"
 
-StateManager::StateManager() 
+StateManager* StateManager::m_pInstance = NULL;
+
+StateManager* StateManager::instance()
 {
+	if(!m_pInstance)
+		m_pInstance = new StateManager;
+
+	return m_pInstance;
 }
 
 StateManager::~StateManager() 
 {
 	free(mmState);
 	free(inGameState);
-
-	BOOST_FOREACH(GameEntity* ent, entityList) {
-		free(ent);
-	}
 }
 
 
 void StateManager::tick()
 {
 	currentState->tick();
-
-	BOOST_FOREACH(GameEntity* ent, entityList) {
-		ent->tick();
-	}
 }
 
 void StateManager::newGame()
@@ -52,7 +48,5 @@ void StateManager::newGame()
 	inGameState = new InGameState();
 	mmState = new MainMenuState();
 	currentState = inGameState;
-
-	entityList.push_back(EntityFactory::create("example"));
 }
 

@@ -22,7 +22,7 @@
 
 bool RenderingComponent::tick()
 {
-	//printf("Render\n");
+	printf("Render\n");
 }
 
 

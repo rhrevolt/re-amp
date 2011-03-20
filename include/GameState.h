@@ -20,14 +20,19 @@
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 
+#include "GameEntity.h"
+
 class GameState
 {
 public:
 	virtual void tick() = 0;
+	GameEntity* getEntity(int ID);
+
 
 protected:
-	
+	std::list<GameEntity*> entityList;
 
+	
 private:
 	
 

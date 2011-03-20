@@ -24,7 +24,7 @@
 //-------------------------------------------------------------------------------------
 Application::Application(void)
 {
-	stateMgr = new StateManager();
+	stateMgr = StateManager::instance();
 }
 //-------------------------------------------------------------------------------------
 Application::~Application(void)
