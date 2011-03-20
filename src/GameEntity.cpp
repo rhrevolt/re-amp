@@ -11,7 +11,7 @@ bool compareByPriority(GameComponent* first, GameComponent* second)
 	return first->getPriority() > second->getPriority();
 }
 
-GameEntity::GameEntity(int entityID) : entityID(entityID) 
+GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID(entityID) 
 {
 	// Empty
 }
@@ -19,15 +19,6 @@ GameEntity::GameEntity(int entityID) : entityID(entityID)
 GameEntity::~GameEntity(void) 
 {
 	// Empty for now..
-}
-
-bool GameEntity::update(void) {
-	// Iterate over the component list
-	std::list<GameComponent*>::iterator it = componentList.begin();
-	std::list<GameComponent*>::iterator end = componentList.end();
-	for (; it != end; it++) {
-		(*it)->update();
-	}
 }
 
 bool GameEntity::addComponent(GameComponent* component)
@@ -54,3 +45,18 @@ bool GameEntity::removeComponent(GameComponent* component)
 	return false;
 }
 
+
+
+bool GameEntity::tick(void) {
+	// Iterate over the component list
+	std::list<GameComponent*>::iterator it = componentList.begin();
+	std::list<GameComponent*>::iterator end = componentList.end();
+	for (; it != end; it++) {
+		(*it)->update();
+	}
+}
+
+bool GameEntity::receiveMessage(ComponentType comp, int message)
+{
+	
+}

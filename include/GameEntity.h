@@ -6,15 +6,25 @@
 
 bool compareComponents(GameComponent* first, GameComponent* second);
 
+typedef enum {
+	COMPONENT_BROADCAST,
+	COMPONENT_PHYSICS
+} ComponentType;
+
 class GameEntity
 {
 	public:
-		GameEntity(int entityID);
-		virtual ~GameEntity(void);
-		virtual bool update(void);
+		GameEntity(int entityID = 0, std::list<GameComponent*> comps = 
+		           (std::list<GameComponent*>)NULL);
+		~GameEntity(void);
+		
+		bool tick(void);
+		bool receiveMessage(ComponentType comp, int message);
+		
 		bool addComponent(GameComponent* component);
 		bool removeComponent(GameComponent* component);
 		bool removeComponent(int componentID); 
+		
 	private:
 		int entityID;
 		std::list<GameComponent*> componentList;
