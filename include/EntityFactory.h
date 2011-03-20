@@ -21,6 +21,7 @@
 #define _ENTITYFACTORY_H_
 
 #include "GameEntity.h"
+#include <string>
 
 class EntityFactory
 {

@@ -19,10 +19,27 @@
 
 #include "InGameState.h"
 #include <stdio.h>
+#include "EntityFactory.h"
+#include "GameEntity.h"
+#include "boost/foreach.hpp"
+
+InGameState::InGameState()
+{
+	entityList.push_back(EntityFactory::create("example"));
+}	
+
+InGameState::~InGameState()
+{
+	BOOST_FOREACH(GameEntity* ent, entityList) {
+		free(ent);
+	}
+}
 
 void InGameState::tick()
 {
-	//printf("InGame\n");
+	BOOST_FOREACH(GameEntity* ent, entityList) {
+		ent->tick();
+	}
 }
 
 

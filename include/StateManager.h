@@ -25,24 +25,26 @@
 #include "InGameState.h"
 #include "MainMenuState.h"
 
+//StateManager is a singleton!
 class StateManager
 {
 public:
-	StateManager();
-	~StateManager();
+	static StateManager* instance();
 	
 	void tick();
 	void newGame();
+	
+	GameState* currentState;
 
 protected:
-	std::list<GameEntity*> entityList;
-
 	MainMenuState*  mmState;
 	InGameState*	inGameState; 
-	GameState*		currentState;
 	
 private:
+	StateManager(){};
+	~StateManager();
 
+	static StateManager* m_pInstance;
 };
 
 #endif // _STATE_MANAGER_H_
