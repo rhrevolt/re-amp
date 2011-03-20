@@ -33,12 +33,15 @@ public:
 	
 	void tick();
 	void newGame();
+
+	int getEntityID();
 	
 	GameState* currentState;
 
 protected:
 	MainMenuState*  mmState;
 	InGameState*	inGameState; 
+	static int		currentEntityID;
 	
 private:
 	StateManager(){};

@@ -22,6 +22,7 @@
 #include <stdlib.h>
 
 StateManager* StateManager::m_pInstance = NULL;
+int StateManager::currentEntityID = 0;
 
 StateManager* StateManager::instance()
 {
@@ -41,6 +42,11 @@ StateManager::~StateManager()
 void StateManager::tick()
 {
 	currentState->tick();
+}
+
+int StateManager::getEntityID () 
+{
+	return currentEntityID++;
 }
 
 void StateManager::newGame()
