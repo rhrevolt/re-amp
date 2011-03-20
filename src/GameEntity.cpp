@@ -45,7 +45,8 @@ bool GameEntity::addComponent(GameComponent* component)
 bool GameEntity::removeComponent(GameComponent* component)
 {
 	// Try to remove the component
-	if (componentList.remove(component)) {
+	componentList.remove(component);
+	if (true) {
 		// TODO: Add message bus firing
 		return true;
 	}

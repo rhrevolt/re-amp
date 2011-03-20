@@ -1,14 +1,16 @@
 #include "Application.h"
 #include "config.h"
+#include "StateManager.h"
 
 //-------------------------------------------------------------------------------------
 Application::Application(void)
 {
-	
+	stateMgr = new StateManager();
 }
 //-------------------------------------------------------------------------------------
 Application::~Application(void)
 {
+	free(stateMgr);
 }
 
 //-------------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ void Application::createScene(void)
 
 void Application::mainLoopPreRender(void)
 {
-      
+	stateMgr->tick();
 }
 
 void Application::mainLoopPostRender(void)
