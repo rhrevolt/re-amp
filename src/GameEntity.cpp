@@ -5,6 +5,7 @@
  */
  
 #include "GameEntity.h"
+#include "boost/foreach.hpp"
 
 bool compareByPriority(GameComponent* first, GameComponent* second) 
 {
@@ -18,7 +19,11 @@ GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID
 
 GameEntity::~GameEntity(void) 
 {
-	// Empty for now..
+	//Free all of our components
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		free(comp);
+	}
 }
 
 bool GameEntity::addComponent(GameComponent* component)
@@ -48,11 +53,9 @@ bool GameEntity::removeComponent(GameComponent* component)
 
 
 bool GameEntity::tick(void) {
-	// Iterate over the component list
-	std::list<GameComponent*>::iterator it = componentList.begin();
-	std::list<GameComponent*>::iterator end = componentList.end();
-	for (; it != end; it++) {
-		(*it)->update();
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		comp->tick();
 	}
 }
 

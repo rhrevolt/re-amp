@@ -31,7 +31,8 @@ public:
 	StateManager();
 	~StateManager();
 	
-	virtual void tick();
+	void tick();
+	void newGame();
 
 protected:
 	std::list<GameEntity*> entityList;

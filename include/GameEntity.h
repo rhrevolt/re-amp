@@ -6,11 +6,6 @@
 
 bool compareComponents(GameComponent* first, GameComponent* second);
 
-typedef enum {
-	COMPONENT_BROADCAST,
-	COMPONENT_PHYSICS
-} ComponentType;
-
 class GameEntity
 {
 	public:

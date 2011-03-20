@@ -27,6 +27,9 @@ void Application::createScene(void)
     // Create a light
     Ogre::Light* l = mSceneMgr->createLight("MainLight");
     l->setPosition(20,80,50);
+
+	//Start our sample game
+	stateMgr->newGame();
 }
 
 void Application::mainLoopPreRender(void)
