@@ -40,6 +40,9 @@ Makefile.in
 *.tar.gz
 *.bzip
 
+# Anjuta
+*.anjuta
+
 # Eclipse *shutter*
 *.pydevproject
 .project
