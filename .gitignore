@@ -1,6 +1,10 @@
 # Log files
 *.log
 
+# TODO files
+*.tasks
+*.TODO
+
 # C++
 *.slo
 *.lo
