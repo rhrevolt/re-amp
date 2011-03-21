@@ -18,10 +18,14 @@
  */
 
 #include <stdio.h>
+#include "StateManager.h"
+#include "BaseApplication.h"
 #include "InputManager.h"
 
-InputManager::InputManager (void)
-{
+
+InputManager::InputManager (std::string windowHandle)
+{	
+	parameterList.insert(std::make_pair(std::string("WINDOW"), windowHandle));
 	// Initialize the input manager and the keyboard/mouse
 	oisInputManager = OIS::InputManager::createInputSystem (parameterList);
 	mKeyboard = static_cast<OIS::Keyboard*>(oisInputManager->createInputObject (OIS::OISKeyboard, true));
@@ -33,15 +37,46 @@ InputManager::InputManager (void)
 
 InputManager::~InputManager (void)
 {
-	// Shutdown OIS
-	oisInputManager->destroyInputObject (mKeyboard);
-	oisInputManager->destroyInputObject (mMouse);
-	OIS::InputManager::destroyInputSystem (oisInputManager);
-	oisInputManager = 0;
+	shutdownManager ();
+	delete oisInputManager;
+	delete mKeyboard;
+	delete mMouse;
+}
+
+void InputManager::shutdownManager(void)
+{
+	if (oisInputManager) {
+		// Shutdown OIS
+		oisInputManager->destroyInputObject (mKeyboard);
+		oisInputManager->destroyInputObject (mMouse);
+		OIS::InputManager::destroyInputSystem (oisInputManager);
+		oisInputManager = 0;
+	}
+}
+
+void InputManager::capture(void) 
+{
+	mKeyboard->capture();
+	mMouse->capture();
+}
+
+void InputManager::updateClippingArea (unsigned int width, unsigned int height) 
+{
+	if (mMouse) {
+		const OIS::MouseState &mouseState = mMouse->getMouseState();
+		mouseState.width = width;
+		mouseState.height = height;
+	}
 }
 
 bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	// Got a keypress event
+	// Check for escape -- it's hard-wired as a quit
+	if (arg.key == OIS::KC_ESCAPE) {
+		// TODO: this should actually fire an event -- but this will do for
+		// now.
+		StateManager::currentState = StateManager::exitGameState;
+	}
 	printf("Got keypress event: %d\n", arg.key);
 	return true;
 	
@@ -61,14 +96,14 @@ bool InputManager::mouseMoved (const OIS::MouseEvent &arg) {
 
 }
 
-bool InputManager::mousePressed (const OIS::MouseEvent &arg) {
+bool InputManager::mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
 	// Got a mouse press event
 	printf("Got mouse press event\n");
 	return true;
 
 }
 
-bool InputManager::mouseReleased (const OIS::MouseEvent &arg) {
+bool InputManager::mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
 	// Got a mouse movement event
 	printf("Got mouse released event");
 	return true;

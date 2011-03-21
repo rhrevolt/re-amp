@@ -36,6 +36,7 @@ StateManager::~StateManager()
 {
 	free(mmState);
 	free(inGameState);
+	free(exitGameState);
 }
 
 
@@ -53,6 +54,7 @@ void StateManager::newGame()
 {
 	inGameState = new InGameState();
 	mmState = new MainMenuState();
+	exitGameState = new ExitGameState();
 	currentState = inGameState;
 }
 

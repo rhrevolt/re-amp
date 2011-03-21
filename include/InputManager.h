@@ -50,18 +50,22 @@ class InputManager: public OIS::KeyListener, public OIS::MouseListener
 public:
 	InputManager (void);
 	~InputManager (void);
+
+	void updateClippingArea(unsigned int height, unsigned int width);
+	void shutdownManager (void);
+	void capture (void);
+	
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
 	bool mouseMoved (const OIS::MouseEvent &arg);
-	bool mousePressed (const OIS::MouseEvent &arg);
-	bool mouseReleased (const OIS::MouseEvent &arg);
+	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	;
 
 protected:
 	;
 
 private:
-	OIS::ParamList parameterList;
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
