@@ -10,12 +10,16 @@ typedef enum {
 
 struct EVENT {
 	int eventID;
+	EventType eventType;
 	char* description;
 };
 
+// Singleton
 class EventManager
 {
 	public:
+		static EventManager* instance();
+		
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(EVENT event);
