@@ -45,10 +45,13 @@ bool EventManager::pushEvent(EVENT event)
 
 bool EventManager::pullEvent()
 {
+	// pull the event messages for the event types the copmonent is registered for
 
 }	
 
 bool EventManager::registerComp(int entityID, EventType eventType)
 {
+	// register a component for a specific event type
+	// possibly change to passing a list
 	
 }
