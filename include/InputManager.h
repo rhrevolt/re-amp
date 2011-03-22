@@ -60,6 +60,8 @@ public:
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
 	void capture (void);
+	bool getStatus(void);
+
 	
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
@@ -75,6 +77,8 @@ private:
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
+
+	bool running; 
 
 };
 

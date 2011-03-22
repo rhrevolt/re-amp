@@ -20,7 +20,7 @@
 #include "InputManager.h"
 
 
-InputManager::InputManager (std::string windowHandle)
+InputManager::InputManager (std::string windowHandle) : running(true)
 {	
 	OIS::ParamList parameterList;
 	// Insert the Window ID
@@ -59,6 +59,13 @@ void InputManager::capture(void)
 	mMouse->capture();
 }
 
+bool InputManager::getStatus(void)
+{
+	if (!running)
+		printf("stopping..");
+	return running;
+}
+
 void InputManager::updateClippingArea (unsigned int width, unsigned int height) 
 {
 	if (mMouse) {
@@ -75,6 +82,7 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 		EVENT evt;
 		evt.eventType = EVENT_SHUTDOWN;
 		EventManager::instance()->pushEvent(evt);
+		running = false;
 	}
 	printf("Got keypress event: %d\n", arg.key);
 	return true;

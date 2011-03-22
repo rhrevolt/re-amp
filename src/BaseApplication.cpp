@@ -220,7 +220,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if(mWindow->isClosed())
         return false;
 
-    if(mShutDown)
+    if(mShutDown | !mInputManager->getStatus ())
         return false;
 
     //Need to capture the input system
