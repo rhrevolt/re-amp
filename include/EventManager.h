@@ -5,7 +5,8 @@
 
 typedef enum {
 	EVENT_DAMAGE,
-	EVENT_ACCELERATE
+	EVENT_ACCELERATE,
+	EVENT_SHUTDOWN
 } EventType;
 
 struct EVENT {
