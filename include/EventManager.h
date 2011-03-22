@@ -24,8 +24,8 @@ class EventManager
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(EVENT event);
-		bool pullEvent();
-		bool registerComp(int entityID, EventType eventType);
+		bool pullEvent(int entityID);
+		bool registerEntity(int entityID, EventType eventType);
 	private:
 		static EventManager* m_instance;
 		boost::circular_buffer<EVENT> events;

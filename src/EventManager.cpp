@@ -39,19 +39,18 @@ EventManager::~EventManager(void)
 
 bool EventManager::pushEvent(EVENT event)
 {
+	// adds the event to the back of the circular buffer
 	events.push_back(event);
 	return true;
 }
 
-bool EventManager::pullEvent()
+bool EventManager::pullEvent(int entityID)
 {
-	// pull the event messages for the event types the copmonent is registered for
-
+	// return a pointer to an event in the buffer	
 }	
 
-bool EventManager::registerComp(int entityID, EventType eventType)
+bool EventManager::registerEntity(int entityID, EventType eventType)
 {
 	// register a component for a specific event type
 	// possibly change to passing a list
-	
 }
