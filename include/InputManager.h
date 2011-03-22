@@ -20,6 +20,8 @@
 #ifndef _INPUT_MANAGER_H_
 #define _INPUT_MANAGER_H_
 
+#include <stdio.h>
+
 // OIS Includes
 #include "OISInputManager.h"
 #include "OISException.h"
@@ -44,11 +46,15 @@ LRESULT DlgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 void checkX11Events();
 #endif
 
+// Our includes
+#include "EventManager.h"
+#include "StateManager.h"
+
 
 class InputManager: public OIS::KeyListener, public OIS::MouseListener
 {
 public:
-	InputManager (void);
+	InputManager (std::string windowHandle);
 	~InputManager (void);
 
 	void updateClippingArea(unsigned int height, unsigned int width);

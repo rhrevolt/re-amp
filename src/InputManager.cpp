@@ -17,14 +17,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include "StateManager.h"
-#include "BaseApplication.h"
 #include "InputManager.h"
 
 
 InputManager::InputManager (std::string windowHandle)
 {	
+	OIS::ParamList parameterList;
+	// Insert the Window ID
 	parameterList.insert(std::make_pair(std::string("WINDOW"), windowHandle));
 	// Initialize the input manager and the keyboard/mouse
 	oisInputManager = OIS::InputManager::createInputSystem (parameterList);
@@ -38,9 +37,9 @@ InputManager::InputManager (std::string windowHandle)
 InputManager::~InputManager (void)
 {
 	shutdownManager ();
-	delete oisInputManager;
-	delete mKeyboard;
-	delete mMouse;
+	free(oisInputManager);
+	free(mKeyboard);
+	free(mMouse);
 }
 
 void InputManager::shutdownManager(void)
@@ -73,9 +72,9 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	// Got a keypress event
 	// Check for escape -- it's hard-wired as a quit
 	if (arg.key == OIS::KC_ESCAPE) {
-		// TODO: this should actually fire an event -- but this will do for
-		// now.
-		StateManager::currentState = StateManager::exitGameState;
+		EVENT evt;
+		evt.eventType = EVENT_SHUTDOWN;
+		EventManager::instance()->pushEvent(evt);
 	}
 	printf("Got keypress event: %d\n", arg.key);
 	return true;

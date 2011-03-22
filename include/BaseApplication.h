@@ -56,6 +56,7 @@ protected:
     virtual void setupResources(void);
     virtual void createResourceListener(void);
     virtual void loadResources(void);
+	virtual void shutdownGame(void);
     
     virtual void mainLoopPreRender(void) = 0; // Override me!
     virtual void mainLoopPostRender(void) = 0; // Override me!

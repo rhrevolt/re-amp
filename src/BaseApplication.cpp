@@ -84,6 +84,11 @@ void BaseApplication::createCamera(void)
 
 	mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
 }
+
+void BaseApplication::shutdownGame(void)
+{
+	mShutDown = true;
+}
 //-------------------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
 {

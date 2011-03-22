@@ -24,6 +24,9 @@
 StateManager* StateManager::m_pInstance = NULL;
 int StateManager::currentEntityID = 0;
 
+const int StateManager::menuID = 0;
+const int StateManager::inGameID = 1;
+
 StateManager* StateManager::instance()
 {
 	if(!m_pInstance)
@@ -36,9 +39,21 @@ StateManager::~StateManager()
 {
 	free(mmState);
 	free(inGameState);
-	free(exitGameState);
 }
 
+void StateManager::switchState(int stateID)
+{
+	switch (stateID) {
+		case menuID:
+			currentState = mmState;
+			break;
+		case inGameID:
+			currentState = inGameState;
+			break;
+		default:
+			break;
+	}
+}
 
 void StateManager::tick()
 {
@@ -54,7 +69,6 @@ void StateManager::newGame()
 {
 	inGameState = new InGameState();
 	mmState = new MainMenuState();
-	exitGameState = new ExitGameState();
 	currentState = inGameState;
 }
 

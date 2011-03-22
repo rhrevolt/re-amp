@@ -20,7 +20,7 @@
 #include "BaseApplication.h"
 #include "ExitGameState.h"
 
-void ExitGameState::tick() {
-	// Shutdown rendering
-	mShutDown = true;
+void ExitGameState::tick() 
+{
+	// TODO: shutdown rendering
 }

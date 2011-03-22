@@ -27,6 +27,7 @@ class EventManager
 		bool pullEvent();
 		bool registerComp(int entityID, EventType eventType);
 	private:
+		static EventManager* m_instance;
 		boost::circular_buffer<EVENT> events;
 		
 };

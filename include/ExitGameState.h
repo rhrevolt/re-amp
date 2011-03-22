@@ -25,8 +25,6 @@
 class ExitGameState : public GameState
 {
 public:
-	~ExitGameState();
-
 	virtual void tick();
 
 protected:

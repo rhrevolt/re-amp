@@ -24,16 +24,21 @@
 #include "GameState.h"
 #include "InGameState.h"
 #include "MainMenuState.h"
-#include "ExitGameState.h"
 
 //StateManager is a singleton!
 class StateManager
 {
 public:
 	static StateManager* instance();
-	
+
+	const static int menuID;
+	const static int inGameID;
+	const static int exitGameID;
+
 	void tick();
 	void newGame();
+
+	void switchState(int stateID);
 
 	int getEntityID();
 	
@@ -42,7 +47,6 @@ public:
 protected:
 	MainMenuState*  mmState;
 	InGameState*	inGameState; 
-	ExitGameState*	exitGameState;
 	static int		currentEntityID;
 	
 private:
