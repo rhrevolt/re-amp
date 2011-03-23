@@ -47,10 +47,12 @@ bool EventManager::pushEvent(EVENT event)
 bool EventManager::pullEvent(int entityID)
 {
 	// return a pointer to an event in the buffer	
+	
 }	
 
 bool EventManager::registerEntity(int entityID, EventType eventType)
 {
 	// register a component for a specific event type
-	// possibly change to passing a list
+	registeredEntities.insert(pair<int, EventType>(entityID, eventType));	
+	return true;
 }

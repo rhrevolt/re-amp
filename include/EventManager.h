@@ -2,6 +2,9 @@
 #define __EventManager_h__
 
 #include <boost/circular_buffer.hpp>
+#include <map>
+
+using namespace std;
 
 typedef enum {
 	EVENT_DAMAGE,
@@ -28,7 +31,10 @@ class EventManager
 		bool registerEntity(int entityID, EventType eventType);
 	private:
 		static EventManager* m_instance;
+		// Circular buffer of events waiting to be pulled
 		boost::circular_buffer<EVENT> events;
+		// Multipmap to keep track of which Events are associated with an entity
+		std::multimap<int, EventType> registeredEntities;
 		
 };
 
