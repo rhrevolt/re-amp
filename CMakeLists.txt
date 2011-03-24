@@ -138,14 +138,13 @@ else()
 endif()
 
 # Find Bullet/OGREBullet
-find_package(Bullet REQUIRED)
-find_package(OgreBullet REQUIRED)
 if (WIN32)
     set(BULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/bulletWin32)
     set(OGREBULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
-else()
-	
 endif()
+
+find_package(Bullet REQUIRED)
+find_package(OgreBullet REQUIRED)
 
 if(NOT BULLET_FOUND)
     message(SEND_ERROR "Failed to find Bullet")
