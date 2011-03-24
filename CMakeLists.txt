@@ -119,8 +119,8 @@ endif()
 
 # Find OpenAL/FreeALUT
 if (WIN32)
-    set(FREEALUTDIR ${CMAKE_SOURCE_DIR}/contrib/freealutWin32)
-    set(OPENAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/contrib/OpenALWin32/include)
+    set(FREEALUT_ROOT ${CMAKE_SOURCE_DIR}/contrib/freealutWin32)
+    set(OPENAL_ROOT ${CMAKE_SOURCE_DIR}/contrib/OpenALWin32)
 endif()
 
 find_package(OpenAL REQUIRED)
@@ -142,7 +142,7 @@ find_package(Bullet REQUIRED)
 find_package(OgreBullet REQUIRED)
 if (WIN32)
     set(BULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/bulletWin32)
-    set(OGREBULLET_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
+    set(OGREBULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
 else()
 	
 endif()
