@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 <>
+ * Copyright (C)  2011 ReAmp Contributors
  * 
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,43 +17,31 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _STATE_MANAGER_H_
-#define _STATE_MANAGER_H_
+#include <stdio.h>
 
-#include "GameEntity.h"
-#include "GameState.h"
-#include "InGameState.h"
-#include "MainMenuState.h"
+#include "boost/foreach.hpp"
 
-//StateManager is a singleton!
-class StateManager
+#include "core/GameEntity.h"
+#include "core/EntityFactory.h"
+#include "states/InGameState.h"
+
+InGameState::InGameState()
 {
-public:
-	static StateManager* instance();
+	entityList.push_back(EntityFactory::create("example"));
+}	
 
-	const static int menuID;
-	const static int inGameID;
-	const static int exitGameID;
+InGameState::~InGameState()
+{
+	BOOST_FOREACH(GameEntity* ent, entityList) {
+		free(ent);
+	}
+}
 
-	void tick();
-	void newGame();
+void InGameState::tick()
+{
+	BOOST_FOREACH(GameEntity* ent, entityList) {
+		ent->tick();
+	}
+}
 
-	void switchState(int stateID);
 
-	int getEntityID();
-	
-	GameState* currentState;
-
-protected:
-	MainMenuState*  mmState;
-	InGameState*	inGameState; 
-	static int		currentEntityID;
-	
-private:
-	StateManager(){};
-	~StateManager();
-
-	static StateManager* m_pInstance;
-};
-
-#endif // _STATE_MANAGER_H_

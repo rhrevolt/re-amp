@@ -47,8 +47,8 @@ void checkX11Events();
 #endif
 
 // Our includes
-#include "EventManager.h"
-#include "StateManager.h"
+#include "core/EventManager.h"
+#include "core/StateManager.h"
 
 
 class InputManager: public OIS::KeyListener, public OIS::MouseListener

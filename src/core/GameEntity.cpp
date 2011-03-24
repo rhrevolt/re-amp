@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-#include "GameEntity.h"
+#include "core/GameEntity.h"
 #include "boost/foreach.hpp"
 
 bool compareByPriority(GameComponent* first, GameComponent* second) 

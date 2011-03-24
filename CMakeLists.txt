@@ -166,8 +166,8 @@ endif()
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
 # Sources and includes
 
-FILE(GLOB SRCS ${SOURCE_DIR}/*.cpp)
-FILE(GLOB HDRS ${HEADER_DIR}/*.h)
+FILE(GLOB_RECURSE SRCS ${SOURCE_DIR}/*.cpp)
+FILE(GLOB_RECURSE HDRS ${HEADER_DIR}/*.h)
 
 
 include_directories( ${OIS_INCLUDE_DIRS}

@@ -17,22 +17,22 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _RENDERINGCOMPONENT_H_
-#define _RENDERINGCOMPONENT_H_
+#ifndef _MAINMENUSTATE_H_
+#define _MAINMENUSTATE_H_
 
-#include "GameComponent.h"
+#include "core/GameState.h"
 
-class RenderingComponent: public GameComponent 
+class MainMenuState: public GameState 
 {
-	public:
-		RenderingComponent(int ID): GameComponent(ID){};
-		~RenderingComponent() {};
-		virtual bool tick();
+public:
+	~MainMenuState();
+	
+	virtual void tick();
 
-	protected:
+protected:
 
-	private:
+private:
 
 };
 
-#endif // _RENDERINGCOMPONENT_H_
+#endif // _MAINMENUSTATE_H_

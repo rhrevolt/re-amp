@@ -14,7 +14,7 @@ This source file is part of the
 	  http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#include "BaseApplication.h"
+#include "core/BaseApplication.h"
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)

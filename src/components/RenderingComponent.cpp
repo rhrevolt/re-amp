@@ -18,7 +18,7 @@
  */
 
 #include <stdio.h>
-#include "RenderingComponent.h"
+#include "components/RenderingComponent.h"
 
 bool RenderingComponent::tick()
 {

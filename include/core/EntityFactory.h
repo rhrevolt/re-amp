@@ -2,37 +2,35 @@
 /*
  * ReAmp
  * Copyright (C)  2011 <>
- *
+ * 
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * ReAmp is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _INPUTCOMPONENT_H_
-#define _INPUTCOMPONENT_H_
+#ifndef _ENTITYFACTORY_H_
+#define _ENTITYFACTORY_H_
 
-#include "GameComponent.h"
+#include "core/GameEntity.h"
+#include <string>
 
-class InputComponent: public GameComponent
+class EntityFactory
 {
 	public:
-		InputComponent(int ID): GameComponent(ID){};
-		~InputComponent() {};
-		virtual bool tick();
+		static GameEntity* create(std::string name);
 
 	protected:
 
 	private:
-
 };
 
-#endif // _INPUTCOMPONENT_H_
+#endif // _ENTITYFACTORY_H_

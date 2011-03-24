@@ -17,9 +17,10 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "StateManager.h"
-#include "stdio.h"
+#include <stdio.h>
 #include <stdlib.h>
+
+#include "core/StateManager.h"
 
 StateManager* StateManager::m_pInstance = NULL;
 int StateManager::currentEntityID = 0;

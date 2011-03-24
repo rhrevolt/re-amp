@@ -18,9 +18,9 @@
  */
 
 #include <string>
-#include "EntityFactory.h"
-#include "RenderingComponent.h"
-#include "GameEntity.h"
+#include "core/EntityFactory.h"
+#include "core/GameEntity.h"
+#include "components/RenderingComponent.h"
 
 GameEntity* EntityFactory::create(std::string name)
 {

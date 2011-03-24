@@ -2,7 +2,7 @@
 #define __GameEntity_h__
 
 #include <list> 
-#include "GameComponent.h"
+#include "core/GameComponent.h"
 
 bool compareComponents(GameComponent* first, GameComponent* second);
 

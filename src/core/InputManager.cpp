@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "InputManager.h"
+#include "core/InputManager.h"
 
 
 InputManager::InputManager (std::string windowHandle) : running(true)

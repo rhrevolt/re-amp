@@ -1,8 +1,8 @@
 #ifndef __Application_h_
 #define __Application_h_
 
-#include "BaseApplication.h"
-#include "StateManager.h"
+#include "core/BaseApplication.h"
+#include "core/StateManager.h"
 
 class Application : public BaseApplication
 {

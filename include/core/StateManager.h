@@ -17,12 +17,43 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MainMenuState.h"
-#include <stdio.h>
+#ifndef _STATE_MANAGER_H_
+#define _STATE_MANAGER_H_
 
-void MainMenuState::tick()
+#include "core/GameEntity.h"
+#include "core/GameState.h"
+#include "states/InGameState.h"
+#include "states/MainMenuState.h"
+
+//StateManager is a singleton!
+class StateManager
 {
-	printf("In Main Menu\n");
-}
+public:
+	static StateManager* instance();
 
+	const static int menuID;
+	const static int inGameID;
+	const static int exitGameID;
 
+	void tick();
+	void newGame();
+
+	void switchState(int stateID);
+
+	int getEntityID();
+	
+	GameState* currentState;
+
+protected:
+	MainMenuState*  mmState;
+	InGameState*	inGameState; 
+	static int		currentEntityID;
+	
+private:
+	StateManager(){};
+	~StateManager();
+
+	static StateManager* m_pInstance;
+};
+
+#endif // _STATE_MANAGER_H_

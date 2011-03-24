@@ -17,9 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Application.h"
 #include "config.h"
-#include "StateManager.h"
+#include "core/Application.h"
+#include "core/StateManager.h"
 
 //-------------------------------------------------------------------------------------
 Application::Application(void)

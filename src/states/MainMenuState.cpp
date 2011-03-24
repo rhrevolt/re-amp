@@ -17,22 +17,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MAINMENUSTATE_H_
-#define _MAINMENUSTATE_H_
+#include <stdio.h>
 
-#include "GameState.h"
+#include "states/MainMenuState.h"
 
-class MainMenuState: public GameState 
+void MainMenuState::tick()
 {
-public:
-	~MainMenuState();
-	
-	virtual void tick();
+	printf("In Main Menu\n");
+}
 
-protected:
 
-private:
-
-};
-
-#endif // _MAINMENUSTATE_H_

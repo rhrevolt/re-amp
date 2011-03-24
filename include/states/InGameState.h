@@ -1,14 +1,14 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * re-amp
+ * ReAmp
  * Copyright (C)  2011 <>
  * 
- * re-amp is free software: you can redistribute it and/or modify it
+ * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * re-amp is distributed in the hope that it will be useful, but
+ * ReAmp is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -17,14 +17,17 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _EXIT_GAME_STATE_H_
-#define _EXIT_GAME_STATE_H_
+#ifndef _INGAMESTATE_H_
+#define _INGAMESTATE_H_
 
-#include "GameState.h"
+#include "core/GameState.h"
 
-class ExitGameState : public GameState
+class InGameState: public GameState 
 {
 public:
+	InGameState();
+	~InGameState();
+	
 	virtual void tick();
 
 protected:
@@ -33,4 +36,4 @@ private:
 
 };
 
-#endif // _EXIT_GAME_STATE_H_
+#endif // _INGAMESTATE_H_

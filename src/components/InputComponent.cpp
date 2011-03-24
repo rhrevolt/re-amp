@@ -18,7 +18,7 @@
  */
 
 #include <stdio.h>
-#include "InputComponent.h"
+#include "components/InputComponent.h"
 
 bool InputComponent::tick()
 {

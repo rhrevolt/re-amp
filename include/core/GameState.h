@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 ReAmp Contributors
+ * Copyright (C)  2011 <>
  * 
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,29 +17,25 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "InGameState.h"
-#include <stdio.h>
-#include "EntityFactory.h"
-#include "GameEntity.h"
-#include "boost/foreach.hpp"
+#ifndef _GAMESTATE_H_
+#define _GAMESTATE_H_
 
-InGameState::InGameState()
+#include "core/GameEntity.h"
+
+class GameState
 {
-	entityList.push_back(EntityFactory::create("example"));
-}	
-
-InGameState::~InGameState()
-{
-	BOOST_FOREACH(GameEntity* ent, entityList) {
-		free(ent);
-	}
-}
-
-void InGameState::tick()
-{
-	BOOST_FOREACH(GameEntity* ent, entityList) {
-		ent->tick();
-	}
-}
+public:
+	virtual void tick() = 0;
+	GameEntity* getEntity(int ID);
 
 
+protected:
+	std::list<GameEntity*> entityList;
+
+	
+private:
+	
+
+};
+
+#endif // _GAMESTATE_H_

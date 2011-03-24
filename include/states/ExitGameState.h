@@ -17,10 +17,20 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "BaseApplication.h"
-#include "ExitGameState.h"
+#ifndef _EXIT_GAME_STATE_H_
+#define _EXIT_GAME_STATE_H_
 
-void ExitGameState::tick() 
+#include "core/GameState.h"
+
+class ExitGameState : public GameState
 {
-	// TODO: shutdown rendering
-}
+public:
+	virtual void tick();
+
+protected:
+
+private:
+
+};
+
+#endif // _EXIT_GAME_STATE_H_

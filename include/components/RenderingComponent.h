@@ -17,25 +17,22 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _GAMESTATE_H_
-#define _GAMESTATE_H_
+#ifndef _RENDERINGCOMPONENT_H_
+#define _RENDERINGCOMPONENT_H_
 
-#include "GameEntity.h"
+#include "core/GameComponent.h"
 
-class GameState
+class RenderingComponent: public GameComponent 
 {
-public:
-	virtual void tick() = 0;
-	GameEntity* getEntity(int ID);
+	public:
+		RenderingComponent(int ID): GameComponent(ID){};
+		~RenderingComponent() {};
+		virtual bool tick();
 
+	protected:
 
-protected:
-	std::list<GameEntity*> entityList;
-
-	
-private:
-	
+	private:
 
 };
 
-#endif // _GAMESTATE_H_
+#endif // _RENDERINGCOMPONENT_H_

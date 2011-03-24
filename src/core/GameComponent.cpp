@@ -16,7 +16,8 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "GameComponent.h"
+
+#include "core/GameComponent.h"
 
 GameComponent::GameComponent(int componentID, int priority) : componentID(componentID), priority(priority)
 {
