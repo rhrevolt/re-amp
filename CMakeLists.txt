@@ -118,6 +118,11 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 endif()
 
 # Find OpenAL/FreeALUT
+if (WIN32)
+    set(FREEALUTDIR ${CMAKE_SOURCE_DIR}/contrib/freealutWin32)
+    set(OPENAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/contrib/OpenALWin32/include)
+endif()
+
 find_package(OpenAL REQUIRED)
 find_package(FreeAlut REQUIRED)
 
@@ -127,14 +132,33 @@ else()
 	message(STATUS "Found OpenAL")
 endif()
 if (NOT FREEALUT_FOUND)
-	message(SEND_ERROR "Failed to find FreeAlut")
+	message(SEND_ERROR "Failed to find FreeAlut " ${FREEALUT_LIB_DIR})
 else()
 	message(STATUS "Found FreeALUT")
 endif()
 
 # Find Bullet/OGREBullet
 find_package(Bullet REQUIRED)
-find_package(OgreBullet REQUIRED)
+
+if (WIN32)
+    set(BULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/bulletWin32)
+    set(OGREBULLET_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
+else()
+	
+endif()
+find_package(bullet REQUIRED)
+
+if(NOT BULLET_FOUND)
+    message(SEND_ERROR "Failed to find Bullet")
+else()
+    message(STATUS "Found Bullet")
+endif()
+
+if(NOT OGREBULLET_FOUND)
+    message(SEND_ERROR "Failed to find OgreBullet")
+else()
+    message(STATUS "Found OgreBullet")
+endif()
 
 ##################
 ## BUILD TARGET ##

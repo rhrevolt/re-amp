@@ -11,7 +11,7 @@
 
 #Todo: Setting up and testing for other platforms than windows
 FIND_PATH(FREEALUT_INCLUDE_DIR alut.h
-  $ENV{FREEALUTDIR}/include/AL
+  ${FREEALUTDIR}/include/AL
   
   ~/Library/Frameworks/freealut.framework/Headers
   /Library/Frameworks/freealut.framework/Headers
@@ -40,6 +40,7 @@ FIND_PATH(FREEALUT_INCLUDE_DIR alut.h
 
 FIND_PATH(FREEALUT_LIB_DIR alut.lib
   ${PROJECT_SOURCE_DIR}/libraries/freealut/lib/
+  ${FREEALUTDIR}/lib
 )  
   
 # I'm not sure if I should do a special casing for Apple. It is 
@@ -68,8 +69,8 @@ ELSE(${FREEALUT_INCLUDE_DIR} MATCHES ".framework")
   FIND_LIBRARY(FREEALUT_LIBRARY 
     NAMES alut
     PATHS
-    $ENV{FREEALUTDIR}/lib
-    $ENV{FREEALUTDIR}/libs
+    ${FREEALUTDIR}/lib
+    ${FREEALUTDIR}/libs
     /usr/local/lib
     /usr/lib
     /sw/lib
