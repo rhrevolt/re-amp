@@ -20,7 +20,7 @@
 #ifndef _INPUTCOMPONENT_H_
 #define _INPUTCOMPONENT_H_
 
-#include "components/GameComponent.h"
+#include "core/GameComponent.h"
 
 class InputComponent: public GameComponent
 {
