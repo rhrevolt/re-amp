@@ -51,6 +51,7 @@ if(UNIX)
 	)
 endif(UNIX)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/build/Modules;${CMAKE_MODULE_PATH}")
 
 if (CMAKE_BUILD_TYPE STREQUAL "")
 	# Set the default build type to Release w/ Debug info
@@ -114,6 +115,16 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 	set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
+# Find OpenAL/FreeALUT
+find_package(OpenAL REQUIRED)
+find_package(FreeAlut REQUIRED)
+
+if (NOT OPENAL_FOUND)
+	message(SEND_ERROR "Failed to find OpenAL")
+endif()
+if (NOT FREEALUT_FOUND)
+	message(SEND_ERROR "Failed to find FreeAlut")
+endif()
 ##################
 ## BUILD TARGET ##
 ##################
