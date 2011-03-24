@@ -2,17 +2,17 @@
 /*
  * re-amp
  * Copyright (C)  2011 <>
- * 
+ *
  * re-amp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * re-amp is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@
 
 
 InputManager::InputManager (std::string windowHandle) : running(true)
-{	
+{
 	OIS::ParamList parameterList;
 	// Insert the Window ID
 	parameterList.insert(std::make_pair(std::string("WINDOW"), windowHandle));
@@ -53,7 +53,7 @@ void InputManager::shutdownManager(void)
 	}
 }
 
-void InputManager::capture(void) 
+void InputManager::capture(void)
 {
 	mKeyboard->capture();
 	mMouse->capture();
@@ -66,7 +66,7 @@ bool InputManager::getStatus(void)
 	return running;
 }
 
-void InputManager::updateClippingArea (unsigned int width, unsigned int height) 
+void InputManager::updateClippingArea (unsigned int width, unsigned int height)
 {
 	if (mMouse) {
 		const OIS::MouseState &mouseState = mMouse->getMouseState();
@@ -84,9 +84,46 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 		EventManager::instance()->pushEvent(evt);
 		running = false;
 	}
+
+	if (arg.key == OIS::KC_UP) {
+        EVENT evt;
+        evt.eventType = EVENT_ACCELERATE;
+        EventManager::instance()->pushEvent(evt);
+	}
+
+	if (arg.key == OIS::KC_DOWN) {
+        EVENT evt;
+        evt.eventType = EVENT_DECELERATE;
+        EventManager::instance()->pushEvent(evt);
+	}
+
+	if (arg.key == OIS::KC_RIGHT) {
+        EVENT evt;
+        evt.eventType = EVENT_RIGHT_TURN;
+        EventManager::instance()->pushEvent(evt);
+	}
+
+	if (arg.key == OIS::KC_LEFT) {
+        EVENT evt;
+        evt.eventType = EVENT_LEFT_TURN;
+        EventManager::instance()->pushEvent(evt);
+	}
+
+	if (arg.key == OIS::KC_H) {
+        EVENT evt;
+        evt.eventType = EVENT_HORN;
+        EventManager::instance()->pushEvent(evt);
+	}
+
+	if (arg.key == OIS::KC_SPACE){
+        EVENT evt;
+        evt.eventType = EVENT_FIRE;
+        EventManager::instance()->pushEvent(evt);
+	}
+
 	printf("Got keypress event: %d\n", arg.key);
 	return true;
-	
+
 }
 
 bool InputManager::keyReleased (const OIS::KeyEvent &arg) {

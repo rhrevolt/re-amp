@@ -10,7 +10,12 @@ using namespace std;
 typedef enum {
 	EVENT_DAMAGE,
 	EVENT_ACCELERATE,
-	EVENT_SHUTDOWN
+	EVENT_SHUTDOWN,
+	EVENT_DECELERATE,
+	EVENT_LEFT_TURN,
+	EVENT_HORN,
+	EVENT_RIGHT_TURN,
+	EVENT_FIRE;
 } EventType;
 
 struct EVENT {
@@ -24,7 +29,7 @@ class EventManager
 {
 	public:
 		static EventManager* instance();
-		
+
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(EVENT event);
@@ -37,7 +42,7 @@ class EventManager
 		// Multipmap to keep track of which Events are
 		// associated with an entity
 		std::multimap<int, EventType> registeredEntities;
-		
+
 };
 
 #endif // __EventManager_h__
