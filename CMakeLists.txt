@@ -124,13 +124,18 @@ find_package(FreeAlut REQUIRED)
 if (NOT OPENAL_FOUND)
 	message(SEND_ERROR "Failed to find OpenAL")
 else()
-	message("-- Found OpenAL")
+	message(STATUS "Found OpenAL")
 endif()
 if (NOT FREEALUT_FOUND)
 	message(SEND_ERROR "Failed to find FreeAlut")
 else()
-	message("-- Found FreeALUT")
+	message(STATUS "Found FreeALUT")
 endif()
+
+# Find Bullet/OGREBullet
+find_package(bullet REQUIRED)
+find_package(OgreBullet REQUIRED)
+
 ##################
 ## BUILD TARGET ##
 ##################
