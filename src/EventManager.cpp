@@ -47,6 +47,14 @@ bool EventManager::pushEvent(EVENT event)
 bool EventManager::pullEvent(int entityID)
 {
 	// return a pointer to an event in the buffer	
+	//BOOST_FOREACH(pair<int, EventType>(entityID, eventType),
+	//			  registeredEntities)
+	//{
+	//	if (pair.first = entityID)
+	//	{
+	//		// Call receiveMessage method in the entity?
+	//	}
+	//}
 	
 }	
 

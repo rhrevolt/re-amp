@@ -2,6 +2,7 @@
 #define __EventManager_h__
 
 #include <boost/circular_buffer.hpp>
+#include <boost/foreach.hpp>
 #include <map>
 
 using namespace std;
