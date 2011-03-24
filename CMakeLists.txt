@@ -36,6 +36,8 @@ set(RESOURCES_PATH "cfg/resources.cfg")
 set(PLUGINS_PATH "cfg/plugins.cfg-${REAMP_PLATFORM}")
 set(REQUIRED_OGRE_VERSION_NUMBER 1.7)
 set(REQUIRED_OGRE_VERSION_NAME "Cthugha")
+# BOOST Plugins
+set(REQUIRED_BOOST_COMPONENTS foreach circularbuffer)
 
 if(WIN32)
 	set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
@@ -98,18 +100,18 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 		# search names with "lib". This is the workaround.
 		set(CMAKE_FIND_LIBRARY_PREFIXES ${CMAKE_FIND_LIBRARY_PREFIXES} "")
 	endif ()
-	set(Boost_ADDITIONAL_VERSIONS "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37" )
+	set(Boost_ADDITIONAL_VERSIONS "1.46.1" "1.46" "1.45" "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37" )
 	# Components that need linking (NB does not include header-only components like bind)
 	set(OGRE_BOOST_COMPONENTS thread date_time)
-	find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
+	find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} ${REQUIRED_BOOST_COMPONENTS} QUIET)
 	if (NOT Boost_FOUND)
 		# Try again with the other type of libs
 		set(Boost_USE_STATIC_LIBS NOT ${Boost_USE_STATIC_LIBS})
-		find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
+		find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} ${REQUIRED_BOOST_COMPONENTS} QUIET)
 	endif()
 	find_package(Boost QUIET)
 
-    # Set up referencing of Boost
+	# Set up referencing of Boost
 	include_directories(${Boost_INCLUDE_DIR})
 	add_definitions(-DBOOST_ALL_NO_LIB)
 	set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
@@ -121,9 +123,13 @@ find_package(FreeAlut REQUIRED)
 
 if (NOT OPENAL_FOUND)
 	message(SEND_ERROR "Failed to find OpenAL")
+else()
+	message("-- Found OpenAL")
 endif()
 if (NOT FREEALUT_FOUND)
 	message(SEND_ERROR "Failed to find FreeAlut")
+else()
+	message("-- Found FreeALUT")
 endif()
 ##################
 ## BUILD TARGET ##
