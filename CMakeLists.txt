@@ -133,7 +133,7 @@ else()
 endif()
 
 # Find Bullet/OGREBullet
-find_package(bullet REQUIRED)
+find_package(Bullet REQUIRED)
 find_package(OgreBullet REQUIRED)
 
 ##################

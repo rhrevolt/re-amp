@@ -1,3 +1,6 @@
+# The contrib folder
+/contrib/
+
 # Log files
 *.log
 
