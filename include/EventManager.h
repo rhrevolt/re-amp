@@ -15,7 +15,7 @@ typedef enum {
 	EVENT_LEFT_TURN,
 	EVENT_HORN,
 	EVENT_RIGHT_TURN,
-	EVENT_FIRE;
+	EVENT_FIRE
 } EventType;
 
 struct EVENT {
