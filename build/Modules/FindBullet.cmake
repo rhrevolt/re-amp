@@ -32,6 +32,8 @@ macro(_FIND_BULLET_LIBRARY _var)
      NAMES 
         ${ARGN}
      PATHS
+	/usr
+	/usr/local
         ${BULLET_ROOT}
         ${BULLET_ROOT}/out/release8/libs
         ${BULLET_ROOT}/out/debug8/libs
@@ -51,6 +53,10 @@ endmacro()
 
 find_path(BULLET_INCLUDE_DIR NAMES btBulletCollisionCommon.h
   PATHS
+    /usr/local/include
+    /usr/local/include/bullet
+    /usr/include/bullet
+    /usr/include
     ${BULLET_ROOT}/include
     ${BULLET_ROOT}/src
 )
