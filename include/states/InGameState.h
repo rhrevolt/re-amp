@@ -22,12 +22,16 @@
 
 #include "core/GameState.h"
 
+const int INGAMESTATE_ID = 1;
+
 class InGameState: public GameState 
 {
 public:
 	InGameState();
 	~InGameState();
-	
+
+	virtual int returnStateID();
+
 	virtual void tick();
 
 protected:

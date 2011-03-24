@@ -44,4 +44,9 @@ void InGameState::tick()
 	}
 }
 
+int InGameState::returnStateID()
+{
+	return INGAMESTATE_ID;
+}
+
 

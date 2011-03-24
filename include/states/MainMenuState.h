@@ -22,10 +22,14 @@
 
 #include "core/GameState.h"
 
+const int MAINMENUSTATE_ID = 4;
+
 class MainMenuState: public GameState 
 {
 public:
 	~MainMenuState();
+
+	virtual int returnStateID();
 	
 	virtual void tick();
 

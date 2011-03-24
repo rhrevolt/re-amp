@@ -24,9 +24,7 @@
 
 StateManager* StateManager::m_pInstance = NULL;
 int StateManager::currentEntityID = 0;
-
-const int StateManager::menuID = 0;
-const int StateManager::inGameID = 1;
+int StateManager::currentStateID = -1;
 
 StateManager* StateManager::instance()
 {
@@ -44,16 +42,28 @@ StateManager::~StateManager()
 
 void StateManager::switchState(int stateID)
 {
+	GameState* oldState = currentState;
+	// Switch the state
 	switch (stateID) {
-		case menuID:
+		case MAINMENUSTATE_ID:
 			currentState = mmState;
 			break;
-		case inGameID:
+		case INGAMESTATE_ID:
 			currentState = inGameState;
 			break;
 		default:
-			break;
+			return;
 	}
+	// Notify the old state that it is inactive and the new state that it is active
+	oldState->deactivate();
+	currentState->activate();
+	// Fire an event notifying of the state change
+	StateChangeEvent evt;
+	evt.oldState = currentStateID;
+	evt.newState = stateID;
+	EventManager::instance()->pushEvent(evt);
+	// Change the current state ID
+	currentStateID = stateID;
 }
 
 void StateManager::tick()

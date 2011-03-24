@@ -22,8 +22,17 @@
 
 #include "core/GameEntity.h"
 #include "core/GameState.h"
+#include "core/EventManager.h"
 #include "states/InGameState.h"
 #include "states/MainMenuState.h"
+
+/**
+ An event for when the state changes
+ */
+struct StateChangeEvent : public EVENT {
+	int oldState;
+	int newState;
+};
 
 //StateManager is a singleton!
 class StateManager
@@ -48,6 +57,7 @@ protected:
 	MainMenuState*  mmState;
 	InGameState*	inGameState; 
 	static int		currentEntityID;
+	static int		currentStateID;
 	
 private:
 	StateManager(){};

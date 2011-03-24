@@ -20,14 +20,19 @@
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 
+#include "core/EventManager.h"
 #include "core/GameEntity.h"
 
 class GameState
 {
 public:
+	virtual int returnStateID() = 0;
 	virtual void tick() = 0;
-	GameEntity* getEntity(int ID);
+	
+	virtual void activate(){};
+	virtual void deactivate(){};
 
+	GameEntity* getEntity(int ID);
 
 protected:
 	std::list<GameEntity*> entityList;

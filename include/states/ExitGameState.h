@@ -22,6 +22,8 @@
 
 #include "core/GameState.h"
 
+const int EXITGAMESTATE_ID = 3;
+
 class ExitGameState : public GameState
 {
 public:

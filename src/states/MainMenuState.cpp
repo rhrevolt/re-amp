@@ -26,4 +26,9 @@ void MainMenuState::tick()
 	printf("In Main Menu\n");
 }
 
+int MainMenuState::returnStateID()
+{
+	return MAINMENUSTATE_ID;
+}
+
 
