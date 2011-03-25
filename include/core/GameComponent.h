@@ -6,6 +6,8 @@ typedef enum {
 	COMPONENT_PHYSICS
 } ComponentType;
 
+class GameEntity; // forward declaration
+
 class GameComponent
 {
 	public:
