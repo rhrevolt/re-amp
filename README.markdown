@@ -3,7 +3,7 @@ ReAmp
 This is ReAmp, a "Re-Volt" inspired RC car racing game.
 Produced for CSSE490: Video Game Development at the Rose-Hulman Institute of Technology
 
-[[Build Instructions]]
+Build Instructions
 ------------------
 
 This project is built using CMake. If you're having issues building the project,

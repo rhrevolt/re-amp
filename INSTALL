@@ -1,0 +1,12 @@
+Build Dependencies
+------------------
+
+* OGRE (1.7 minimum)
+* OIS
+* Boost 
+* Bullet
+* OgreBullet
+
+Optional:
+* OpenAL
+* FreeALUT
