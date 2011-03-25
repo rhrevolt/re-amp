@@ -218,11 +218,13 @@ bool BaseApplication::setup(void)
 bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
     mainLoopPreRender();
+	return true;
 }
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-    if(mWindow->isClosed())
+
+    if(mWindow->isClosed()) 
         return false;
 
     if(mShutDown | !mInputManager->getStatus())
@@ -240,7 +242,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt)
 {
-    
+	return true;   
 }
 
 //Adjust mouse clipping area
