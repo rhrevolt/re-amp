@@ -12,16 +12,20 @@ if(PKG_CONFIG_FOUND)
 	set(OPENAL_DEFINITIONS ${PC_OPENAL_CFLAGS_OTHER})
 endif(PKG_CONFIG_FOUND)
 
-find_path(OPENAL_INCLUDE_DIR al.h
+find_path(OPENAL_INCLUDE_DIR 
+	NAMES al.h
 	HINTS ${PC_OPENAL_INCLUDEDIR} ${PC_OPENAL_INCLUDE_DIRS}
 	PATHS ${OPENAL_ROOT}
+	PATH_SUFFIXES AL Al OpenAl openal
 )
 
 find_library(OPENAL_LIBRARY
 	NAMES OpenAL al openal OpenAL32
 	HINTS ${PC_OPENAL_LIBDIR} ${PC_OPENAL_LIBRARY_DIRS}
 	PATHS ${OPENAL_ROOT}
+	PATH_SUFFIXES lib64 lib libs64 libs libs/Win32 libs/Win6
 )
+
 
 include( "FindPackageHandleStandardArgs" )
 find_package_handle_standard_args(OpenAL DEFAULT_MSG OPENAL_LIBRARY OPENAL_INCLUDE_DIR)
