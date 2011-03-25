@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 <>
+ * Copyright (C)  2011 ReAmp Contributors
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
