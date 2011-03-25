@@ -35,7 +35,10 @@ set(REAMP_LINK_LIBRARIES
 FILE(GLOB_RECURSE REAMP_SRCS ${CMAKE_SOURCE_DIR}/src/*.cpp)
 FILE(GLOB_RECURSE REAMP_HDRS ${CMAKE_SOURCE_DIR}/include/*.h)
 
-include_directories(${REAMP_LIB_INCLUDES})
+include_directories(${CMAKE_SOURCE_DIR}/include
+	${REAMP_LIB_INCLUDES}
+	${CMAKE_BINARY_DIR}/include
+)	
 
 # Build the executable
 add_executable(${PROJECT_EXEC} WIN32 ${REAMP_HDRS} ${REAMP_SRCS})

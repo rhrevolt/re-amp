@@ -48,9 +48,6 @@ find_package(FreeAlut REQUIRED)
 find_package(Bullet REQUIRED)
 find_package(OgreBullet REQUIRED)
 
-# Build a path of includes
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
-
 # Find out if we have threading available
 set(CMAKE_THREAD_PREFER_PTHREADS ON)
 find_package(Threads)
