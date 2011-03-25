@@ -38,7 +38,7 @@ FILE(GLOB_RECURSE REAMP_HDRS ${CMAKE_SOURCE_DIR}/include/*.h)
 include_directories(${REAMP_LIB_INCLUDES})
 
 # Build the executable
-add_executable(${PROJECT_EXEC} WIN32 ${REAMP_SRCS} ${REAMP_HDRS})
+add_executable(${PROJECT_EXEC} WIN32 ${REAMP_HDRS} ${REAMP_SRCS})
 set_target_properties(${PROJECT_EXEC} PROPERTIES DEBUG_POSTFIX _d)
 target_link_libraries(${PROJECT_EXEC} ${REAMP_LINK_LIBRARIES})
 
