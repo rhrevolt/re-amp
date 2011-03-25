@@ -20,16 +20,22 @@
 #include <string>
 #include "core/EntityFactory.h"
 #include "core/GameEntity.h"
+
+#include "components/InputComponent.h"
 #include "components/RenderingComponent.h"
 
 GameEntity* EntityFactory::create(std::string name)
 {
 	GameEntity* ent = new(GameEntity);
-	
-	if (name == ("example")) {
-			ent->addComponent((GameComponent*) new RenderingComponent(0));
-	}
 
+	// TODO: Perhaps this should be generated from a file?
+	if (name == ("example")) {
+		ent->addComponent((GameComponent*) new RenderingComponent(0));
+	} else if (name == "vehicle") {
+		ent->addComponent((GameComponent*) new RenderingComponent(0));
+		ent->addComponent((GameComponent*) new InputComponent(0));
+	}
+	
 	return ent;
 }
 
