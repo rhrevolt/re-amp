@@ -19,8 +19,13 @@
 
 #include "core/InputManager.h"
 
+#define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
+#define MAX_TICKS 10 // The maximum number of ticks to buffer
 
-InputManager::InputManager (std::string windowHandle) : running(true)
+
+InputManager::InputManager (std::string windowHandle) : 
+	running(true),
+	bufferedTicks(0)
 {
 	OIS::ParamList parameterList;
 	// Insert the Window ID
@@ -75,6 +80,33 @@ void InputManager::updateClippingArea (unsigned int width, unsigned int height)
 	}
 }
 
+void InputManager::tick() {
+	// Increment the number of ticks we've incremented
+	bufferedTicks++;
+
+	if (KEY_UP_DOWN)
+		bufferedVector.x += KEYBOARD_INCREMENT;
+	if (KEY_DOWN_DOWN)
+		bufferedVector.x -= KEYBOARD_INCREMENT;
+	if (KEY_RIGHT_DOWN)
+		bufferedVector.y += KEYBOARD_INCREMENT;
+	if (KEY_LEFT_DOWN)
+		bufferedVector.y -= KEYBOARD_INCREMENT;
+
+	// Check if we've buffered enough. 
+	if (bufferedTicks >= MAX_TICKS) {
+		// TODO: Create a new buffer event
+		// Dump to console
+		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x, bufferedVector.y);
+		// Reset the vector
+		bufferedVector.x = 0;
+		bufferedVector.y = 0;
+		// Reset the tick count
+		bufferedTicks = 0;
+	}
+
+}
+
 bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	// Got a keypress event
 	// Check for escape -- it's hard-wired as a quit
@@ -86,27 +118,19 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	}
 
 	if (arg.key == OIS::KC_UP) {
-        EVENT evt;
-        evt.eventType = EVENT_ACCELERATE;
-        EventManager::instance()->pushEvent(evt);
+		KEY_UP_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_DOWN) {
-        EVENT evt;
-        evt.eventType = EVENT_DECELERATE;
-        EventManager::instance()->pushEvent(evt);
+		KEY_DOWN_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_RIGHT) {
-        EVENT evt;
-        evt.eventType = EVENT_RIGHT_TURN;
-        EventManager::instance()->pushEvent(evt);
+		KEY_RIGHT_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_LEFT) {
-        EVENT evt;
-        evt.eventType = EVENT_LEFT_TURN;
-        EventManager::instance()->pushEvent(evt);
+		KEY_LEFT_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_H) {
@@ -121,6 +145,7 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
         EventManager::instance()->pushEvent(evt);
 	}
 
+	printf("Buffered vector: %f, %f\n", bufferedVector.x, bufferedVector.y);
 	printf("Got keypress event: %d\n", arg.key);
 	return true;
 
@@ -128,6 +153,22 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 
 bool InputManager::keyReleased (const OIS::KeyEvent &arg) {
 	// Got a keyrelease event
+	if (arg.key == OIS::KC_UP) {
+		KEY_UP_DOWN = false;
+	}
+
+	if (arg.key == OIS::KC_DOWN) {
+		KEY_DOWN_DOWN = false;
+	}
+
+	if (arg.key == OIS::KC_LEFT) {
+		KEY_LEFT_DOWN = false;
+	}
+
+	if (arg.key == OIS::KC_RIGHT) {
+		KEY_RIGHT_DOWN = false;
+	}
+	
 	printf("Got keyrelease event: %d\n", arg.key);
 	return true;
 

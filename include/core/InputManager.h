@@ -46,10 +46,13 @@ LRESULT DlgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 void checkX11Events();
 #endif
 
+// Ogre includes
+#include <OgrePrerequisites.h>
+#include <OgreVector2.h>
+
 // Our includes
 #include "core/EventManager.h"
 #include "core/StateManager.h"
-
 
 class InputManager: public OIS::KeyListener, public OIS::MouseListener
 {
@@ -57,6 +60,8 @@ public:
 	InputManager (std::string windowHandle);
 	~InputManager (void);
 
+	void tick(void);
+	
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
 	void capture (void);
@@ -74,11 +79,19 @@ protected:
 	;
 
 private:
+	int bufferedTicks;
+	
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
 	bool running; 
+
+	bool KEY_LEFT_DOWN;
+	bool KEY_RIGHT_DOWN;
+	bool KEY_UP_DOWN;
+	bool KEY_DOWN_DOWN;
+	Ogre::Vector2 bufferedVector;
 
 };
 
