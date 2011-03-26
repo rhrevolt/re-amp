@@ -20,6 +20,7 @@
 #ifndef _INPUT_MANAGER_H_
 #define _INPUT_MANAGER_H_
 
+#include <cstdlib>
 #include <stdio.h>
 
 // OIS Includes
@@ -37,7 +38,6 @@
 #ifdef min
 #undef min
 #endif
-#include "resource.h"
 LRESULT DlgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 // Linux Headers
 #elif defined OIS_LINUX_PLATFORM

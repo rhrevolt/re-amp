@@ -20,9 +20,9 @@ find_path(OPENAL_INCLUDE_DIR
 )
 
 find_library(OPENAL_LIBRARY
-	NAMES OpenAL al openal OpenAL32
+	NAMES OpenAL32.lib
 	HINTS ${PC_OPENAL_LIBDIR} ${PC_OPENAL_LIBRARY_DIRS}
-	PATHS ${OPENAL_ROOT}
+	PATHS ${OPENAL_ROOT}/libs/Win32
 	PATH_SUFFIXES lib64 lib libs64 libs libs/Win32 libs/Win6
 )
 

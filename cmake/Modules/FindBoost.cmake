@@ -493,6 +493,9 @@ ELSE (_boost_IN_CACHE)
   set(_boost_INCLUDE_SEARCH_DIRS_SYSTEM
     C:/boost/include
     C:/boost
+    ${BOOSTDIR}/include
+    ${BOOSTDIR}
+    ${BOOSTDIR}/boost
     "$ENV{ProgramFiles}/boost/include"
     "$ENV{ProgramFiles}/boost"
     /sw/local/include
