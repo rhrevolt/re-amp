@@ -24,7 +24,7 @@ find_path(FREEALUT_LIB_DIR alut.lib
 )  
 
 find_library(FREEALUT_LIBRARY
-	NAMES alut
+	NAMES alut.lib
 	HINTS ${PC_FREEALUT_LIBDIR} ${PC_FREEALUT_LIBRARY_DIRS}
 	PATHS ${FREEALUT_ROOT}/lib
 )

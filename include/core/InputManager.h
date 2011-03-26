@@ -37,7 +37,7 @@
 #ifdef min
 #undef min
 #endif
-#include "resource.h"
+//#include "resource.h"
 LRESULT DlgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 // Linux Headers
 #elif defined OIS_LINUX_PLATFORM
@@ -61,13 +61,13 @@ public:
 	~InputManager (void);
 
 	void tick(void);
-	
+
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
 	void capture (void);
 	bool getStatus(void);
 
-	
+
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
 	bool mouseMoved (const OIS::MouseEvent &arg);
@@ -80,12 +80,12 @@ protected:
 
 private:
 	int bufferedTicks;
-	
+
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
-	bool running; 
+	bool running;
 
 	bool KEY_LEFT_DOWN;
 	bool KEY_RIGHT_DOWN;

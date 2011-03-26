@@ -29,6 +29,7 @@ if (WIN32)
 	set(OPENAL_ROOT ${CMAKE_SOURCE_DIR}/contrib/OpenALWin32)
 	set(BULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/bulletWin32)
 	set(OGREBULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
+    set(BOOSTDIR ${CMAKE_SOURCE_DIR}/contrib/boostWin32)
 endif()
 
 
