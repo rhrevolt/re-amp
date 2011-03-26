@@ -99,12 +99,7 @@ void InputManager::tick(const Ogre::FrameEvent& evt) {
 
 	
 	// Check if we've buffered enough. 
-	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {
-		// Normalize the vector so that it's 0.0..1.0
-		bufferedVector.x = bufferedVector.x / 
-			((BUFFER_TIME_INTERVAL / currentFrameDelay) * KEYBOARD_INCREMENT);
-		bufferedVector.y = bufferedVector.y / 
-			((BUFFER_TIME_INTERVAL / currentFrameDelay) * KEYBOARD_INCREMENT);
+	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {;
 		// TODO: Create a new buffer event
 		
 		// Dump to console
