@@ -233,7 +233,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //Need to capture the input system
 	mInputManager->capture();
 	// Tick the input manager
-	mInputManager->tick();
+	mInputManager->tick(evt);
 
 	mCameraMan->frameRenderingQueued(evt);   
 	

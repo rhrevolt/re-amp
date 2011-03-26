@@ -48,6 +48,7 @@ void checkX11Events();
 
 // Ogre includes
 #include <OgrePrerequisites.h>
+#include <OgreFrameListener.h>
 #include <OgreVector2.h>
 
 // Our includes
@@ -60,12 +61,13 @@ public:
 	InputManager (std::string windowHandle);
 	~InputManager (void);
 
-	void tick(void);
+	void tick(const Ogre::FrameEvent& evt);
 	
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
 	void capture (void);
 	bool getStatus(void);
+	void updateTiming(float frameTiming);
 
 	
 	bool keyPressed (const OIS::KeyEvent &arg);
@@ -85,6 +87,8 @@ private:
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
+	float currentFrameDelay;
+	
 	bool running; 
 
 	bool KEY_LEFT_DOWN;

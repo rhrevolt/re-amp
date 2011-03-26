@@ -20,12 +20,12 @@
 #include "core/InputManager.h"
 
 #define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
-#define MAX_TICKS 10 // The maximum number of ticks to buffer
-
+#define BUFFER_TIME_INTERVAL 0.05f // in seconds
 
 InputManager::InputManager (std::string windowHandle) : 
 	running(true),
-	bufferedTicks(0)
+	bufferedTicks(0),
+	currentFrameDelay(0.01f)
 {
 	OIS::ParamList parameterList;
 	// Insert the Window ID
@@ -80,7 +80,7 @@ void InputManager::updateClippingArea (unsigned int width, unsigned int height)
 	}
 }
 
-void InputManager::tick() {
+void InputManager::tick(const Ogre::FrameEvent& evt) {
 	// Increment the number of ticks we've incremented
 	bufferedTicks++;
 
@@ -93,8 +93,9 @@ void InputManager::tick() {
 	if (KEY_LEFT_DOWN)
 		bufferedVector.y -= KEYBOARD_INCREMENT;
 
+	
 	// Check if we've buffered enough. 
-	if (bufferedTicks >= MAX_TICKS) {
+	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {
 		// TODO: Create a new buffer event
 		// Dump to console
 		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x, bufferedVector.y);
@@ -103,6 +104,10 @@ void InputManager::tick() {
 		bufferedVector.y = 0;
 		// Reset the tick count
 		bufferedTicks = 0;
+		// Update the timing information
+		if (evt.timeSinceLastEvent > 0) 
+			currentFrameDelay = evt.timeSinceLastFrame;
+		printf("New max tick count: %f\n", (BUFFER_TIME_INTERVAL / currentFrameDelay));
 	}
 
 }
