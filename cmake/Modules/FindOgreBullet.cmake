@@ -12,15 +12,17 @@ if(PKG_CONFIG_FOUND)
 	set(OGREBULLET_DEFINITIONS ${PC_OGREBULLET_CFLAGS_OTHER})
 endif(PKG_CONFIG_FOUND)
 
-find_path(OGREBULLET_INCLUDE_DIR Dynamics/include/OgreBulletDynamicsRigidBody.h
+find_path(OGREBULLET_INCLUDE_DIR 
+	NAMES Dynamics/OgreBulletDynamicsRigidBody.h Dynamics/include/OgreBulletDynamicsRigidBody.h
 	HINTS ${PC_OGREBULLET_INCLUDEDIR} ${PC_OGREBULLET_INCLUDE_DIRS} 
-	PATHS ${OGREBULLET_ROOT}/
-	PATH_SUFFIXES OgreBullet )
+	PATHS ${OGREBULLET_ROOT} ${OGREBULLET_ROOT}/include
+	PATH_SUFFIXES OgreBullet 
+)
 
 find_library(OGREBULLET_LIBRARIES 
-	NAMES OgreBulletCol.a OgreBulletDyn.a
+	NAMES OgreBulletCol OgreBulletDyn OgreBulletCol.a OgreBulletDyn.a
 	HINTS ${PC_OGREBULLET_LIBDIR} ${PC_OGREBULLET_LIBRARY_DIRS} 
-	PATHS ${OGREBULLET_ROOT}/lib/Debug 
+	PATHS ${OGREBULLET_ROOT}/lib ${OGREBULLET_ROOT}/lib/Debug 
 	PATH_SUFFIXES OgreBullet
 )
 
