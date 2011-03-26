@@ -20,11 +20,15 @@
 #include "core/InputManager.h"
 
 #define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
-#define BUFFER_TIME_INTERVAL 0.05f // in seconds
+#define BUFFER_TIME_INTERVAL 0.1f // in seconds
 
 InputManager::InputManager (std::string windowHandle) : 
 	running(true),
 	bufferedTicks(0),
+	KEY_DOWN_DOWN(false),
+	KEY_UP_DOWN(false),
+	KEY_LEFT_DOWN(false),
+	KEY_RIGHT_DOWN(false),
 	currentFrameDelay(0.01f)
 {
 	OIS::ParamList parameterList;
@@ -96,18 +100,30 @@ void InputManager::tick(const Ogre::FrameEvent& evt) {
 	
 	// Check if we've buffered enough. 
 	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {
+		// Normalize the vector so that it's 0.0..1.0
+		bufferedVector.x = bufferedVector.x / 
+			((BUFFER_TIME_INTERVAL / currentFrameDelay) * KEYBOARD_INCREMENT);
+		bufferedVector.y = bufferedVector.y / 
+			((BUFFER_TIME_INTERVAL / currentFrameDelay) * KEYBOARD_INCREMENT);
 		// TODO: Create a new buffer event
+		
 		// Dump to console
-		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x, bufferedVector.y);
+		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x, 
+		       bufferedVector.y);
+
 		// Reset the vector
 		bufferedVector.x = 0;
 		bufferedVector.y = 0;
 		// Reset the tick count
 		bufferedTicks = 0;
-		// Update the timing information
+		
+		// Update the timing information..
+		// Check that the timeSinceLastEvent is not zero (for zero-div
+		// reasons)
 		if (evt.timeSinceLastEvent > 0) 
 			currentFrameDelay = evt.timeSinceLastFrame;
-		printf("New max tick count: %f\n", (BUFFER_TIME_INTERVAL / currentFrameDelay));
+		printf("New max tick count: %f\n", 
+		       (BUFFER_TIME_INTERVAL / currentFrameDelay));
 	}
 
 }
@@ -150,7 +166,6 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
         EventManager::instance()->pushEvent(evt);
 	}
 
-	printf("Buffered vector: %f, %f\n", bufferedVector.x, bufferedVector.y);
 	printf("Got keypress event: %d\n", arg.key);
 	return true;
 
