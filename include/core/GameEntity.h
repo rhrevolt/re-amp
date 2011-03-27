@@ -22,6 +22,7 @@
 
 #include <list> 
 #include "core/GameComponent.h"
+#include "core/FrameData.h"
 
 bool compareComponents(GameComponent* first, GameComponent* second);
 
@@ -32,7 +33,7 @@ class GameEntity
 		           (std::list<GameComponent*>)NULL);
 		~GameEntity(void);
 		
-		bool tick(void);
+		bool tick(FrameData &fd);
 		bool receiveMessage(ComponentType comp, int message);
 		
 		bool addComponent(GameComponent* component);

@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "components/InputComponent.h"
 
-bool InputComponent::tick()
+bool InputComponent::tick(FrameData &fd)
 {
 	//printf("Render\n");
 }

@@ -30,7 +30,7 @@ class CarPhysicsComponent: public PhysicsComponent
 public:
 	CarPhysicsComponent(int ID);
 	~CarPhysicsComponent();
-	virtual bool tick();
+	virtual bool tick(FrameData &fd);
 	void init();
 	void stepSimulation(Ogre::Real timeStep);
 	void createVehicle();

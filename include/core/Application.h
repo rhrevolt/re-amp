@@ -23,6 +23,7 @@
 #include "core/BaseApplication.h"
 #include "core/StateManager.h"
 
+
 class Application : public BaseApplication
 {
 public:

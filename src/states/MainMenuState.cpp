@@ -21,7 +21,7 @@
 
 #include "states/MainMenuState.h"
 
-void MainMenuState::tick()
+void MainMenuState::tick(FrameData &fd)
 {
 	printf("In Main Menu\n");
 }

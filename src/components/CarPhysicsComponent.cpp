@@ -65,7 +65,7 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	createVehicle();
 };
 	
-bool CarPhysicsComponent::tick()
+bool CarPhysicsComponent::tick(FrameData &fd)
 {
 	
 }

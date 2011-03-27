@@ -27,7 +27,7 @@ class InputComponent: public GameComponent
 	public:
 		InputComponent(int ID): GameComponent(ID){};
 		~InputComponent() {};
-		virtual bool tick();
+		virtual bool tick(FrameData &fd);
 
 	protected:
 

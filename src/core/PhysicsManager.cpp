@@ -44,32 +44,48 @@ PhysicsManager::PhysicsManager ()
  		mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
  		SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
  		node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));
- 
     }
 
 
 PhysicsManager::~PhysicsManager (void)
 {
-std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
- 		while (mBodies.end() != itBody)
- 		{   
- 			delete *itBody; 
- 			++itBody;
- 		}	
- 		// OgreBullet physic delete - Shapes
- 		std::deque<OgreBulletCollisions::CollisionShape *>::iterator itShape = mShapes.begin();
- 		while (mShapes.end() != itShape)
- 		{   
- 			delete *itShape; 
- 			++itShape;
- 		}
- 		mBodies.clear();
- 		mShapes.clear();
- 		delete mWorld->getDebugDrawer();
- 		mWorld->setDebugDrawer(0);
- 		delete mWorld;
- 	}
+	std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
+	while (mBodies.end() != itBody)
+	{   
+		delete *itBody; 
+		++itBody;
+	}	
 	
+	// OgreBullet physic delete - Shapes
+	std::deque<OgreBulletCollisions::CollisionShape *>::iterator itShape = mShapes.begin();
+	while (mShapes.end() != itShape)
+	{   
+		delete *itShape; 
+		++itShape;
+	}
+	
+	mBodies.clear();
+	mShapes.clear();
+	delete mWorld->getDebugDrawer();
+	mWorld->setDebugDrawer(0);
+	delete mWorld;
+}
+
+bool tick(FrameData &fd) 
+{
+	for(int i = 0; i < addPhysicsList.size(); i++)
+		addPhysicsList[i]->stepSimulation(fd.timeSinceLastFrame);
+
+	mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
+
+	return ret;
+}
+	
+bool registerComponent(PhysicsComponent* component)
+{		
+	componentList.push_back(component);
+}
+
  /* bool PhysicsManager::frameStarted(const FrameEvent& evt)
  	{
 		for(int i = 0; i < addPhysicsList.size(); i++)
@@ -91,9 +107,6 @@ std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
  		return ret;
  	}
 */	
-//void PhysicsManager::addComponent(PhysicsComponent& comp){
-//	addPhysicsList.push_back(&comp);
-//}
 
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;

@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "components/PhysicsComponent.h"
 
-bool PhysicsComponent::tick()
+bool PhysicsComponent::tick(FrameData &fd)
 {
 	
 }

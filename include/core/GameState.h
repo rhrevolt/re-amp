@@ -23,12 +23,13 @@
 #include "core/EventManager.h"
 #include "core/GameEntity.h"
 #include <Ogre.h>
+#include "core/FrameData.h"
 
 class GameState
 {
 public:
 	virtual int returnStateID() = 0;
-	virtual void tick() = 0;
+	virtual void tick(FrameData &fd) = 0;
 	
 	virtual void activate(){};
 	virtual void deactivate(){};

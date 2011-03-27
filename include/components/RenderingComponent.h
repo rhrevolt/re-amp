@@ -27,7 +27,7 @@ class RenderingComponent: public GameComponent
 	public:
 		RenderingComponent(int ID): GameComponent(ID){};
 		~RenderingComponent() {};
-		virtual bool tick();
+		virtual bool tick(FrameData &fd);
 
 	protected:
 

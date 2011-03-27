@@ -23,6 +23,7 @@
 #include "core/GameEntity.h"
 #include "core/GameState.h"
 #include "core/EventManager.h"
+#include "core/FrameData.h"
 
 /**
  An event for when the state changes
@@ -43,7 +44,7 @@ public:
 	const static int inGameID;
 	const static int exitGameID;
 
-	void tick();
+	void tick(FrameData &fd);
 	void newGame();
 
 	void switchState(int stateID);

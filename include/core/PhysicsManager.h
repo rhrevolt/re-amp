@@ -38,11 +38,11 @@ friend class Singleton<PhysicsManager>;
 public:
 	PhysicsManager ();
 	~PhysicsManager (void);
-	bool frameStarted(const Ogre::FrameEvent& evt);
-	bool frameEnded(const Ogre::FrameEvent& evt);
-	void addComponent(PhysicsComponent comp);
+
+	bool tick(FrameData &fd);
+	bool registerComponent(PhysicsComponent* component);
+	
 	OgreBulletDynamics::DynamicsWorld* getWorld();
-	//static vector<PhysicsComponent*> addPhysicsList;
 
 	
 protected:
@@ -53,7 +53,8 @@ private:
  	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
  	OgreBulletCollisions::DebugDrawer *debugDrawer;
  	int mNumEntitiesInstanced;
- 
+
+	std::list<PhysicsComponent*> componentList; 
  	std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
  	std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 

@@ -20,6 +20,8 @@
 #ifndef __GameComponent_h__
 #define __GameComponent_h__
 
+#include "core/FrameData.h"
+
 typedef enum {
 	COMPONENT_BROADCAST,
 	COMPONENT_PHYSICS
@@ -36,7 +38,7 @@ class GameComponent
 		int getPriority(void);
 		bool setParentEntity(GameEntity* parent);
 
-		virtual bool tick(void) = 0;
+		virtual bool tick(FrameData &fd) = 0;
 
 		ComponentType type;
 		

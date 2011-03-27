@@ -30,7 +30,7 @@ public:
 
 	virtual int returnStateID();
 	
-	virtual void tick();
+	virtual void tick(FrameData &fd);
 
 protected:
 
