@@ -26,7 +26,7 @@ find_library(OGREBULLET_LIBRARIES
 	PATH_SUFFIXES OgreBullet
 )
 
-set(OGREBULLET_INCLUDE_DIRS "${OGREBULLET_INCLUDE_DIR}/Collisions/include" "${OGREBULLET_INCLUDE_DIR}/Dynamics/include")
+set(OGREBULLET_INCLUDE_DIRS "${OGREBULLET_INCLUDE_DIR}/Collisions/include" "${OGREBULLET_INCLUDE_DIR}/Dynamics/include" "${OGREBULLET_INCLUDE_DIR}/Collisions" "${OGREBULLET_INCLUDE_DIR}/Dynamics")
 
 # handle the QUIETLY and REQUIRED arguments and set OGREBULLET_FOUND to TRUE if
 # all listed variables are TRUE

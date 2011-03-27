@@ -29,7 +29,7 @@ if (WIN32)
 	set(OPENAL_ROOT ${CMAKE_SOURCE_DIR}/contrib/OpenALWin32)
 	set(BULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/bulletWin32)
 	set(OGREBULLET_ROOT ${CMAKE_SOURCE_DIR}/contrib/OgrebulletWin32)
-    set(BOOSTDIR ${CMAKE_SOURCE_DIR}/contrib/boostWin32)
+	set(BOOSTDIR ${CMAKE_SOURCE_DIR}/contrib/boostWin32)
 endif()
 
 
@@ -48,10 +48,6 @@ find_package(OpenAL REQUIRED)
 find_package(FreeAlut REQUIRED)
 find_package(Bullet REQUIRED)
 find_package(OgreBullet REQUIRED)
-
-# Find out if we have threading available
-set(CMAKE_THREAD_PREFER_PTHREADS ON)
-find_package(Threads)
 
 # Include the CMakeLists for the remaining directories
 add_subdirectory(include)
