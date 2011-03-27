@@ -36,17 +36,17 @@ EventManager::~EventManager(void)
 {
 }
 
-bool EventManager::pushEvent(EVENT event)
+bool EventManager::pushEvent(Event event)
 {
 	// adds the event to the back of the circular buffer
 	events.push_back(event);
 	return true;
 }
 
-EVENT EventManager::pullEvent(int entityID)
+Event EventManager::pullEvent(int entityID)
 {
 	// return a pointer to an event in the buffer	
-	BOOST_FOREACH(EVENT event, events)
+	BOOST_FOREACH(Event event, events)
 	{
 		BOOST_FOREACH(IDTypePair pair, registeredEntities)
 	{

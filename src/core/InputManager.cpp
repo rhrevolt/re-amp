@@ -127,7 +127,7 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	// Got a keypress event
 	// Check for escape -- it's hard-wired as a quit
 	if (arg.key == OIS::KC_ESCAPE) {
-		EVENT evt;
+		Event evt;
 		evt.eventType = EVENT_SHUTDOWN;
 		EventManager::instance()->pushEvent(evt);
 		running = false;
@@ -150,13 +150,13 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	}
 
 	if (arg.key == OIS::KC_H) {
-        EVENT evt;
+        Event evt;
         evt.eventType = EVENT_HORN;
         EventManager::instance()->pushEvent(evt);
 	}
 
 	if (arg.key == OIS::KC_SPACE){
-        EVENT evt;
+        Event evt;
         evt.eventType = EVENT_FIRE;
         EventManager::instance()->pushEvent(evt);
 	}

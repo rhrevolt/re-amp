@@ -28,7 +28,7 @@
 /**
  An event for when the state changes
  */
-struct StateChangeEvent : public EVENT {
+struct StateChangeEvent : public Event {
 	int oldState;
 	int newState;
 };

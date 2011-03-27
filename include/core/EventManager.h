@@ -39,7 +39,7 @@ typedef enum {
 
 typedef pair<int, EventType> IDTypePair;
 
-struct EVENT {
+struct Event {
 	int eventID;
 	EventType eventType;
 	char* description;
@@ -53,13 +53,13 @@ class EventManager
 
 		EventManager();
 		~EventManager(void);
-		bool pushEvent(EVENT event);
-		EVENT pullEvent(int entityID);
+		bool pushEvent(Event event);
+		Event pullEvent(int entityID);
 		bool registerEntity(int entityID, EventType eventType);
 	private:
 		static EventManager* m_instance;
 		// Circular buffer of events waiting to be pulled
-		boost::circular_buffer<EVENT> events;
+		boost::circular_buffer<Event> events;
 		// Multipmap to keep track of which Events are
 		// associated with an entity
 		std::multimap<int, EventType> registeredEntities;
