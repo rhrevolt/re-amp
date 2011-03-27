@@ -23,7 +23,7 @@
 #include "components/PhysicsComponent.h"
 #include "core/PhysicsManager.h"
 
-static mNumEntitiesInstanced = 0;
+static int mNumEntitiesInstanced = 0;
 
 class CarPhysicsComponent: public PhysicsComponent
 {
@@ -32,10 +32,8 @@ public:
 	~CarPhysicsComponent();
 	virtual bool tick();
 	void init();
-	void stepSimulation(Real timeStep);
+	void stepSimulation(Ogre::Real timeStep);
 	void createVehicle();
-	void keyDown(BULLET_KEY_CODE key);
-	void keyUp(BULLET_KEY_CODE key);
 
 protected:
 
@@ -66,6 +64,7 @@ private:
     Ogre::Entity    *mWheels[4];
     Ogre::SceneNode *mWheelNodes[4];
 
+	Ogre::SceneManager *mSceneMgr;
 
     int mWheelsEngine[4];
     int mWheelsEngineCount;

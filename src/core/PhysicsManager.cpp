@@ -24,17 +24,17 @@
  #endif
  #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 
-PhysicsManager::PhysicsManager (SceneManager *sceneMgr, 
- 		  RenderWindow* win, 
- 		  Camera* cam,
- 		  Vector3 &gravityVector,
- 		  AxisAlignedBox &bounds) : ExampleFrameListener(win, cam),
-           mSceneMgr(sceneMgr)
+PhysicsManager::PhysicsManager ()
  	{
+		//TODO: Change if necessary
+		AxisAlignedBox* bounds = NULL;
+		Vector3 *gravityVector = new Vector3(0, -1, 0);
+		 
  		mNumEntitiesInstanced = 0; // how many shapes are created
- 		mSceneMgr = sceneMgr;
+ 		mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
+		 
  		// Start Bullet
- 		mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, bounds, gravityVector);
+ 		mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
  
  	        // add Debug info display tool
  		debugDrawer = new OgreBulletCollisions::DebugDrawer();
@@ -70,7 +70,7 @@ std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
  		delete mWorld;
  	}
 	
- bool PhysicsManager::frameStarted(const FrameEvent& evt)
+ /* bool PhysicsManager::frameStarted(const FrameEvent& evt)
  	{
 		for(int i = 0; i < addPhysicsList.size(); i++)
 			addPhysicsList[i]->stepSimulation(evt.timeSinceLastFrame);
@@ -90,10 +90,10 @@ std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
  
  		return ret;
  	}
-	
-void PhysicsManager::addComponent(PhysicsComponent& comp){
-	addPhysicsList.push_back(&comp);
-}
+*/	
+//void PhysicsManager::addComponent(PhysicsComponent& comp){
+//	addPhysicsList.push_back(&comp);
+//}
 
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;

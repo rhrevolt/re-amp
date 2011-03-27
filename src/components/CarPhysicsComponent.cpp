@@ -18,14 +18,32 @@
  */
 
 #include <stdio.h>
+
 #include "components/CarPhysicsComponent.h"
+
+#include "Shapes/OgreBulletCollisionsBoxShape.h"
+#include "Shapes/OgreBulletCollisionsCompoundShape.h"
+
 #include "OgreBulletDynamicsWorld.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
+#include <OgreSceneQuery.h>
+
+
+//TODO: What does these do?
+#define CUBE_HALF_EXTENTS 0.5
+#define GEOMETRY_QUERY_MASK 0
+
+using namespace Ogre;
+using namespace OgreBulletCollisions;
+using namespace OgreBulletDynamics;
+
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
+	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
+
 	gMaxEngineForce = 3000.f;
 
 	gSteeringIncrement = 0.04f;
@@ -55,7 +73,7 @@ bool CarPhysicsComponent::tick()
 CarPhysicsComponent::~CarPhysicsComponent() {};
 
 
-void CarPhysicsComponent::init(){
+void CarPhysicsComponent::init() {
 
 	for (int i = 0; i < 4; i++)
     {
@@ -99,7 +117,7 @@ void CarPhysicsComponent::createVehicle(){
         chassisnode->setPosition (chassisShift);
 
 
-        mChassis->setQueryFlags (GEOMETRY_QUERY_MASK);
+        mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
 #if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
         mChassis->setNormaliseNormals(true);
 #endif
@@ -113,7 +131,7 @@ void CarPhysicsComponent::createVehicle(){
 
         mCarChassis = new WheeledRigidBody("carChassis", PhysicsManager::getInstance()->getWorld());
 
-        mCarChassis->setShape (node, compound, 0.6, 0.6, 800, CarPosition, Quaternion::IDENTITY);
+        mCarChassis->setShape (node, compound, 0.6, 0.6, 800, Ogre::Vector3(15, 3,-15), Quaternion::IDENTITY);
         mCarChassis->setDamping(0.2, 0.2);
 
         mCarChassis->disableDeactivation ();
@@ -220,6 +238,7 @@ void CarPhysicsComponent::createVehicle(){
 		}
 }
 
+/*
 void CarPhysicsComponent::keyDown(BULLET_KEY_CODE key){
 	OgreBulletListener::throwDynamicObject (key);
     OgreBulletListener::dropDynamicObject (key);
@@ -353,6 +372,8 @@ void CarPhysicsComponent::keyUp(BULLET_KEY_CODE key){
 
     }
 }
+*/
+
 void CarPhysicsComponent::stepSimulation(Real timeStep){
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
     {

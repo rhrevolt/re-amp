@@ -21,6 +21,7 @@
 #define _INGAMESTATE_H_
 
 #include "core/GameState.h"
+#include "core/PhysicsManager.h"
 
 const int INGAMESTATE_ID = 1;
 
@@ -37,6 +38,7 @@ public:
 protected:
 
 private:
+	//PhysicsManager* physicsManager;
 
 };
 

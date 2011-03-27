@@ -21,8 +21,7 @@
 #define _PHYSICS_MANAGER_H_
 
 #include <stdio.h>
-
-
+//#include <Ogre.h>
 
 // Our includes
 #include "core/EventManager.h"
@@ -33,28 +32,24 @@
 #include "OgreBulletDynamicsRigidBody.h"	// for OgreBullet
 
 
-class PhysicsManager: public ExampleFrameListener, public Singleton<PhysicsManager>
+class PhysicsManager: public Singleton<PhysicsManager>
 {
 friend class Singleton<PhysicsManager>;
 public:
-	PhysicsManager (SceneManager *sceneMgr, 
- 		  RenderWindow* win, 
- 		  Camera* cam,
- 		  Vector3 &gravityVector,
- 		  AxisAlignedBox &bounds);
+	PhysicsManager ();
 	~PhysicsManager (void);
-	bool frameStarted(const FrameEvent& evt);
-	bool frameEnded(const FrameEvent& evt);
+	bool frameStarted(const Ogre::FrameEvent& evt);
+	bool frameEnded(const Ogre::FrameEvent& evt);
 	void addComponent(PhysicsComponent comp);
 	OgreBulletDynamics::DynamicsWorld* getWorld();
-	static vector<PhysicsComponent*> addPhysicsList;
+	//static vector<PhysicsComponent*> addPhysicsList;
 
 	
 protected:
 	;
 
 private:
-	SceneManager* mSceneMgr; 
+	Ogre::SceneManager* mSceneMgr; 
  	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
  	OgreBulletCollisions::DebugDrawer *debugDrawer;
  	int mNumEntitiesInstanced;

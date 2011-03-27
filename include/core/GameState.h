@@ -22,6 +22,7 @@
 
 #include "core/EventManager.h"
 #include "core/GameEntity.h"
+#include <Ogre.h>
 
 class GameState
 {
@@ -34,9 +35,11 @@ public:
 
 	GameEntity* getEntity(int ID);
 
+	Ogre::SceneManager* getSceneMgr(){return mSceneMgr;};
+
 protected:
 	std::list<GameEntity*> entityList;
-
+	Ogre::SceneManager* mSceneMgr;
 	
 private:
 	

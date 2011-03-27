@@ -1,15 +1,14 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-template <class T>
-class Singleton
+template <class T> class Singleton
 {
 public :
-	inline static T& getInstance() {
+	inline static T* getInstance() {
 		if (!s_pInstance)
 			s_pInstance = new T;
 
-		return *s_pInstance;
+		return s_pInstance;
 	}
 
 	inline static void DestroyInstance() {

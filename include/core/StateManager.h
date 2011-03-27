@@ -23,8 +23,6 @@
 #include "core/GameEntity.h"
 #include "core/GameState.h"
 #include "core/EventManager.h"
-#include "states/InGameState.h"
-#include "states/MainMenuState.h"
 
 /**
  An event for when the state changes
@@ -39,6 +37,7 @@ class StateManager
 {
 public:
 	static StateManager* instance();
+	static GameState* getCurrentState();
 
 	const static int menuID;
 	const static int inGameID;
@@ -54,8 +53,8 @@ public:
 	GameState* currentState;
 
 protected:
-	MainMenuState*  mmState;
-	InGameState*	inGameState; 
+	GameState*  mmState;
+	GameState*	inGameState; 
 	static int		currentEntityID;
 	static int		currentStateID;
 	
