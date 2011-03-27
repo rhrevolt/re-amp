@@ -40,7 +40,7 @@ InGameState::~InGameState()
 void InGameState::tick(FrameData &fd)
 {
 	BOOST_FOREACH(GameEntity* ent, entityList) {
-		ent->tick();
+		ent->tick(fd);
 	}
 }
 
