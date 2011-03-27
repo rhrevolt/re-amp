@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+<title>projects/libssh.git - libssh shared repository</title>
+<meta name='generator' content='cgit v0.8.3.3'/>
+<meta name='robots' content='index, nofollow'/>
+<link rel='stylesheet' type='text/css' href='/cgit/cgit.css'/>
+<link rel='alternate' title='Atom feed' href='http://git.libssh.org/projects/libssh.git/atom/cmake/Modules/COPYING-CMAKE-SCRIPTS?h=master' type='application/atom+xml'/>
+</head>
+<body>
+<div id='cgit'><table id='header'>
+<tr>
+<td class='logo' rowspan='2'><a href='/'><img src='/cgit/cgit.png' alt='cgit logo'/></a></td>
+<td class='main'><a href='/'>index</a> : <a title='projects/libssh.git' href='/projects/libssh.git/'>projects/libssh.git</a></td><td class='form'><form method='get' action=''>
+<select name='h' onchange='this.form.submit();'>
+<option value='master' selected='selected'>master</option>
+<option value='v0-2'>v0-2</option>
+<option value='v0-3'>v0-3</option>
+<option value='v0-4'>v0-4</option>
+<option value='v0-5'>v0-5</option>
+</select> <input type='submit' name='' value='switch'/></form></td></tr>
+<tr><td class='sub'>libssh shared repository</td><td class='sub right'></td></tr></table>
+<table class='tabs'><tr><td>
+<a href='/projects/libssh.git/'>summary</a><a href='/projects/libssh.git/refs/'>refs</a><a href='/projects/libssh.git/log/'>log</a><a class='active' href='/projects/libssh.git/tree/'>tree</a><a href='/projects/libssh.git/commit/'>commit</a><a href='/projects/libssh.git/diff/'>diff</a></td><td class='form'><form class='right' method='get' action='/projects/libssh.git/log/cmake/Modules/COPYING-CMAKE-SCRIPTS'>
+<select name='qt'>
+<option value='grep'>log msg</option>
+<option value='author'>author</option>
+<option value='committer'>committer</option>
+</select>
+<input class='txt' type='text' size='10' name='q' value=''/>
+<input type='submit' value='search'/>
+</form>
+</td></tr></table>
+<div class='content'>path: <a href='/projects/libssh.git/tree/?h=master'>root</a>/<a href='/projects/libssh.git/tree/cmake'>cmake</a>/<a href='/projects/libssh.git/tree/cmake/Modules'>Modules</a>/<a href='/projects/libssh.git/tree/cmake/Modules/COPYING-CMAKE-SCRIPTS'>COPYING-CMAKE-SCRIPTS</a> (<a href='/projects/libssh.git/plain/cmake/Modules/COPYING-CMAKE-SCRIPTS'>plain</a>)<br/>blob: 4b417765f3a834ce6b0a216f6b6c0fe2d3f0bed5
+<table summary='blob content' class='blob'>
+<tr><td class='linenumbers'><pre><a class='no' id='n1' name='n1' href='#n1'>1</a>
+<a class='no' id='n2' name='n2' href='#n2'>2</a>
+<a class='no' id='n3' name='n3' href='#n3'>3</a>
+<a class='no' id='n4' name='n4' href='#n4'>4</a>
+<a class='no' id='n5' name='n5' href='#n5'>5</a>
+<a class='no' id='n6' name='n6' href='#n6'>6</a>
+<a class='no' id='n7' name='n7' href='#n7'>7</a>
+<a class='no' id='n8' name='n8' href='#n8'>8</a>
+<a class='no' id='n9' name='n9' href='#n9'>9</a>
+<a class='no' id='n10' name='n10' href='#n10'>10</a>
+<a class='no' id='n11' name='n11' href='#n11'>11</a>
+<a class='no' id='n12' name='n12' href='#n12'>12</a>
+<a class='no' id='n13' name='n13' href='#n13'>13</a>
+<a class='no' id='n14' name='n14' href='#n14'>14</a>
+<a class='no' id='n15' name='n15' href='#n15'>15</a>
+<a class='no' id='n16' name='n16' href='#n16'>16</a>
+<a class='no' id='n17' name='n17' href='#n17'>17</a>
+<a class='no' id='n18' name='n18' href='#n18'>18</a>
+<a class='no' id='n19' name='n19' href='#n19'>19</a>
+<a class='no' id='n20' name='n20' href='#n20'>20</a>
+<a class='no' id='n21' name='n21' href='#n21'>21</a>
+<a class='no' id='n22' name='n22' href='#n22'>22</a>
+</pre></td>
+<td class='lines'><pre><code>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products 
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</code></pre></td></tr></table>
+</div> <!-- class=content -->
+<div class='footer'>generated  by cgit v0.8.3.3 at 2011-03-25 04:38:54 (GMT)</div>
+</div> <!-- id=cgit -->
+</body>
+</html>

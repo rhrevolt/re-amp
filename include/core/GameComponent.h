@@ -17,40 +17,37 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "main.h"
+#ifndef __GameComponent_h__
+#define __GameComponent_h__
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-#endif
+typedef enum {
+	COMPONENT_BROADCAST,
+	COMPONENT_PHYSICS
+} ComponentType;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class GameEntity; // forward declaration
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-	int main(int argc, char *argv[])
-#endif
-	{
-		// Create application object
-		Application app;
+class GameComponent
+{
+	public:
+		GameComponent(int componentID, int priority = 0);
+		~GameComponent(void);
+		bool recieveMessage(int message);
+		int getPriority(void);
+		bool setParentEntity(GameEntity* parent);
 
-		try {
-			app.go();
-		} catch( Ogre::Exception& e ) {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
-#else
-			std::cerr << "An exception has occurred: " <<
-				e.getFullDescription().c_str() << std::endl;
-#endif
-		}
+		virtual bool tick(void) = 0;
 
-		return 0; 
-	}
+		ComponentType type;
+		
+	protected:
+		GameEntity* parentEntity;
+		
+	private:
+		int componentID;
+		int priority; //TODO: Remove?
+		
+		
+};
 
-#ifdef __cplusplus
-}
-#endif
+#endif // __GameComponent_h__

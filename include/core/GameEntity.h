@@ -17,40 +17,31 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "main.h"
+#ifndef __GameEntity_h__
+#define __GameEntity_h__
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-#endif
+#include <list> 
+#include "core/GameComponent.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+bool compareComponents(GameComponent* first, GameComponent* second);
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-	int main(int argc, char *argv[])
-#endif
-	{
-		// Create application object
-		Application app;
+class GameEntity
+{
+	public:
+		GameEntity(int entityID = 0, std::list<GameComponent*> comps = 
+		           (std::list<GameComponent*>)NULL);
+		~GameEntity(void);
+		
+		bool tick(void);
+		bool receiveMessage(ComponentType comp, int message);
+		
+		bool addComponent(GameComponent* component);
+		bool removeComponent(GameComponent* component);
+		bool removeComponent(int componentID); 
+		
+	private:
+		int entityID;
+		std::list<GameComponent*> componentList;
+};
 
-		try {
-			app.go();
-		} catch( Ogre::Exception& e ) {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
-#else
-			std::cerr << "An exception has occurred: " <<
-				e.getFullDescription().c_str() << std::endl;
-#endif
-		}
-
-		return 0; 
-	}
-
-#ifdef __cplusplus
-}
-#endif
+#endif // __GameEntity_h__

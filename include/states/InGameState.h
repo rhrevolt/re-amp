@@ -17,40 +17,27 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "main.h"
+#ifndef _INGAMESTATE_H_
+#define _INGAMESTATE_H_
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-#endif
+#include "core/GameState.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+const int INGAMESTATE_ID = 1;
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-	int main(int argc, char *argv[])
-#endif
-	{
-		// Create application object
-		Application app;
+class InGameState: public GameState 
+{
+public:
+	InGameState();
+	~InGameState();
 
-		try {
-			app.go();
-		} catch( Ogre::Exception& e ) {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
-#else
-			std::cerr << "An exception has occurred: " <<
-				e.getFullDescription().c_str() << std::endl;
-#endif
-		}
+	virtual int returnStateID();
 
-		return 0; 
-	}
+	virtual void tick();
 
-#ifdef __cplusplus
-}
-#endif
+protected:
+
+private:
+
+};
+
+#endif // _INGAMESTATE_H_

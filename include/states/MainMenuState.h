@@ -16,41 +16,26 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef _MAINMENUSTATE_H_
+#define _MAINMENUSTATE_H_
 
-#include "main.h"
+#include "core/GameState.h"
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-#endif
+const int MAINMENUSTATE_ID = 4;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class MainMenuState: public GameState 
+{
+public:
+	~MainMenuState();
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-	int main(int argc, char *argv[])
-#endif
-	{
-		// Create application object
-		Application app;
+	virtual int returnStateID();
+	
+	virtual void tick();
 
-		try {
-			app.go();
-		} catch( Ogre::Exception& e ) {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
-#else
-			std::cerr << "An exception has occurred: " <<
-				e.getFullDescription().c_str() << std::endl;
-#endif
-		}
+protected:
 
-		return 0; 
-	}
+private:
 
-#ifdef __cplusplus
-}
-#endif
+};
+
+#endif // _MAINMENUSTATE_H_
