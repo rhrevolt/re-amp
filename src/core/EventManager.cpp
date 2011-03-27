@@ -46,22 +46,22 @@ bool EventManager::pushEvent(EVENT event)
 EVENT EventManager::pullEvent(int entityID)
 {
 	// return a pointer to an event in the buffer	
-	//BOOST_FOREACH(EVENT event, events)
-	//{
-	//	BOOST_FOREACH(pair<int, EventType>(entityID, eventTypes) pair,
-	//			  registeredEntities)
-	//	{
-	//		if (pair.first == entityID)
-	//		{
-	//			BOOST_FOREACH(EventType eventType, pair.second)
-	//			{
-	//				if (eventType == event.eventType)
-	//				{
-	//					// Pass reference to message to appropriate component
-	//				} 
-	//			}
-	//		}
-	//	}
+	BOOST_FOREACH(EVENT event, events)
+	{
+		BOOST_FOREACH(pair<int, EventType>(entityID, eventTypes) pair,
+			  registeredEntities)
+	{
+		if (pair.first == entityID)
+		{
+			BOOST_FOREACH(EventType eventType, pair.second)
+			{
+				if (eventType == event.eventType)
+				{
+					// Pass reference to message to appropriate component
+				} 
+			}
+		}
+	}
 	
 }	
 
