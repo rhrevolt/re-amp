@@ -4,6 +4,7 @@
 #include <boost/circular_buffer.hpp>
 #include <boost/foreach.hpp>
 #include <map>
+#include <list>
 
 using namespace std;
 
@@ -28,15 +29,16 @@ class EventManager
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(EVENT event);
-		bool pullEvent(int entityID);
-		bool registerEntity(int entityID, EventType eventType);
+		EVENT pullEvent(int entityID);
+		bool registerEntity(int entityID, std::list<EventType> eventTypes);
 	private:
 		static EventManager* m_instance;
 		// Circular buffer of events waiting to be pulled
 		boost::circular_buffer<EVENT> events;
 		// Multipmap to keep track of which Events are
 		// associated with an entity
-		std::multimap<int, EventType> registeredEntities;
+		std::multimap<int, std::list<EventType>> registeredEntities;
+		
 		
 };
 

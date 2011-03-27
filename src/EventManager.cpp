@@ -44,23 +44,32 @@ bool EventManager::pushEvent(EVENT event)
 	return true;
 }
 
-bool EventManager::pullEvent(int entityID)
+EVENT EventManager::pullEvent(int entityID)
 {
 	// return a pointer to an event in the buffer	
-	//BOOST_FOREACH(pair<int, EventType>(entityID, eventType),
-	//			  registeredEntities)
+	//BOOST_FOREACH(EVENT event, events)
 	//{
-	//	if (pair.first = entityID)
+	//	BOOST_FOREACH(pair<int, EventType>(entityID, eventTypes) pair,
+	//			  registeredEntities)
 	//	{
-	//		// Call receiveMessage method in the entity?
+	//		if (pair.first == entityID)
+	//		{
+	//			BOOST_FOREACH(EventType eventType, pair.second)
+	//			{
+	//				if (eventType == event.eventType)
+	//				{
+	//					// Pass reference to message to appropriate component
+	//				} 
+	//			}
+	//		}
 	//	}
-	//}
 	
 }	
 
-bool EventManager::registerEntity(int entityID, EventType eventType)
+bool EventManager::registerEntity(int entityID,
+		std::list<EventType eventTypes)
 {
 	// register a component for a specific event type
-	registeredEntities.insert(pair<int, EventType>(entityID, eventType));	
+	registeredEntities.insert(pair<int, EventType>(entityID, eventTypes));	
 	return true;
 }
