@@ -48,8 +48,7 @@ EVENT EventManager::pullEvent(int entityID)
 	// return a pointer to an event in the buffer	
 	BOOST_FOREACH(EVENT event, events)
 	{
-		BOOST_FOREACH(pair<int, EventType>(entityID, eventTypes) pair,
-			  registeredEntities)
+		BOOST_FOREACH(IDTypePair pair, registeredEntities)
 	{
 		if (pair.first == entityID)
 		{

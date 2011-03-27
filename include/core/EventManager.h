@@ -37,6 +37,8 @@ typedef enum {
 	EVENT_FIRE
 } EventType;
 
+typedef pair<int, EventType> IDTypePair;
+
 struct EVENT {
 	int eventID;
 	EventType eventType;
@@ -52,7 +54,7 @@ class EventManager
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(EVENT event);
-		bool pullEvent(int entityID);
+		EVENT pullEvent(int entityID);
 		bool registerEntity(int entityID, EventType eventType);
 	private:
 		static EventManager* m_instance;
