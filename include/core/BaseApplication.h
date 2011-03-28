@@ -34,12 +34,9 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-#include <SdkTrays.h>
-#include <SdkCameraMan.h>
-
 #include "core/InputManager.h"
 
-class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, OgreBites::SdkTrayListener
+class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener
 {
 public:
     BaseApplication(void);
@@ -82,8 +79,6 @@ protected:
     Ogre::String mResourcesCfg;
     Ogre::String mPluginsCfg;
 
-    // OgreBites
-    OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
 

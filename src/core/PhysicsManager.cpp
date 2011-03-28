@@ -18,11 +18,7 @@
  */
 
 #include "core/PhysicsManager.h"
-#include "ExampleApplication.h"
- #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
- #include "../res/resource.h"
- #endif
- #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
+#include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 
 PhysicsManager::PhysicsManager ()
  	{

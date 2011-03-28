@@ -29,7 +29,6 @@ BaseApplication::BaseApplication(void)
 	mWindow(0),
 	mResourcesCfg(Ogre::StringUtil::BLANK),
 	mPluginsCfg(Ogre::StringUtil::BLANK),
-	mCameraMan(0),
 	mCursorWasVisible(false),
 	mShutDown(false),
 	mInputManager(0)
@@ -39,8 +38,6 @@ BaseApplication::BaseApplication(void)
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-	if (mCameraMan) delete mCameraMan;
-
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
@@ -87,7 +84,6 @@ void BaseApplication::createCamera(void)
 	mCamera->lookAt(Ogre::Vector3(0,0,-300));
 	mCamera->setNearClipDistance(5);
 
-	mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
 }
 
 void BaseApplication::shutdownGame(void)
@@ -235,8 +231,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	// Tick the input manager
 	mInputManager->tick(evt);
 
-	mCameraMan->frameRenderingQueued(evt);   
-	
     mainLoopPostRender((FrameData&)evt);
 
     return true;
