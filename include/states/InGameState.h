@@ -34,11 +34,15 @@ public:
 	virtual int returnStateID();
 
 	virtual void tick(FrameData &fd);
+	virtual void start();
+
+	virtual Ogre::SceneManager* getSceneMgr();
 
 protected:
 
 private:
 	PhysicsManager* physicsManager;
+	Ogre::SceneManager* GameSceneMgr;
 
 };
 

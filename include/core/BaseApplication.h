@@ -46,8 +46,6 @@ public:
 
     virtual void go(void);
 
-	Ogre::Root* getRoot();
-
 protected:
     virtual bool setup();
     virtual bool configure(void);

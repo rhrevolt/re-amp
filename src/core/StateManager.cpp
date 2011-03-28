@@ -47,7 +47,7 @@ StateManager::~StateManager()
  * (such as the sceneMgr) */
 GameState* StateManager::getCurrentState()
 {
-	instance()->currentState;
+	return instance()->currentState;
 }
 
 void StateManager::switchState(int stateID)
@@ -91,5 +91,7 @@ void StateManager::newGame()
 	inGameState = new InGameState();
 	mmState = new MainMenuState();
 	currentState = inGameState;
+
+	inGameState->start();
 }
 

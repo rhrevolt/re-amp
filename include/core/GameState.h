@@ -34,13 +34,14 @@ public:
 	virtual void activate(){};
 	virtual void deactivate(){};
 
+	virtual void start() = 0;
+
 	GameEntity* getEntity(int ID);
 
-	Ogre::SceneManager* getSceneMgr(){return mSceneMgr;};
+	virtual Ogre::SceneManager* getSceneMgr() = 0;
 
 protected:
 	std::list<GameEntity*> entityList;
-	Ogre::SceneManager* mSceneMgr;
 	
 private:
 	
