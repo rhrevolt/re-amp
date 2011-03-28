@@ -173,7 +173,7 @@ void BaseApplication::go(void)
 		Ogre::LogManager::getSingletonPtr()->logMessage("*** setup() call failed -- aborting");
 		return;
 	}
-	
+
 	mRoot->startRendering();
 
 	// clean up

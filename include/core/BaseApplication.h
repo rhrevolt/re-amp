@@ -35,14 +35,18 @@
 #include <OISMouse.h>
 
 #include "core/InputManager.h"
+#include "core/Singleton.h"
 
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener
 {
+	
 public:
     BaseApplication(void);
     virtual ~BaseApplication(void);
 
     virtual void go(void);
+
+	Ogre::Root* getRoot(){return mRoot;};
 
 protected:
     virtual bool setup();

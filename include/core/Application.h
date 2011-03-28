@@ -24,8 +24,9 @@
 #include "core/StateManager.h"
 
 
-class Application : public BaseApplication
+class Application : public Singleton<Application>, public BaseApplication
 {
+friend class Singleton<BaseApplication>;
 public:
     Application(void);
     virtual ~Application(void);

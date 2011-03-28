@@ -19,17 +19,21 @@
 
 #include "core/PhysicsManager.h"
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
+#include <OgreAxisAlignedBox.h>
 
 PhysicsManager::PhysicsManager ()
  	{
 		//TODO: Change if necessary
-		AxisAlignedBox* bounds = NULL;
+		AxisAlignedBox* bounds = new AxisAlignedBox();
 		Vector3 *gravityVector = new Vector3(0, -1, 0);
 		 
  		mNumEntitiesInstanced = 0; // how many shapes are created
  		mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
 		 
  		// Start Bullet
+		assert(bounds != NULL);
+		assert(mSceneMgr != NULL);
+		 
  		mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
  
  	        // add Debug info display tool
