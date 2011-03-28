@@ -30,7 +30,6 @@ InGameState::InGameState()
 {
 	// Initialize our SceneManager
 	mSceneMgr = Application::getInstance()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
-	
 	physicsManager = new PhysicsManager();
 	
 	entityList.push_back(EntityFactory::create("playerCar"));

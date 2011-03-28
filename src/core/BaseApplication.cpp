@@ -218,6 +218,11 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 	return true;
 }
 
+Ogre::Root* BaseApplication::getRoot()
+{
+	return mRoot;
+}
+
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 

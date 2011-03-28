@@ -46,7 +46,7 @@ public:
 
     virtual void go(void);
 
-	Ogre::Root* getRoot(){return mRoot;};
+	Ogre::Root* getRoot();
 
 protected:
     virtual bool setup();

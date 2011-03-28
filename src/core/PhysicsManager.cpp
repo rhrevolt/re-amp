@@ -39,15 +39,6 @@ PhysicsManager::PhysicsManager ()
 		assert(mSceneMgr != NULL);
 		 
  		mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
- 
- 	        // add Debug info display tool
- 		debugDrawer = new OgreBulletCollisions::DebugDrawer();
- 		debugDrawer->setDrawWireframe(true);	// we want to see the Bullet containers
- 
- 		mWorld->setDebugDrawer(debugDrawer);
- 		mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
- 		SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
- 		node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));
     }
 
 
