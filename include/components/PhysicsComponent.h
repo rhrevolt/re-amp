@@ -25,8 +25,9 @@
 class PhysicsComponent: public GameComponent
 {
 	public:
-		PhysicsComponent(int ID): GameComponent(ID){};
+		PhysicsComponent(int ID);
 		~PhysicsComponent();
+		
 		virtual bool tick(FrameData &fd);
 
 	protected:
