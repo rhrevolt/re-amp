@@ -210,6 +210,7 @@ bool BaseApplication::setup(void)
 
 	return true;
 };
+
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 {

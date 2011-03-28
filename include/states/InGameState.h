@@ -38,7 +38,7 @@ public:
 protected:
 
 private:
-	//PhysicsManager* physicsManager;
+	PhysicsManager* physicsManager;
 
 };
 

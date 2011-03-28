@@ -83,28 +83,6 @@ bool PhysicsManager::registerComponent(PhysicsComponent* component)
 	componentList.push_back(component);
 }
 
- /* bool PhysicsManager::frameStarted(const FrameEvent& evt)
- 	{
-		for(int i = 0; i < addPhysicsList.size(); i++)
-			addPhysicsList[i]->stepSimulation(evt.timeSinceLastFrame);
-			
- 		bool ret = ExampleFrameListener::frameStarted(evt);
- 
- 		mWorld->stepSimulation(evt.timeSinceLastFrame);	// update Bullet Physics animation
- 
- 		return ret;
- 	}
- 
- bool PhysicsManager::frameEnded(const FrameEvent& evt)
- 	{
- 		bool ret = ExampleFrameListener::frameEnded(evt);
- 
- 		mWorld->stepSimulation(evt.timeSinceLastFrame);	// update Bullet Physics animation
- 
- 		return ret;
- 	}
-*/	
-
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;
 }

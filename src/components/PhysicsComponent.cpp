@@ -19,13 +19,23 @@
 
 #include <stdio.h>
 #include "components/PhysicsComponent.h"
+#include "core/PhysicsManager.h"
+
+PhysicsComponent::PhysicsComponent(int ID): GameComponent(ID)
+{
+	PhysicsManager* pManager = PhysicsManager::getInstance();
+	pManager->registerComponent(this);
+}
+
+PhysicsComponent::~PhysicsComponent() {
+	PhysicsManager* pManager = PhysicsManager::getInstance();
+	//pManager->unregisterComponent(this);
+};
 
 bool PhysicsComponent::tick(FrameData &fd)
 {
 	
 }
-
-PhysicsComponent::~PhysicsComponent() {};
 
 
 

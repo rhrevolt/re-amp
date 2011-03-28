@@ -149,8 +149,6 @@ void CarPhysicsComponent::createVehicle(){
 #endif
 		mChassis->setCastShadows(true);
 
-
-
         BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
         CompoundCollisionShape* compound = new CompoundCollisionShape();
         compound->addChildShape(chassisShape, chassisShift);
