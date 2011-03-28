@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "core/EventManager.h"
+#include <list>
 
 EventManager* EventManager::m_instance = NULL;
 
@@ -49,25 +50,26 @@ Event EventManager::pullEvent(int entityID)
 	BOOST_FOREACH(Event event, events)
 	{
 		BOOST_FOREACH(IDTypePair pair, registeredEntities)
-	{
-		if (pair.first == entityID)
 		{
-			BOOST_FOREACH(EventType eventType, pair.second)
+			if (pair.first == entityID)
 			{
-				if (eventType == event.eventType)
+				;
+				/*BOOST_FOREACH(EventType eventType, pair.second)
 				{
-					// Pass reference to message to appropriate component
-				} 
+					if (eventType == event.eventType)
+					{
+						// Pass reference to message to appropriate component
+					} 
+				}
+				*/
 			}
 		}
-	}
-	
-}	
+	}	
+}
 
-bool EventManager::registerEntity(int entityID,
-		std::list<EventType eventTypes)
+bool EventManager::registerEntity(int entityID, EventTypeList eventTypes)
 {
 	// register a component for a specific event type
-	registeredEntities.insert(pair<int, EventType>(entityID, eventTypes));	
+	// registeredEntities.insert(IDTypePair(entityID, eventTypes));	
 	return true;
 }

@@ -23,6 +23,7 @@
 #include <boost/circular_buffer.hpp>
 #include <boost/foreach.hpp>
 #include <map>
+#include <list>
 
 using namespace std;
 
@@ -37,7 +38,8 @@ typedef enum {
 	EVENT_FIRE
 } EventType;
 
-typedef pair<int, EventType> IDTypePair;
+typedef std::list<EventType> EventTypeList;
+typedef pair<int, EventTypeList> IDTypePair;
 
 struct Event {
 	int eventID;
@@ -55,13 +57,15 @@ class EventManager
 		~EventManager(void);
 		bool pushEvent(Event event);
 		Event pullEvent(int entityID);
-		bool registerEntity(int entityID, EventType eventType);
+		bool registerEntity(int entityID, EventTypeList eventTypes);
 	private:
 		static EventManager* m_instance;
 		// Circular buffer of events waiting to be pulled
 		boost::circular_buffer<Event> events;
 		// Multipmap to keep track of which Events are
 		// associated with an entity
+
+		//TODO: Rething this implementation
 		std::multimap<int, EventType> registeredEntities;
 
 };
