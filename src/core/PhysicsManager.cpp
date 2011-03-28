@@ -71,17 +71,18 @@ PhysicsManager::~PhysicsManager (void)
 	delete mWorld;
 }
 
-bool tick(FrameData &fd) 
+bool PhysicsManager::tick(FrameData &fd) 
 {
-	for(int i = 0; i < addPhysicsList.size(); i++)
-		addPhysicsList[i]->stepSimulation(fd.timeSinceLastFrame);
+	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
+		comp->stepSimulation(fd.timeSinceLastFrame);
+	}
 
 	mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
 
-	return ret;
+	return true;
 }
 	
-bool registerComponent(PhysicsComponent* component)
+bool PhysicsManager::registerComponent(PhysicsComponent* component)
 {		
 	componentList.push_back(component);
 }
