@@ -27,11 +27,15 @@
 
 InGameState::InGameState()
 {
-	entityList.push_back(EntityFactory::create("example"));
+	physicsManager = new PhysicsManager();
+	
+	entityList.push_back(EntityFactory::create("playerCar"));
 }	
 
 InGameState::~InGameState()
 {
+	free(physicsManager);
+	
 	BOOST_FOREACH(GameEntity* ent, entityList) {
 		free(ent);
 	}
@@ -39,6 +43,8 @@ InGameState::~InGameState()
 
 void InGameState::tick(FrameData &fd)
 {
+	physicsManager->tick(fd);
+	
 	BOOST_FOREACH(GameEntity* ent, entityList) {
 		ent->tick(fd);
 	}
