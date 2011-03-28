@@ -32,7 +32,6 @@ public:
 	~CarPhysicsComponent();
 	virtual bool tick(FrameData &fd);
 	void init();
-	void stepSimulation(Ogre::Real timeStep);
 	void createVehicle();
 
 protected:

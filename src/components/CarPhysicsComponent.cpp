@@ -64,14 +64,40 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	init();
 	createVehicle();
 };
+
+CarPhysicsComponent::~CarPhysicsComponent() {
+
+}
 	
 bool CarPhysicsComponent::tick(FrameData &fd)
 {
-	
+	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
+    {
+        mVehicle->applyEngineForce (mEngineForce, mWheelsEngine[i]);
+    }
+
+    if (mSteeringLeft)
+    {
+        mSteering += gSteeringIncrement;
+        if (mSteering > gSteeringClamp)
+            mSteering = gSteeringClamp;
+    }
+    else if (mSteeringRight)
+    {
+        mSteering -= gSteeringIncrement;
+        if (mSteering < -gSteeringClamp)
+            mSteering = -gSteeringClamp;
+    }
+
+    // apply Steering on relevant wheels
+    for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
+	{
+		if (i < 2)
+		    mVehicle->setSteeringValue (mSteering, mWheelsSteerable[i]);
+		else
+		    mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
+	}
 }
-
-CarPhysicsComponent::~CarPhysicsComponent() {};
-
 
 void CarPhysicsComponent::init() {
 
@@ -373,32 +399,3 @@ void CarPhysicsComponent::keyUp(BULLET_KEY_CODE key){
     }
 }
 */
-
-void CarPhysicsComponent::stepSimulation(Real timeStep){
-	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
-    {
-        mVehicle->applyEngineForce (mEngineForce, mWheelsEngine[i]);
-    }
-
-    if (mSteeringLeft)
-    {
-        mSteering += gSteeringIncrement;
-        if (mSteering > gSteeringClamp)
-            mSteering = gSteeringClamp;
-    }
-    else if (mSteeringRight)
-    {
-        mSteering -= gSteeringIncrement;
-        if (mSteering < -gSteeringClamp)
-            mSteering = -gSteeringClamp;
-    }
-
-    // apply Steering on relevant wheels
-    for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
-    {
-        if (i < 2)
-            mVehicle->setSteeringValue (mSteering, mWheelsSteerable[i]);
-        else
-            mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
-    }
-}

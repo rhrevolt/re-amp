@@ -217,7 +217,7 @@ bool BaseApplication::setup(void)
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
-    mainLoopPreRender();
+    mainLoopPreRender((FrameData&)evt);
 	return true;
 }
 
@@ -237,7 +237,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 	mCameraMan->frameRenderingQueued(evt);   
 	
-    mainLoopPostRender();
+    mainLoopPostRender((FrameData&)evt);
 
     return true;
 }

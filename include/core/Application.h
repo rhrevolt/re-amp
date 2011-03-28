@@ -32,8 +32,8 @@ public:
 
 protected:
     virtual void createScene(void);
-    virtual void mainLoopPreRender(void); 
-    virtual void mainLoopPostRender(void);
+    virtual void mainLoopPreRender(FrameData &fd); 
+    virtual void mainLoopPostRender(FrameData &fd);
 
 	StateManager* stateMgr;
 };

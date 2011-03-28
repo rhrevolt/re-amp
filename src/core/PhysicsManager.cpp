@@ -74,7 +74,7 @@ PhysicsManager::~PhysicsManager (void)
 bool PhysicsManager::tick(FrameData &fd) 
 {
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
-		comp->stepSimulation(fd.timeSinceLastFrame);
+		comp->tick(fd);
 	}
 
 	mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation

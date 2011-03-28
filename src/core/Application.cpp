@@ -51,12 +51,12 @@ void Application::createScene(void)
 	stateMgr->newGame();
 }
 
-void Application::mainLoopPreRender(void)
+void Application::mainLoopPreRender(FrameData &fd)
 {
-	stateMgr->tick();
+	stateMgr->tick(fd);
 }
 
-void Application::mainLoopPostRender(void)
+void Application::mainLoopPostRender(FrameData &fd)
 {
     
 }
