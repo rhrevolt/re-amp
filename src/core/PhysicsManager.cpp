@@ -92,6 +92,7 @@ bool PhysicsManager::tick(FrameData &fd)
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
 {		
 	componentList.push_back(component);
+	return true;
 }
 
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){

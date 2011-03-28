@@ -67,14 +67,15 @@ std::list<Event> EventManager::pullEvent(int entityID)
 		{
 			if (pair.first == entityID)
 			{
-				BOOST_FOREACH(EventType eventType, pair.second)
+				
+				/*BOOST_FOREACH(EventType eventType, pair.second)
 				{
 					if (eventType == event.eventType)
 					{
-						eventList.push_back(event);
+						// Pass reference to message to appropriate component
 					} 
 				}
-				
+				*/
 			}
 		}
 	}	
@@ -90,6 +91,6 @@ std::list<Event> EventManager::pullEvent(int entityID)
 bool EventManager::registerEntity(int entityID, EventTypeList eventTypes)
 {
 	// register a component for a specific event type
-	registeredEntities.insert(IDTypePair(entityID, eventTypes));	
+	// registeredEntities.insert(IDTypePair(entityID, eventTypes));	
 	return true;
 }

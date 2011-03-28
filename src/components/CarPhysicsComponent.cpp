@@ -97,6 +97,8 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		else
 		    mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
 	}
+
+	return true;
 }
 
 void CarPhysicsComponent::init() {
@@ -133,9 +135,9 @@ void CarPhysicsComponent::createVehicle(){
 		float connectionHeight = 0.7f;
 
         mChassis = mSceneMgr->createEntity(
-                "chassis" + StringConverter::toString(mNumEntitiesInstanced++),
+                "chassis" + StringConverter::toString(0),
                 "chassis.mesh");
-
+	
         SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
 
         SceneNode *chassisnode = node->createChildSceneNode ();

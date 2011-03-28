@@ -34,7 +34,7 @@ PhysicsComponent::~PhysicsComponent() {
 
 bool PhysicsComponent::tick(FrameData &fd)
 {
-	
+	return true;
 }
 
 
