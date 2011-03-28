@@ -21,6 +21,10 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include <OgreAxisAlignedBox.h>
 
+using namespace Ogre;
+using namespace OgreBulletCollisions;
+using namespace OgreBulletDynamics;
+
 PhysicsManager::PhysicsManager ()
  	{
 		//TODO: Change if necessary
