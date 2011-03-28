@@ -76,9 +76,9 @@ void StateManager::switchState(int stateID)
 	currentStateID = stateID;
 }
 
-void StateManager::tick()
+void StateManager::tick(FrameData &fd)
 {
-	currentState->tick();
+	currentState->tick(fd);
 }
 
 int StateManager::getEntityID () 

@@ -69,7 +69,7 @@ bool GameEntity::removeComponent(GameComponent* component)
 bool GameEntity::tick(FrameData &fd) {
 	BOOST_FOREACH(GameComponent* comp, componentList)
 	{
-		comp->tick();
+		comp->tick(fd);
 	}
 }
 
