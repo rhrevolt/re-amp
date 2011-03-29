@@ -58,7 +58,7 @@ class EventManager
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(Event event);
-		Event pullEvent(int entityID);
+		std::list<Event> pullEvent(int entityID);
 		bool registerEntity(int entityID, EventTypeList eventTypes);
 	private:
 		static EventManager* m_instance;

@@ -37,6 +37,11 @@ EventManager::~EventManager(void)
 {
 }
 
+/* pushEvent
+ * Params: event
+ * Returns: success
+ * Description: Takes an event and adds it to the circular buffer of events
+ */
 bool EventManager::pushEvent(Event event)
 {
 	// adds the event to the back of the circular buffer
@@ -44,8 +49,17 @@ bool EventManager::pushEvent(Event event)
 	return true;
 }
 
-Event EventManager::pullEvent(int entityID)
+/* pullEvent
+ * Params: entityID
+ * Returns: EventTypeList
+ * Description: Takes an entityID and returns a list of all the events of the
+ * 				types it was registered for.
+ */
+std::list<Event> EventManager::pullEvent(int entityID)
 {
+	// The list of events to be returned
+	std::list<Event> eventList;
+
 	// return a pointer to an event in the buffer	
 	BOOST_FOREACH(Event event, events)
 	{
@@ -53,20 +67,26 @@ Event EventManager::pullEvent(int entityID)
 		{
 			if (pair.first == entityID)
 			{
-				;
 				BOOST_FOREACH(EventType eventType, pair.second)
 				{
 					if (eventType == event.eventType)
 					{
-						// Pass reference to message to appropriate component
+						eventList.push_back(event);
 					} 
 				}
 				
 			}
 		}
 	}	
+	return eventList;
 }
 
+/* registerEntity
+ * Params: entityID, eventTypes
+ * Returns: success
+ * Description: Takes an entityID and a list of eventTypes and registers that entity
+ * 				for any Events of that type to be pulled in the future.
+ */
 bool EventManager::registerEntity(int entityID, EventTypeList eventTypes)
 {
 	// register a component for a specific event type
