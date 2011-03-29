@@ -31,4 +31,8 @@ int MainMenuState::returnStateID()
 	return MAINMENUSTATE_ID;
 }
 
+void MainMenuState::start()
+{
+}
+
 

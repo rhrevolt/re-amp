@@ -31,6 +31,8 @@ public:
     Application(void);
     virtual ~Application(void);
 
+	Ogre::Root* getRoot(){return mRoot;};
+
 protected:
     virtual void createScene(void);
     virtual void mainLoopPreRender(FrameData &fd); 

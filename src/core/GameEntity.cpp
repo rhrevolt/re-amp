@@ -71,9 +71,11 @@ bool GameEntity::tick(FrameData &fd) {
 	{
 		comp->tick(fd);
 	}
+
+	return true;
 }
 
 bool GameEntity::receiveMessage(ComponentType comp, int message)
 {
-
+	return true;
 }

@@ -43,6 +43,8 @@ typedef pair<int, EventTypeList> IDTypePair;
 
 struct Event {
 	int eventID;
+	int toID;
+	int fromID;
 	EventType eventType;
 	char* description;
 };
@@ -56,7 +58,7 @@ class EventManager
 		EventManager();
 		~EventManager(void);
 		bool pushEvent(Event event);
-		Event pullEvent(int entityID);
+		std::list<Event> pullEvent(int entityID);
 		bool registerEntity(int entityID, EventTypeList eventTypes);
 	private:
 		static EventManager* m_instance;
@@ -66,7 +68,7 @@ class EventManager
 		// associated with an entity
 
 		//TODO: Rething this implementation
-		std::multimap<int, EventType> registeredEntities;
+		std::multimap<int, EventTypeList> registeredEntities;
 
 };
 

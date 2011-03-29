@@ -31,6 +31,9 @@ public:
 	virtual int returnStateID();
 	
 	virtual void tick(FrameData &fd);
+	virtual void start();
+	
+	virtual Ogre::SceneManager* getSceneMgr() {return NULL;};
 
 protected:
 

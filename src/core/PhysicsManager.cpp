@@ -25,22 +25,9 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
-PhysicsManager::PhysicsManager ()
- 	{
-		//TODO: Change if necessary
-		AxisAlignedBox* bounds = new AxisAlignedBox();
-		Vector3 *gravityVector = new Vector3(0, -1, 0);
-		 
- 		mNumEntitiesInstanced = 0; // how many shapes are created
- 		mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
-		 
- 		// Start Bullet
-		assert(bounds != NULL);
-		assert(mSceneMgr != NULL);
-		 
- 		mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
-    }
-
+PhysicsManager::PhysicsManager()
+{
+}
 
 PhysicsManager::~PhysicsManager (void)
 {
@@ -66,6 +53,31 @@ PhysicsManager::~PhysicsManager (void)
 	delete mWorld;
 }
 
+void PhysicsManager::init()
+{
+	//TODO: Change if necessary
+	AxisAlignedBox* bounds = new AxisAlignedBox();
+	Vector3 *gravityVector = new Vector3(0, -1, 0);
+	 
+	mNumEntitiesInstanced = 0; // how many shapes are created
+	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
+	 
+	// Start Bullet
+	assert(bounds != NULL);
+	assert(mSceneMgr != NULL);
+	 
+	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
+
+        // add Debug info display tool
+	debugDrawer = new OgreBulletCollisions::DebugDrawer();
+	debugDrawer->setDrawWireframe(true);	// we want to see the Bullet containers
+
+	mWorld->setDebugDrawer(debugDrawer);
+	mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
+	SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
+	node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));	
+}
+
 bool PhysicsManager::tick(FrameData &fd) 
 {
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
@@ -80,6 +92,7 @@ bool PhysicsManager::tick(FrameData &fd)
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
 {		
 	componentList.push_back(component);
+	return true;
 }
 
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){

@@ -24,15 +24,15 @@
 #include "core/GameEntity.h"
 #include "core/EntityFactory.h"
 #include "states/InGameState.h"
-#include "core/Application.h"
+#include <OgreRoot.h>
 
 InGameState::InGameState()
 {
 	// Initialize our SceneManager
-	mSceneMgr = Application::getInstance()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
-	physicsManager = new PhysicsManager();
+	Ogre::Root* root = Ogre::Root::getSingletonPtr();
+	GameSceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
 	
-	entityList.push_back(EntityFactory::create("playerCar"));
+	physicsManager = PhysicsManager::getInstance();
 }	
 
 InGameState::~InGameState()
@@ -43,6 +43,14 @@ InGameState::~InGameState()
 		free(ent);
 	}
 }
+
+void InGameState::start()
+{
+	physicsManager->init();
+	
+	entityList.push_back(EntityFactory::create("playerCar"));
+}
+
 
 void InGameState::tick(FrameData &fd)
 {
@@ -58,4 +66,8 @@ int InGameState::returnStateID()
 	return INGAMESTATE_ID;
 }
 
+Ogre::SceneManager* InGameState::getSceneMgr()
+{
+	return GameSceneMgr;
+}
 

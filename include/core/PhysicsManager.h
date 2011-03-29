@@ -36,9 +36,10 @@ class PhysicsManager: public Singleton<PhysicsManager>
 {
 friend class Singleton<PhysicsManager>;
 public:
-	PhysicsManager ();
+	PhysicsManager(void);
 	~PhysicsManager (void);
 
+	void init();	
 	bool tick(FrameData &fd);
 	bool registerComponent(PhysicsComponent* component);
 	
@@ -49,6 +50,7 @@ protected:
 	;
 
 private:
+
 	Ogre::SceneManager* mSceneMgr; 
  	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
  	OgreBulletCollisions::DebugDrawer *debugDrawer;
