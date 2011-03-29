@@ -20,9 +20,26 @@
 #include <stdio.h>
 #include "components/InputComponent.h"
 
+InputComponent::InputComponent(int ID): GameComponent(ID)
+{
+	InputManager* iManager = InputManager::getInstance();
+	iManager->registerComponent(this);
+}
+
+InputComponent::~InputComponent() {
+	InputManager* iManager = InputManager::getInstance();
+	//iManager->unregisterComponent(this);
+};
+
 bool InputComponent::tick(FrameData &fd)
 {
-	//printf("Render\n");
+    /*
+    TODO: Retrieve the input list from iManager
+          Process each input, sending commands to the other components
+          For movement commands, send action to physicsComponent
+          For sounds (horn), send to soundComponent
+
+    */
 }
 
 
