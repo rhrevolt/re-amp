@@ -17,12 +17,22 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include "components/RenderingComponent.h"
+#ifndef _OGRECOMPONENT_H_
+#define _OGRECOMPONENT_H_
 
-bool RenderingComponent::tick(FrameData &fd)
+#include "core/GameComponent.h"
+
+class OgreComponent: public GameComponent 
 {
-	//printf("Render\n");
-}
+	public:
+		OgreComponent(int ID): GameComponent(ID){};
+		~OgreComponent() {};
+		virtual bool tick(FrameData &fd);
 
+	protected:
 
+	private:
+
+};
+
+#endif // _OGRECOMPONENT_H_
