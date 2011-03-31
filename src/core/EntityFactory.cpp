@@ -22,8 +22,9 @@
 #include "core/GameEntity.h"
 
 #include "components/InputComponent.h"
-#include "components/RenderingComponent.h"
+#include "components/CarOgreComponent.h"
 #include "components/CarPhysicsComponent.h"
+#include "components/TerrainOgreComponent.h"
 
 GameEntity* EntityFactory::create(std::string name)
 {
@@ -31,11 +32,13 @@ GameEntity* EntityFactory::create(std::string name)
 
 	// TODO: Perhaps this should be generated from a file?
 	if (name == ("example")) {
-		ent->addComponent((GameComponent*) new RenderingComponent(0));
+		ent->addComponent((GameComponent*) new OgreComponent(0));
 	} else if (name == "playerCar") {
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
-		ent->addComponent((GameComponent*) new RenderingComponent(0));
+		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new InputComponent(0));
+	} else if (name == "terrain") {
+		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
 	}
 	
 	return ent;
