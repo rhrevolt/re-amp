@@ -24,6 +24,7 @@
 #include "core/GameState.h"
 #include "core/EventManager.h"
 #include "core/FrameData.h"
+#include "core/Singleton.h"
 
 /**
  An event for when the state changes
@@ -34,10 +35,10 @@ struct StateChangeEvent : public Event {
 };
 
 //StateManager is a singleton!
-class StateManager
+class StateManager: public Singleton<StateManager>
 {
+friend class Singleton<StateManager>;
 public:
-	static StateManager* instance();
 	static GameState* getCurrentState();
 
 	const static int menuID;
@@ -52,18 +53,16 @@ public:
 	int getEntityID();
 	
 	GameState* currentState;
-
-protected:
 	GameState*  mmState;
 	GameState*	inGameState; 
+
+protected:
 	static int		currentEntityID;
 	static int		currentStateID;
 	
 private:
 	StateManager(){};
 	~StateManager();
-
-	static StateManager* m_pInstance;
 };
 
 #endif // _STATE_MANAGER_H_

@@ -25,8 +25,8 @@
 class SoundComponent: public GameComponent
 {
 	public:
-		SoundComponent(int ID): GameComponent(ID){};
-		~SoundComponent() {};
+		SoundComponent(int ID);
+		~SoundComponent();
 		virtual bool tick(FrameData &fd);
 
 	protected:
