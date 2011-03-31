@@ -17,17 +17,17 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OGRECOMPONENT_H_
-#define _OGRECOMPONENT_H_
+#ifndef _TERRAINOGRECOMPONENT_H_
+#define _TERRAINOGRECOMPONENT_H_
 
-#include "core/GameComponent.h"
+#include "core/OgreComponent.h"
 
-class OgreComponent: public GameComponent 
+class TerrainOgreComponent: public OgreComponent 
 {
 	public:
-		OgreComponent(int ID): GameComponent(ID){};
-		~OgreComponent() {};
-		virtual bool tick(FrameData &fd);
+		TerrainOgreComponent(int ID): OgreComponent(ID){};
+		~TerrainOgreComponent() {};
+		void init();
 
 	protected:
 
@@ -35,4 +35,4 @@ class OgreComponent: public GameComponent
 
 };
 
-#endif // _OGRECOMPONENT_H_
+#endif // _TERRAINOGRECOMPONENT_H_
