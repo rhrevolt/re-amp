@@ -127,13 +127,6 @@ class SoundManager
 				Ogre::Quaternion orientation );
 
 		bool isOggExtensionPresent( void );
-
-
-		/**
-		 * Preload audio files into the system.
-		 * Not obligatory, the files can also be loaded on the fly.
-		 */
-		bool loadDefaultSounds( std::string filename );
 };
 
 #endif /*__SOUNDMANAGER_H__*/
