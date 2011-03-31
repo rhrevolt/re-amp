@@ -17,19 +17,25 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CAROGRECOMPONENT_H_
-#define _CAROGRECOMPONENT_H_
+#ifndef _OGRECOMPONENT_H_
+#define _OGRECOMPONENT_H_
 
 #include "core/GameComponent.h"
-<<<<<<< HEAD
 
-
-=======
-/*
->>>>>>> Commented out class with no header
-void CarOgreComponent::init()
+class OgreComponent: public GameComponent 
 {
-	// Draw a car with Ogre
-}
-*/
-#endif // _CAROGRECOMPONENT_H_
+	public:
+		OgreComponent(int ID): GameComponent(ID){};
+		~OgreComponent() {};
+		virtual bool tick(FrameData &fd);
+		
+		//weirnc: When would this normally get called? How is it different from a constructor?
+		virtual void init();
+
+	protected:
+
+	private:
+
+};
+
+#endif // _OGRECOMPONENT_H_
