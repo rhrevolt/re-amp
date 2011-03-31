@@ -22,13 +22,15 @@
 #define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
 #define BUFFER_TIME_INTERVAL 0.1f // in seconds
 
-InputManager::InputManager (std::string windowHandle) : 
+InputManager::InputManager (std::string windowHandle) :
 	running(true),
 	bufferedTicks(0),
 	KEY_DOWN_DOWN(false),
 	KEY_UP_DOWN(false),
 	KEY_LEFT_DOWN(false),
 	KEY_RIGHT_DOWN(false),
+	KEY_HORN(false),
+	KEY_FIRE(false),
 	currentFrameDelay(0.01f)
 {
 	OIS::ParamList parameterList;
@@ -97,13 +99,13 @@ void InputManager::tick(const Ogre::FrameEvent& evt) {
 	if (KEY_LEFT_DOWN)
 		bufferedVector.y -= KEYBOARD_INCREMENT;
 
-	
-	// Check if we've buffered enough. 
+
+	// Check if we've buffered enough.
 	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {;
 		// TODO: Create a new buffer event
-		
+
 		// Dump to console
-		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x, 
+		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x,
 		       bufferedVector.y);
 
 		// Reset the vector
@@ -111,13 +113,13 @@ void InputManager::tick(const Ogre::FrameEvent& evt) {
 		bufferedVector.y = 0;
 		// Reset the tick count
 		bufferedTicks = 0;
-		
+
 		// Update the timing information..
 		// Check that the timeSinceLastEvent is not zero (for zero-div
 		// reasons)
-		if (evt.timeSinceLastEvent > 0) 
+		if (evt.timeSinceLastEvent > 0)
 			currentFrameDelay = evt.timeSinceLastFrame;
-		printf("New max tick count: %f\n", 
+		printf("New max tick count: %f\n",
 		       (BUFFER_TIME_INTERVAL / currentFrameDelay));
 	}
 
@@ -133,19 +135,19 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 		running = false;
 	}
 
-	if (arg.key == OIS::KC_UP) {
+	if (arg.key == OIS::KC_UP || arg.key == OIS::KC_W) {
 		KEY_UP_DOWN = true;
 	}
 
-	if (arg.key == OIS::KC_DOWN) {
+	if (arg.key == OIS::KC_DOWN || arg.key == OIS::KC_S) {
 		KEY_DOWN_DOWN = true;
 	}
 
-	if (arg.key == OIS::KC_RIGHT) {
+	if (arg.key == OIS::KC_RIGHT || arg.key == OIS::KC_D) {
 		KEY_RIGHT_DOWN = true;
 	}
 
-	if (arg.key == OIS::KC_LEFT) {
+	if (arg.key == OIS::KC_LEFT || arg.key == OIS::KC_A) {
 		KEY_LEFT_DOWN = true;
 	}
 
@@ -153,12 +155,14 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
         Event evt;
         evt.eventType = EVENT_HORN;
         EventManager::instance()->pushEvent(evt);
+        KEY_HORN = true;
 	}
 
 	if (arg.key == OIS::KC_SPACE){
         Event evt;
         evt.eventType = EVENT_FIRE;
         EventManager::instance()->pushEvent(evt);
+        KEY_FIRE = true;
 	}
 
 	printf("Got keypress event: %d\n", arg.key);
@@ -168,22 +172,30 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 
 bool InputManager::keyReleased (const OIS::KeyEvent &arg) {
 	// Got a keyrelease event
-	if (arg.key == OIS::KC_UP) {
+	if (arg.key == OIS::KC_UP || arg.key == OIS::KC_W) {
 		KEY_UP_DOWN = false;
 	}
 
-	if (arg.key == OIS::KC_DOWN) {
+	if (arg.key == OIS::KC_DOWN || arg.key == OIS::KC_S) {
 		KEY_DOWN_DOWN = false;
 	}
 
-	if (arg.key == OIS::KC_LEFT) {
+	if (arg.key == OIS::KC_LEFT || arg.key == OIS::KC_A) {
 		KEY_LEFT_DOWN = false;
 	}
 
-	if (arg.key == OIS::KC_RIGHT) {
+	if (arg.key == OIS::KC_RIGHT || arg.key == OIS::KC_D) {
 		KEY_RIGHT_DOWN = false;
 	}
-	
+
+	if (arg.key == OIS::KC_H) {
+        KEY_HORN = false;
+	}
+
+	if (arg.key == OIS::KC_SPACE) {
+        KEY_FIRE = false;
+	}
+
 	printf("Got keyrelease event: %d\n", arg.key);
 	return true;
 

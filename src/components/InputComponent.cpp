@@ -33,6 +33,18 @@ InputComponent::~InputComponent() {
 
 bool InputComponent::tick(FrameData &fd)
 {
+    //move the car as dictated by current input
+    //PhysicsComponent.alterMoveVector(iManager.bufferedVector);
+
+    if (iManager.KEY_HORN)
+    {
+        //SoundComponent.playSound("horn");
+    }
+
+    if (iManager.KEY_FIRE)
+    {
+        //RenderingComponent.fireWeapon();
+    }
     /*
     TODO: Retrieve the input list from iManager
           Process each input, sending commands to the other components
