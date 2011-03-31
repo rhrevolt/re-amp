@@ -77,6 +77,7 @@ class SoundManager
 		static SoundManager* getManager( void );
 		static SoundManager* getSingletonPtr( void ) { return mSoundManager; };
 		int registerComponent(SoundComponent* pSoundComponent);
+		int unregisterComponent(SoundCOmponent* pSoundComponent);
 
 		bool init( void );
 		bool getIsSoundOn( void ) { return isSoundOn; };

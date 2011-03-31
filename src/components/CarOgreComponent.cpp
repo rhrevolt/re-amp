@@ -22,6 +22,7 @@
 
 #include "core/GameComponent.h"
 
+
 void CarOgreComponent::init()
 {
 	// Draw a car with Ogre

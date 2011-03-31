@@ -21,6 +21,7 @@ void SoundManager::tick(FrameData &fd)
 int SoundManager::registerComponent(SoundComponent* pSoundComponent)
 {
 	componentList.push_front(pSoundComponent);
+	return 1;
 }
 
 /****************************************************************************/
@@ -28,6 +29,7 @@ int SoundManager::registerComponent(SoundComponent* pSoundComponent)
 int SoundManager::unregisterComponent(SoundComponent* pSoundComponent)
 {
 	componentList.remove(pSoundComponent);
+	return 1;
 }
 
 /****************************************************************************/
