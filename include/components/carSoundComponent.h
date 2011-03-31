@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 ReAmp Contributors
+ * Copyright (C)  2011 <>
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,24 +17,28 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _SOUNDCOMPONENT_H_
-#define _SOUNDCOMPONENT_H_
+#ifndef _CARSOUNDCOMPONENT_H_
+#define _CARSOUNDCOMPONENT_H_
 
-#include "core/GameComponent.h"
+#include "components/SoundComponent.h"
+#include "core/SoundManager.h"
+#include "core/GameEntity.h"
 
-class SoundComponent: public GameComponent
+static std::string HORN = "honka.wav";
+
+class CarSoundComponent: public SoundComponent
 {
-	public:
-		SoundComponent(int ID): GameComponent(ID){};
-		~SoundComponent() {};
-		virtual bool tick(FrameData &fd);
+public:
+    CarSoundComponent(int id);
+    ~CarSoundComponent();
+    virtual bool tick(FrameData &fd);
+    void init();
+    void setParentEntity(GameEntity* pParentCar);
+protected:
 
-	protected:
+private:
+    GameEntity* parentEntity;
+    SoundManager* pSoundManager;
+}
 
-	private:
-        std::map<std::string, unsigned int> audioFiles;
-
-};
-
-#endif // _SOUNDCOMPONENT_H_
-
+#endif

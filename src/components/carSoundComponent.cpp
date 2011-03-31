@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 ReAmp Contributors
+ * Copyright (C)  2011 <>
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,24 +17,27 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _SOUNDCOMPONENT_H_
-#define _SOUNDCOMPONENT_H_
+ #include "components/CarSoundComponent.h"
 
-#include "core/GameComponent.h"
 
-class SoundComponent: public GameComponent
+ CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
+
+    init();
+ }
+
+ CarSoundComponent::~CarSoundComponent() {
+ }
+
+bool CarSoundComponent::tick(FrameData &fd)
 {
-	public:
-		SoundComponent(int ID): GameComponent(ID){};
-		~SoundComponent() {};
-		virtual bool tick(FrameData &fd);
+    pSoundManager->playAudio(audioFiles.find(HONK), true);
+}
 
-	protected:
-
-	private:
-        std::map<std::string, unsigned int> audioFiles;
-
-};
-
-#endif // _SOUNDCOMPONENT_H_
-
+void CarSoundComponent::init()
+{
+    pSoundManager = SoundManager::getInstance();
+    unsigned int honkId = 0;
+    pSoundManager->loadAudio(HONK, &honkId, false);
+    pSoundManager->registerComponent(this);
+    audioFiles.insert(HONK, honkId);
+}
