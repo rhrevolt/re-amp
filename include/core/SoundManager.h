@@ -74,7 +74,7 @@ class SoundManager
 		SoundManager( void );
 		virtual ~SoundManager( void );
 		void selfDestruct( void );
-		static SoundManager* getManager( void );
+		static SoundManager* getInstance( void );
 		static SoundManager* getSingletonPtr( void ) { return mSoundManager; };
 		int registerComponent(SoundComponent* pSoundComponent);
 		int unregisterComponent(SoundComponent* pSoundComponent);
