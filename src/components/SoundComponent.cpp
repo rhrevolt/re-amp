@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 ReAmp Contributors
+ * Copyright (C)  2011 <>
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,27 +18,25 @@
  */
 
 #include <stdio.h>
-#include "components/InputComponent.h"
+#include "components/SoundComponent.h"
+#include "core/SoundManager.h"
 
-InputComponent::InputComponent(int ID): GameComponent(ID)
+SoundComponent::SoundComponent(int ID): GameComponent(ID)
 {
-	InputManager* iManager = InputManager::getInstance();
-	iManager->registerComponent(this);
+	SoundManager* pManager = SoundManager::getInstance();
+	pManager->registerComponent(this);
 }
 
-InputComponent::~InputComponent() {
-	InputManager* iManager = InputManager::getInstance();
-	//iManager->unregisterComponent(this);
+SoundComponent::~SoundComponent() {
+	SoundManager* pManager = SoundManager::getInstance();
+	pManager->unregisterComponent(this);
 };
 
-bool InputComponent::tick(FrameData &fd)
+bool SoundComponent::tick(FrameData &fd)
 {
-    /*
-    TODO: Retrieve the input list from iManager
-          Process each input, sending commands to the other components
-          For movement commands, send action to physicsComponent
-          For sounds (horn), send to soundComponent
-    */
-
-
+	return true;
 }
+
+
+
+

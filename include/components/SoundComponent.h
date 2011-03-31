@@ -17,28 +17,23 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include "components/InputComponent.h"
+#ifndef _SOUNDCOMPONENT_H_
+#define _SOUNDCOMPONENT_H_
 
-InputComponent::InputComponent(int ID): GameComponent(ID)
+#include "core/GameComponent.h"
+
+class SoundComponent: public GameComponent
 {
-	InputManager* iManager = InputManager::getInstance();
-	iManager->registerComponent(this);
-}
+	public:
+		SoundComponent(int ID): GameComponent(ID){};
+		~SoundComponent() {};
+		virtual bool tick(FrameData &fd);
 
-InputComponent::~InputComponent() {
-	InputManager* iManager = InputManager::getInstance();
-	//iManager->unregisterComponent(this);
+	protected:
+
+	private:
+
 };
 
-bool InputComponent::tick(FrameData &fd)
-{
-    /*
-    TODO: Retrieve the input list from iManager
-          Process each input, sending commands to the other components
-          For movement commands, send action to physicsComponent
-          For sounds (horn), send to soundComponent
-    */
+#endif // _SOUNDCOMPONENT_H_
 
-
-}
