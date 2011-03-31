@@ -48,6 +48,7 @@ void InGameState::start()
 {
 	physicsManager->init();
 	
+	entityList.push_back(EntityFactory::create("terrain"));
 	entityList.push_back(EntityFactory::create("playerCar"));
 }
 
