@@ -3,251 +3,137 @@
  *
  *  Original Code : Van Stokes, Jr. (http://www.EvilMasterMindsInc.com) - Aug 05
  *  Modified Code : Steven Gay - mec3@bluewin.ch - Septembre 2005 - Jan 06
- *
- *
- *                    Partial Documentation
- *                    =====================
- *
- *  Very simple SoundManager using OpenAl.
- *
- *  For a more complete one, you should see :
- *  OpenAL++ http://alpp.sourceforge.net/
- *
- ****************************************************************************
- *  COMPILE
- *
- *  - Don't forget to link to : ALut.lib and OpenAL32.lib.
- *    The order is important.
- *
- *  - With CodeBlocks there is one warning I didn't resolve :
- *     "Warning: .drectve `/DEFAULTLIB:"uuid.lib" /DEFAULTLIB:"uuid.lib" ' unrecognized"
- *
- ****************************************************************************
- *  USAGE
- *
- * 1. Create the object from the class with createManager()
- *
- * 2. Call the init() function
- *
- * 3. Call the loadDefaultSounds() function to PRE-LOAD audio into the buffers.
- *    This is optional. Review the function to make changes that you need.
- *
- * 4. Set the Listener Location by calling setListenerPosition() function
- *    continually call this as your Listener (camera) position changes!
- *
- * 5. For each object that emits sound, call the loadSound() function.
- *    CAREFUL : The filename must be unique.
- *
- * 6. Optional : For each object you can set the all the parameters of the
- *    sound with setSound() or only the position, velocity and direction with
- *    setSoundPosition().
- *
- * 7. Call the playAudioSource() to play the sound at some event.
- *    This function will play the sound and then stop. It will NOT repeat playing.
- *    Use stopAudioSource() to stop a sound from playing if its still playing
- *
- * 8. Call pauseAudio() or pauseAllAudio() to pause one or all sound(s).
- *    Call resumeAudio() or resumeAllAudio() to resume one or all paused sound(s).
- *
- * 9. When your object is done emitting sounds (when out of range for example)
- *    call releaseAudioSource().
- *    It is important to release your source when you are no longer going to
- *    need it because you are limited in the number of sources you can have.
- *
- * 10. If your objects moves (other than the listener/camera) then
- *    continually update the objects position by calling setSourcePosition().
- *
- ******************************************************************************
- *
- * Additional informations :
- *
- * Ogg Vorbis - http://www.xiph.org/downloads/
- *            - http://www.illiminable.com/ogg/
- * Flac       - http://flac.sourceforge.net/features.html
- * Theora     - http://www.theora.org/
- *
- *
- ******************************************************************************
- *
- * TODO
- *
- * loadOGG()
- * alSourcePause()
- *
- * Use the EAX functions !
- *
- ******************************************************************************/
+ */
 
- #ifndef __SOUNDMANAGER_H__
- #define __SOUNDMANAGER_H__
+#ifndef __SOUNDMANAGER_H__
+#define __SOUNDMANAGER_H__
 
- #include <stdio.h>
- #include <string>
- #include "components/SoundComponent.h"
+#include <stdio.h>
+#include <string>
 
- // Comment this line if you don't have the EAX 2.0 SDK installed
- //#define _USEEAX
+#include <al.h>
+#include <alc.h>
+#include <alut.h>
 
- #ifdef _USEEAX
-     #include "eax.h"
- #endif
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/foreach.hpp>
 
- // OpenAl version 1.0
- // #include <al/alctypes.h>
- // #include <al/altypes.h>
- // #include <al/alc.h>
- // #include <al/al.h>
- // #include <alut/alut.h>
- // OpenAl version 1.1
- #include <al.h>
- #include <alc.h>
- #include <alut.h>
-#define OGRE
- // Modify this as you need.
- #ifdef OGRE
-    #include "OgreVector3.h"
-    #include "OgreQuaternion.h"
-    using namespace Ogre;
- #else
-    #include "Vector3.h"
-    using namespace gameengine::utilities;
- #endif
+#include <OgreVector3.h>
+#include <OgreQuaternion.h>
 
- // Be very careful with these two parameters
- // It is very dependant on the audio hardware your
- // user is using. It you get too large, it may work
- // on one persons system but not on another.
- // TODO Write a fct testing the hardware !
- #define MAX_AUDIO_BUFFERS   64
- #define MAX_AUDIO_SOURCES   16
+#include "components/SoundComponent.h"
 
- // Used to store sound filenames
- #define MAX_FILENAME_LENGTH 40
+#define MAX_AUDIO_BUFFERS   64
+#define MAX_AUDIO_SOURCES   16
+#define MAX_FILENAME_LENGTH 40
 
- class SoundManager
- {
-   private:
-        // EAX related
-        bool isEAXPresent;
- #ifdef _USEEAX
-        // EAX 2.0 GUIDs
-        const GUID DSPROPSETID_EAX20_ListenerProperties
-            = { 0x306a6a8, 0xb224, 0x11d2, { 0x99, 0xe5, 0x0, 0x0, 0xe8, 0xd8, 0xc7, 0x22 } };
+class SoundManager
+{
+	private:
+		bool isInitialised;
+		ALCdevice* mSoundDevice;
+		ALCcontext* mSoundContext;
 
-        const GUID DSPROPSETID_EAX20_BufferProperties
-            = { 0x306a6a7, 0xb224, 0x11d2, {0x99, 0xe5, 0x0, 0x0, 0xe8, 0xd8, 0xc7, 0x22 } };
+		std::string mAudioPath;
 
-        EAXSet eaxSet; // EAXSet function, retrieved if EAX Extension is supported
-        EAXGet eaxGet; // EAXGet function, retrieved if EAX Extension is supported
- #endif // _USEEAX
+		bool isSoundOn;
 
-        bool isInitialised;
-        ALCdevice* mSoundDevice;
-        ALCcontext* mSoundContext;
+		ALfloat position[3];
+		ALfloat velocity[3];
+		ALfloat orientation[6];
 
-        std::string mAudioPath;
+		// Needed because of hardware limitation
+		// Audio sources
+		unsigned int mAudioSourcesInUseCount;
+		unsigned int mAudioSources[ MAX_AUDIO_SOURCES ];
+		bool         mAudioSourceInUse[ MAX_AUDIO_SOURCES ];
 
-        bool isSoundOn;
+		// Audio buffers
+		unsigned int mAudioBuffersInUseCount;
+		unsigned int mAudioBuffers[ MAX_AUDIO_BUFFERS ];
+		bool         mAudioBufferInUse[ MAX_AUDIO_BUFFERS ];
+		char         mAudioBufferFileName[ MAX_AUDIO_BUFFERS ][ MAX_FILENAME_LENGTH ];
 
-        ALfloat position[3];
-        ALfloat velocity[3];
-        ALfloat orientation[6];
+		// Function to check if the soundFile is already loaded into a buffer
+		int locateAudioBuffer( std::string filename );
+		int loadAudioInToSystem( std::string filename );
+		bool loadWAV( std::string filename, ALuint pDestAudioBuffer );
+		bool loadOGG( std::string filename, ALuint pDestAudioBuffer );
+		// TODO bool loadAU( std::string filename, ALuint pDestAudioBuffer );
 
-        // Needed because of hardware limitation
-        // Audio sources
-        unsigned int mAudioSourcesInUseCount;
-        unsigned int mAudioSources[ MAX_AUDIO_SOURCES ];
-        bool         mAudioSourceInUse[ MAX_AUDIO_SOURCES ];
+		// Ogg Vorbis extension
+		bool bOggExtensionPresent;
 
-        // Audio buffers
-        unsigned int mAudioBuffersInUseCount;
-        unsigned int mAudioBuffers[ MAX_AUDIO_BUFFERS ];
-        bool         mAudioBufferInUse[ MAX_AUDIO_BUFFERS ];
-        char         mAudioBufferFileName[ MAX_AUDIO_BUFFERS ][ MAX_FILENAME_LENGTH ];
+		std::list<SoundComponent*> componentList;
 
-        // Function to check if the soundFile is already loaded into a buffer
-        int locateAudioBuffer( std::string filename );
-        int loadAudioInToSystem( std::string filename );
-        bool loadWAV( std::string filename, ALuint pDestAudioBuffer );
-        bool loadOGG( std::string filename, ALuint pDestAudioBuffer );
-        // TODO bool loadAU( std::string filename, ALuint pDestAudioBuffer );
+	public:
+		static SoundManager* mSoundManager;
 
-        // Ogg Vorbis extension
-        bool bOggExtensionPresent;
+		void tick(FrameData &fd);
 
-        std::list<SoundComponent*> componentList;
+		SoundManager( void );
+		virtual ~SoundManager( void );
+		void selfDestruct( void );
+		static SoundManager* getManager( void );
+		static SoundManager* getSingletonPtr( void ) { return mSoundManager; };
+		int registerComponent(SoundComponent* pSoundComponent);
 
-    public:
-        static SoundManager* mSoundManager;
+		bool init( void );
+		bool getIsSoundOn( void ) { return isSoundOn; };
+		void setAudioPath( char* path ) { mAudioPath = std::string( path ); };
 
-        bool tick(FrameData &fd);
+		bool checkALError( void );
+		bool checkALError( std::string pMsg );
 
-        SoundManager( void );
-        virtual ~SoundManager( void );
-        void selfDestruct( void );
-        static SoundManager* getManager( void );
-        static SoundManager* getSingletonPtr( void ) { return mSoundManager; };
-        int registerComponent(SoundComponent* pSoundComponent);
+		/** See http://www.openal.org/windows_enumeration.html for installing other
+		 *   devices. You should at least have "Generic Hardware".
+		 */
+		std::string listAvailableDevices( void );
 
-        bool init( void );
-        bool getIsSoundOn( void ) { return isSoundOn; };
-        void setAudioPath( char* path ) { mAudioPath = std::string( path ); };
+		// careful : testSound should not be used it doesn't use the resource limitation
+		void testSound( const char* wavFile );
 
-        bool checkALError( void );
-        bool checkALError( std::string pMsg );
+		// Aquire an Audio Source
+		// filename = pass in the sound file to play for this source (ex. "myfile.wav")
+		// audioId   = returns the AudioSource identifier you will need for the PlayAudioSource();
+		bool loadAudio( std::string filename, unsigned int *audioId, bool loop );
+		bool releaseAudio( unsigned int audioID );
 
-        /** See http://www.openal.org/windows_enumeration.html for installing other
-        *   devices. You should at least have "Generic Hardware".
-        */
-        std::string listAvailableDevices( void );
+		// deprecated
+		bool aquireAudioSource( char* file, unsigned int *audioId )
+		{ return loadAudio( std::string(file), audioId, false ); };
 
-        // careful : testSound should not be used it doesn't use the resource limitation
-        void testSound( const char* wavFile );
+		// Returns true if the audio is started from the beginning
+		// false if error or if already playing
+		bool playAudio( unsigned int audioId, bool forceRestart );
+		bool stopAudio( unsigned int audioID );
+		bool stopAllAudio( void );
 
-        // Aquire an Audio Source
-        // filename = pass in the sound file to play for this source (ex. "myfile.wav")
-        // audioId   = returns the AudioSource identifier you will need for the PlayAudioSource();
-        bool loadAudio( std::string filename, unsigned int *audioId, bool loop );
-        bool releaseAudio( unsigned int audioID );
+		bool pauseAudio( unsigned int audioID );
+		bool pauseAllAudio( void );
+		bool resumeAudio( unsigned int audioID );
+		bool resumeAllAudio( void );
 
-        // deprecated
-        bool aquireAudioSource( char* file, unsigned int *audioId )
-            { return loadAudio( std::string(file), audioId, false ); };
+		bool setSoundPosition( unsigned int audioID, Ogre::Vector3 position );
 
-        // Returns true if the audio is started from the beginning
-        // false if error or if already playing
-        bool playAudio( unsigned int audioId, bool forceRestart );
-        bool stopAudio( unsigned int audioID );
-        bool stopAllAudio( void );
+		bool setSoundPosition( unsigned int audioID, Ogre::Vector3 position,
+				Ogre::Vector3 velocity, Ogre::Vector3 direction );
 
-        bool pauseAudio( unsigned int audioID );
-        bool pauseAllAudio( void );
-        bool resumeAudio( unsigned int audioID );
-        bool resumeAllAudio( void );
+		bool setSound( unsigned int audioID, Ogre::Vector3 position,
+				Ogre::Vector3 velocity, Ogre::Vector3 direction, float maxDistance,
+				bool playNow, bool forceRestart, float minGain );
 
-        bool setSoundPosition( unsigned int audioID, Vector3 position );
+		bool setListenerPosition( Ogre::Vector3 position, Ogre::Vector3 velocity,
+				Ogre::Quaternion orientation );
 
-        bool setSoundPosition( unsigned int audioID, Vector3 position,
-            Vector3 velocity, Vector3 direction );
-
-        bool setSound( unsigned int audioID, Vector3 position,
-            Vector3 velocity, Vector3 direction, float maxDistance,
-            bool playNow, bool forceRestart, float minGain );
-
-        bool setListenerPosition( Vector3 position, Vector3 velocity,
-            Quaternion orientation );
-
-        bool isOggExtensionPresent( void );
+		bool isOggExtensionPresent( void );
 
 
-        /**
-         * Preload audio files into the system.
-         * Not obligatory, the files can also be loaded on the fly.
-         */
-        bool loadDefaultSounds( std::string filename );
-        // Function to trim the trailing crap from a string.
-        void trimTrailingSpace( char *s );
+		/**
+		 * Preload audio files into the system.
+		 * Not obligatory, the files can also be loaded on the fly.
+		 */
+		bool loadDefaultSounds( std::string filename );
+};
 
- };
-
- #endif /*__SOUNDMANAGER_H__*/
+#endif /*__SOUNDMANAGER_H__*/
