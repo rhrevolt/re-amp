@@ -21,18 +21,19 @@
 #define _INPUTCOMPONENT_H_
 
 #include "core/GameComponent.h"
+#include "core/InputManager.h"
 
 class InputComponent: public GameComponent
 {
 	public:
-		InputComponent(int ID): GameComponent(ID){};
-		~InputComponent() {};
+		InputComponent(int ID);
+		~InputComponent();
 		virtual bool tick(FrameData &fd);
 
 	protected:
 
 	private:
-
+		InputManager* iManager;
 };
 
 #endif // _INPUTCOMPONENT_H_

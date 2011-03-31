@@ -54,8 +54,10 @@ void checkX11Events();
 // Our includes
 #include "core/EventManager.h"
 #include "core/StateManager.h"
+#include "core/SubSystemManager.h"
+#include "core/Singleton.h"
 
-class InputManager: public OIS::KeyListener, public OIS::MouseListener
+class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Ogre::Singleton<InputManager>
 {
 public:
 	InputManager (std::string windowHandle);
@@ -68,13 +70,15 @@ public:
 	void capture (void);
 	bool getStatus(void);
 	void updateTiming(float frameTiming);
-
 	
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
 	bool mouseMoved (const OIS::MouseEvent &arg);
 	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	
+    static InputManager& getSingleton(void);
+    static InputManager* getSingletonPtr(void);
 	;
 
 protected:
