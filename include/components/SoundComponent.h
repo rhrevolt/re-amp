@@ -30,9 +30,9 @@ class SoundComponent: public GameComponent
 		virtual bool tick(FrameData &fd);
 
 	protected:
+        std::map<std::string, unsigned int> audioFiles;
 
 	private:
-        std::map<std::string, unsigned int> audioFiles;
 
 };
 

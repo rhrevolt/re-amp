@@ -21,7 +21,6 @@
 
 
  CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
-
     init();
  }
 
@@ -30,14 +29,14 @@
 
 bool CarSoundComponent::tick(FrameData &fd)
 {
-    pSoundManager->playAudio(audioFiles.find(HONK), true);
+    pSoundManager->playAudio(audioFiles["HONK"], true);
 }
 
 void CarSoundComponent::init()
 {
     pSoundManager = SoundManager::getInstance();
     unsigned int honkId = 0;
-    pSoundManager->loadAudio(HONK, &honkId, false);
+    pSoundManager->loadAudio("honka.wav", &honkId, false);
     pSoundManager->registerComponent(this);
-    audioFiles.insert(HONK, honkId);
+    audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
 }

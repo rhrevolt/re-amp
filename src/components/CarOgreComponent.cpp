@@ -23,9 +23,9 @@
 #include "core/GameComponent.h"
 
 
-void CarOgreComponent::init()
-{
+//void CarOgreComponent::init()
+//{
 	// Draw a car with Ogre
-}
+//}
 
 #endif // _CAROGRECOMPONENT_H_

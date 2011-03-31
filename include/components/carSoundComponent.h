@@ -24,7 +24,6 @@
 #include "core/SoundManager.h"
 #include "core/GameEntity.h"
 
-static std::string HORN = "honka.wav";
 
 class CarSoundComponent: public SoundComponent
 {
@@ -39,6 +38,6 @@ protected:
 private:
     GameEntity* parentEntity;
     SoundManager* pSoundManager;
-}
+};
 
 #endif
