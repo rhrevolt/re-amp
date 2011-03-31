@@ -64,16 +64,14 @@ bool GameEntity::removeComponent(GameComponent* component)
 	return false;
 }
 
+	bool GameEntity::tick(FrameData &fd) {
+		BOOST_FOREACH(GameComponent* comp, componentList)
+		{
+			comp->tick(fd);
+		}
 
-
-bool GameEntity::tick(FrameData &fd) {
-	BOOST_FOREACH(GameComponent* comp, componentList)
-	{
-		comp->tick(fd);
+		return true;
 	}
-
-	return true;
-}
 
 bool GameEntity::receiveMessage(ComponentType comp, int message)
 {

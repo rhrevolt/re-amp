@@ -26,7 +26,7 @@ GameComponent::GameComponent(int componentID, int priority) : componentID(compon
 
 GameComponent::~GameComponent(void) 
 {
-	
+
 }
 
 int GameComponent::getPriority(void)

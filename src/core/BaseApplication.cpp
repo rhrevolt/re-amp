@@ -66,26 +66,6 @@ bool BaseApplication::configure(void)
 	mWindow = mRoot->initialise(true, "Re-Amp");
 	return true;
 }
-//-------------------------------------------------------------------------------------
-void BaseApplication::chooseSceneManager(void)
-{
-	// Get the SceneManager, in this case a generic one
-	mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::createCamera(void)
-{
-	// Create the camera
-	mCamera = mSceneMgr->createCamera("PlayerCam");
-
-	// Position it at 500 in Z direction
-	mCamera->setPosition(Ogre::Vector3(0,0,80));
-	// Look back along -Z
-	mCamera->lookAt(Ogre::Vector3(0,0,-300));
-	mCamera->setNearClipDistance(5);
-
-}
-
 void BaseApplication::shutdownGame(void)
 {
 	mShutDown = true;
@@ -113,21 +93,6 @@ void BaseApplication::createFrameListener(void)
 	mRoot->addFrameListener(this);
 }
 //-------------------------------------------------------------------------------------
-void BaseApplication::destroyScene(void)
-{
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::createViewports(void)
-{
-	// Create one viewport, entire window
-	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-	vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
-
-	// Alter the camera aspect ratio to match the viewport
-	mCamera->setAspectRatio(
-		Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-}
-//-------------------------------------------------------------------------------------
 void BaseApplication::setupResources(void)
 {
 	// Load resource paths from config file
@@ -148,14 +113,9 @@ void BaseApplication::setupResources(void)
 			typeName = i->first;
 			archName = i->second;
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-				archName, typeName, secName);
+					archName, typeName, secName);
 		}
 	}
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::createResourceListener(void)
-{
-
 }
 //-------------------------------------------------------------------------------------
 void BaseApplication::loadResources(void)
@@ -191,10 +151,6 @@ bool BaseApplication::setup(void)
 		return false;
 	}
 
-	chooseSceneManager();
-	createCamera();
-	createViewports();
-
 	// Set default mipmap level (NB some APIs ignore this)
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
@@ -214,27 +170,27 @@ bool BaseApplication::setup(void)
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
-    mainLoopPreRender((FrameData&)evt);
+	mainLoopPreRender((FrameData&)evt);
 	return true;
 }
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 
-    if(mWindow->isClosed()) 
-        return false;
+	if(mWindow->isClosed()) 
+		return false;
 
-    if(mShutDown | !mInputManager->getStatus())
-        return false;
+	if(mShutDown | !mInputManager->getStatus())
+		return false;
 
-    //Need to capture the input system
+	//Need to capture the input system
 	mInputManager->capture();
 	// Tick the input manager
 	mInputManager->tick(evt);
 
-    mainLoopPostRender((FrameData&)evt);
+	mainLoopPostRender((FrameData&)evt);
 
-    return true;
+	return true;
 }
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt)
