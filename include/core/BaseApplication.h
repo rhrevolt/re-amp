@@ -60,14 +60,6 @@ protected:
     virtual void loadResources(void);
 	virtual void shutdownGame(void);
     
-    virtual void mainLoopPreRender(FrameData &fd) = 0; // Override me!
-    virtual void mainLoopPostRender(FrameData &fd) = 0; // Override me!
-
-    // Ogre::FrameListener
-    virtual bool frameStarted(const Ogre::FrameEvent& evt);
-    virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-    virtual bool frameEnded(const Ogre::FrameEvent& evt);
-
     // Ogre::WindowEventListener
     //Adjust mouse clipping area
     virtual void windowResized(Ogre::RenderWindow* rw);

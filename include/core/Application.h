@@ -23,20 +23,22 @@
 #include "core/BaseApplication.h"
 #include "core/StateManager.h"
 
-
-class Application : public Singleton<Application>, public BaseApplication
+class Application : public Singleton<Application>, public BaseApplication, public Ogre::FrameListener
 {
 friend class Singleton<BaseApplication>;
 public:
-    Application(void);
-    virtual ~Application(void);
+	Application(void);
+	virtual ~Application(void);
 
 	Ogre::Root* getRoot(){return mRoot;};
 
 protected:
-    virtual void createScene(void);
-    virtual void mainLoopPreRender(FrameData &fd); 
-    virtual void mainLoopPostRender(FrameData &fd);
+	virtual void createScene(void);
+
+	// Ogre::FrameListener
+	virtual bool frameStarted(const Ogre::FrameEvent& evt);
+	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
 	StateManager* stateMgr;
 };

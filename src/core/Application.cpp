@@ -42,12 +42,37 @@ void Application::createScene(void)
 	stateMgr->newGame();
 }
 
-void Application::mainLoopPreRender(FrameData &fd)
+bool Application::frameStarted(const Ogre::FrameEvent& evt)
 {
+	// Construct a FrameData event
+	FrameData& fd = (FrameData&)evt;
+	fd.frameType = FRAME_PRERENDER;
+	// Tick the state manager
 	stateMgr->tick(fd);
+
+	return true;
 }
 
-void Application::mainLoopPostRender(FrameData &fd)
+bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-    
+	// Check if the window is closed
+	if (mWindow->isClosed()) {
+		return false;
+	}
+
+	// Make sure that we aren't shutting down
+	// TODO: Instead of polling the inputmanager for status, have it listen
+	// for the event
+	if (!mInputManager->getStatus()) {
+		return false;
+	}
+
+	// TODO: fire events to the statemanager
+	return true;
+}
+
+bool Application::frameEnded(const Ogre::FrameEvent& evt) 
+{
+	// TODO: fire events to the statemanager
+	return true;
 }

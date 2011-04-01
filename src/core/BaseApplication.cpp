@@ -91,6 +91,7 @@ void BaseApplication::createFrameListener(void)
 	//Register as a Window listener
 	Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
 
+	// Add ourself (actually, Application) as a frame listener
 	mRoot->addFrameListener(this);
 }
 //-------------------------------------------------------------------------------------
@@ -167,32 +168,6 @@ bool BaseApplication::setup(void)
 
 	return true;
 };
-
-//-------------------------------------------------------------------------------------
-bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
-{
-	mainLoopPreRender((FrameData&)evt);
-	return true;
-}
-
-bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
-{
-
-	if(mWindow->isClosed()) 
-		return false;
-
-	if(mShutDown | !mInputManager->getStatus())
-		return false;
-
-	mainLoopPostRender((FrameData&)evt);
-
-	return true;
-}
-
-bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt)
-{
-	return true;   
-}
 
 //Adjust mouse clipping area
 void BaseApplication::windowResized(Ogre::RenderWindow* rw)

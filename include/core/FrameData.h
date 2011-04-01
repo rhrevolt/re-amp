@@ -22,9 +22,16 @@
 
 #include <OgreFrameListener.h>
 
+typedef enum {
+	FRAME_PRERENDER,
+	FRAME_QUEUED,
+	FRAME_POSTRENDER
+} FrameType;
+
 class FrameData: public Ogre::FrameEvent 
 {
 public:
+	FrameType frameType;
 
 protected:
 
