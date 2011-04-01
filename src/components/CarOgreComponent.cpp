@@ -17,16 +17,10 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CAROGRECOMPONENT_H_
-#define _CAROGRECOMPONENT_H_
-
 #include "core/GameComponent.h"
-//#include "component/CarOgreComponent.h"
+#include "components/CarOgreComponent.h"
 
-/*
 void CarOgreComponent::init()
 {
 	// Draw a car with Ogre
 }
-*/
-#endif // _CAROGRECOMPONENT_H_
