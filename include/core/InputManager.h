@@ -99,6 +99,8 @@ private:
 	bool KEY_RIGHT_DOWN;
 	bool KEY_UP_DOWN;
 	bool KEY_DOWN_DOWN;
+	bool KEY_HORN;
+	bool KEY_FIRE;
 	Ogre::Vector2 bufferedVector;
 
 };

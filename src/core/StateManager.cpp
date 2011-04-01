@@ -24,30 +24,13 @@
 #include "states/InGameState.h"
 #include "states/MainMenuState.h"
 
-StateManager* StateManager::m_pInstance = NULL;
 int StateManager::currentEntityID = 0;
 int StateManager::currentStateID = -1;
-
-StateManager* StateManager::instance()
-{
-	if(!m_pInstance)
-		m_pInstance = new StateManager;
-
-	return m_pInstance;
-}
 
 StateManager::~StateManager() 
 {
 	free(mmState);
 	free(inGameState);
-}
-
-/* Static method which returns a pointer to the current game stateID
- * This should be used to access any global state variables 
- * (such as the sceneMgr) */
-GameState* StateManager::getCurrentState()
-{
-	return instance()->currentState;
 }
 
 void StateManager::switchState(int stateID)
