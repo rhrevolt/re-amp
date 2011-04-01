@@ -33,19 +33,19 @@ PhysicsManager::~PhysicsManager (void)
 {
 	std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
 	while (mBodies.end() != itBody)
-	{   
-		delete *itBody; 
+	{
+		delete *itBody;
 		++itBody;
-	}	
-	
+	}
+
 	// OgreBullet physic delete - Shapes
 	std::deque<OgreBulletCollisions::CollisionShape *>::iterator itShape = mShapes.begin();
 	while (mShapes.end() != itShape)
-	{   
-		delete *itShape; 
+	{
+		delete *itShape;
 		++itShape;
 	}
-	
+
 	mBodies.clear();
 	mShapes.clear();
 	delete mWorld->getDebugDrawer();
@@ -58,14 +58,14 @@ void PhysicsManager::init()
 	//TODO: Change if necessary
 	AxisAlignedBox* bounds = new AxisAlignedBox();
 	Vector3 *gravityVector = new Vector3(0, -1, 0);
-	 
+
 	mNumEntitiesInstanced = 0; // how many shapes are created
 	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
-	 
+
 	// Start Bullet
 	assert(bounds != NULL);
 	assert(mSceneMgr != NULL);
-	 
+
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
 
         // add Debug info display tool
@@ -75,10 +75,10 @@ void PhysicsManager::init()
 	mWorld->setDebugDrawer(debugDrawer);
 	mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
 	SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
-	node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));	
+	node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));
 }
 
-bool PhysicsManager::tick(FrameData &fd) 
+bool PhysicsManager::tick(FrameData &fd)
 {
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
 		comp->tick(fd);
@@ -88,14 +88,22 @@ bool PhysicsManager::tick(FrameData &fd)
 
 	return true;
 }
-	
+
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
-{		
+{
 	componentList.push_back(component);
 	return true;
 }
 
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;
+}
+
+std::deque<OgreBulletDynamics::RigidBody *> * PhysicsManager::getBodies(){
+    return &mBodies;
+}
+
+std::deque<OgreBulletCollisions::CollisionShape *> * PhysicsManager::getShapes(){
+    return &mShapes;
 }
 

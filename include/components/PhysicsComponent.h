@@ -21,19 +21,26 @@
 #define _PHYSICSCOMPONENT_H_
 
 #include "core/GameComponent.h"
+#include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
+#include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
+
+
 
 class PhysicsComponent: public GameComponent
 {
 	public:
 		PhysicsComponent(int ID);
 		~PhysicsComponent();
-		
+		void addRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
+		void addCollisionShape(OgreBulletCollisions::CollisionShape* shape);
+
 		virtual bool tick(FrameData &fd);
 
 	protected:
 
 	private:
-	
+        OgreBulletDynamics::RigidBody* rigidBody;
+        OgreBulletCollisions::CollisionShape* shape;
 };
 
 #endif // _PHYSICSCOMPONENT_H_

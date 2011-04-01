@@ -2,17 +2,17 @@
 /*
  * re-amp
  * Copyright (C)  2011 <>
- * 
+ *
  * re-amp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * re-amp is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,28 +39,30 @@ public:
 	PhysicsManager(void);
 	~PhysicsManager (void);
 
-	void init();	
+	void init();
 	bool tick(FrameData &fd);
 	bool registerComponent(PhysicsComponent* component);
-	
-	OgreBulletDynamics::DynamicsWorld* getWorld();
 
-	
+	OgreBulletDynamics::DynamicsWorld* getWorld();
+	std::deque<OgreBulletDynamics::RigidBody *> * getBodies();
+ 	std::deque<OgreBulletCollisions::CollisionShape *> * getShapes();
+
+
 protected:
 	;
 
 private:
 
-	Ogre::SceneManager* mSceneMgr; 
+	Ogre::SceneManager* mSceneMgr;
  	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
  	OgreBulletCollisions::DebugDrawer *debugDrawer;
  	int mNumEntitiesInstanced;
 
-	std::list<PhysicsComponent*> componentList; 
+	std::list<PhysicsComponent*> componentList;
  	std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
  	std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 
-	bool running; 
+	bool running;
 
 };
 

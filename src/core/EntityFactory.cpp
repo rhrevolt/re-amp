@@ -21,11 +21,15 @@
 #include "core/EntityFactory.h"
 #include "core/GameEntity.h"
 
-#include "components/OgreComponent.h"
 #include "components/InputComponent.h"
 #include "components/CarOgreComponent.h"
 #include "components/CarPhysicsComponent.h"
 #include "components/TerrainOgreComponent.h"
+#include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
+#include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
+#include "components/PhysicsComponent.h"
+#include "core/PhysicsManager.h"
+
 
 GameEntity* EntityFactory::create(std::string name)
 {
@@ -40,8 +44,20 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new InputComponent(0));
 	} else if (name == "terrain") {
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
+		OgreBulletCollisions::CollisionShape *Shape;
+ 		Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
+ 		// a body is needed for the shape
+ 		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
+  												    PhysicsManager::getInstance()->getWorld());
+        PhysicsComponent* physicsComp = new PhysicsComponent(0);
+        ent->addComponent(physicsComp);
+        physicsComp->addCollisionShape(Shape);
+        physicsComp->addRigidBody(defaultPlaneBody);
+        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+
+
 	}
-	
+
 	return ent;
 }
 
