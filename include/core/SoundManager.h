@@ -29,8 +29,9 @@
 #define MAX_AUDIO_SOURCES   16
 #define MAX_FILENAME_LENGTH 40
 
-class SoundManager: public SubSystemManager, public Ogre::Singleton<SoundManager>
+class SoundManager: public Singleton<SoundManager>
 {
+friend class Singleton<SoundManager>;
 	private:
 		bool isInitialised;
 		ALCdevice* mSoundDevice;

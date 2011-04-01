@@ -78,3 +78,8 @@ void StateManager::newGame()
 	inGameState->start();
 }
 
+GameState* StateManager::getCurrentState() 
+{
+	return StateManager::getInstance()->currentState;
+}
+	

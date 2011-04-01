@@ -25,7 +25,6 @@
 #include "core/StateManager.h"
 #include "core/Singleton.h"
 
-
 class SubSystemManager
 {
 friend class Singleton<SubSystemManager>;
@@ -34,10 +33,9 @@ public:
 	virtual bool registerComponent(GameComponent* component) = 0;
 	
 protected:
-	;
+	std::list<GameComponent*> componentList; 
 
 private:
-	std::list<GameComponent*> componentList; 
 
 };
 
