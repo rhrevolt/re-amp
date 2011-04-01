@@ -18,7 +18,7 @@
  */
 
 #include <stdio.h>
-#include "components/RenderingComponent.h"
+#include "components/OgreComponent.h"
 
 bool OgreComponent::tick(FrameData &fd)
 {

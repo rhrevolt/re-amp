@@ -20,7 +20,7 @@
 #ifndef _TERRAINOGRECOMPONENT_H_
 #define _TERRAINOGRECOMPONENT_H_
 
-#include "core/OgreComponent.h"
+#include "components/OgreComponent.h"
 
 class TerrainOgreComponent: public OgreComponent 
 {

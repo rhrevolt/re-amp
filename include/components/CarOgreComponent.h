@@ -20,7 +20,7 @@
 #ifndef _CAROGRECOMPONENT_H_
 #define _CAROGRECOMPONENT_H_
 
-#include "core/OgreComponent.h"
+#include "components/OgreComponent.h"
 
 class CarOgreComponent: public OgreComponent 
 {

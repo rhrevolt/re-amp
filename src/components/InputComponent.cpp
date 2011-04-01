@@ -19,15 +19,16 @@
 
 #include <stdio.h>
 #include "components/InputComponent.h"
+#include "core/InputManager.h"
 
 InputComponent::InputComponent(int ID): GameComponent(ID)
 {
-	InputManager* iManager = InputManager::getInstance();
+	iManager = InputManager::getSingletonPtr();
 	iManager->registerComponent(this);
 }
 
 InputComponent::~InputComponent() {
-	InputManager* iManager = InputManager::getInstance();
+	InputManager* iManager = InputManager::getSingletonPtr();
 	//iManager->unregisterComponent(this);
 };
 
@@ -36,12 +37,12 @@ bool InputComponent::tick(FrameData &fd)
     //move the car as dictated by current input
     //PhysicsComponent.alterMoveVector(iManager.bufferedVector);
 
-    if (iManager.KEY_HORN)
+   // if (iManager->KEY_HORN)
     {
         //SoundComponent.playSound("horn");
     }
 
-    if (iManager.KEY_FIRE)
+    //if (iManager->KEY_FIRE)
     {
         //RenderingComponent.fireWeapon();
     }
