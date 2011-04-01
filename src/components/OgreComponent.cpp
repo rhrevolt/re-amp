@@ -25,4 +25,9 @@ bool OgreComponent::tick(FrameData &fd)
 	//printf("Render\n");
 }
 
+void OgreComponent::init()
+{
+	// Do nothing
+}
+
 

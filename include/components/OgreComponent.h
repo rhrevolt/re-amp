@@ -28,8 +28,6 @@ class OgreComponent: public GameComponent
 		OgreComponent(int ID): GameComponent(ID){};
 		~OgreComponent() {};
 		virtual bool tick(FrameData &fd);
-		
-		//weirnc: When would this normally get called? How is it different from a constructor?
 		virtual void init();
 
 	protected:

@@ -21,6 +21,7 @@
 #include "core/EntityFactory.h"
 #include "core/GameEntity.h"
 
+#include "components/OgreComponent.h"
 #include "components/InputComponent.h"
 #include "components/CarOgreComponent.h"
 #include "components/CarPhysicsComponent.h"
