@@ -23,12 +23,12 @@
 
 InputComponent::InputComponent(int ID): GameComponent(ID)
 {
-	iManager = InputManager::getSingletonPtr();
+	iManager = InputManager::getInstance();
 	iManager->registerComponent(this);
 }
 
 InputComponent::~InputComponent() {
-	InputManager* iManager = InputManager::getSingletonPtr();
+	InputManager* iManager = InputManager::getInstance();
 	//iManager->unregisterComponent(this);
 };
 
