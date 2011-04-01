@@ -82,7 +82,7 @@ public:
 	
     static InputManager& getSingleton(void);
     static InputManager* getSingletonPtr(void);
-	;
+
 
 protected:
 	;
@@ -106,6 +106,7 @@ private:
 	bool KEY_FIRE;
 	Ogre::Vector2 bufferedVector;
 
+	//std::list<InputComponent*> componentList;
 };
 
 #endif // _INPUT_MANAGER_H_

@@ -30,6 +30,8 @@
 
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
+#include "core/StateManager.h"
+
 #include <OgreSceneQuery.h>
 
 

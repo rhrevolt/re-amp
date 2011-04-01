@@ -30,8 +30,7 @@ class InputComponent: public GameComponent
 		~InputComponent();
 		virtual bool tick(FrameData &fd);
 
-	protected:
-
+	
 	private:
 		InputManager* iManager;
 };

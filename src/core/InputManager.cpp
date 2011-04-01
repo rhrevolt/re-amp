@@ -65,6 +65,12 @@ void InputManager::shutdownManager(void)
 	}
 }
 
+bool InputManager::registerComponent(GameComponent* pInputComponent)
+{
+	//componentList.push_front((InputComponent*)pInputComponent);
+	return 1;
+}
+
 void InputManager::capture(void)
 {
 	mKeyboard->capture();
