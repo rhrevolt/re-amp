@@ -21,7 +21,7 @@
 #define _CAROGRECOMPONENT_H_
 
 #include "core/GameComponent.h"
-#include "component/CarOgreComponent.h"
+//#include "component/CarOgreComponent.h"
 
 /*
 void CarOgreComponent::init()
