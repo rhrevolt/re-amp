@@ -138,8 +138,6 @@ void BaseApplication::go(void)
 
 	mRoot->startRendering();
 
-	// clean up
-	destroyScene();
 }
 //-------------------------------------------------------------------------------------
 bool BaseApplication::setup(void)
@@ -156,13 +154,8 @@ bool BaseApplication::setup(void)
 	// Set default mipmap level (NB some APIs ignore this)
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-	// Create any resource listeners (for loading screens)
-	createResourceListener();
 	// Load resources
 	loadResources();
-
-	// Create the scene
-	createScene();
 
 	createFrameListener();
 

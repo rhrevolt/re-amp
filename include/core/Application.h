@@ -23,7 +23,7 @@
 #include "core/BaseApplication.h"
 #include "core/StateManager.h"
 
-class Application : public Singleton<Application>, public BaseApplication, public Ogre::FrameListener
+class Application : public Singleton<Application>, public BaseApplication
 {
 friend class Singleton<BaseApplication>;
 public:

@@ -49,14 +49,8 @@ public:
 protected:
     virtual bool setup();
     virtual bool configure(void);
-    virtual void chooseSceneManager(void);
-    virtual void createCamera(void);
     virtual void createFrameListener(void);
-    virtual void createScene(void) = 0; // Override me!
-    virtual void destroyScene(void);
-    virtual void createViewports(void);
     virtual void setupResources(void);
-    virtual void createResourceListener(void);
     virtual void loadResources(void);
 	virtual void shutdownGame(void);
     
