@@ -57,8 +57,9 @@ void checkX11Events();
 #include "core/SubSystemManager.h"
 #include "core/Singleton.h"
 
-class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Ogre::Singleton<InputManager>
+class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Singleton<InputManager>
 {
+friend class Singleton<InputManager>;
 public:
 	InputManager (std::string windowHandle);
 	~InputManager (void);
