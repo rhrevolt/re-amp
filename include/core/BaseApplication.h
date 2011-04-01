@@ -84,7 +84,6 @@ protected:
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
 
-    //OIS Input devices
     InputManager* mInputManager;
 
 };

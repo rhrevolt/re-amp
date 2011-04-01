@@ -33,7 +33,6 @@ public:
 	SubSystemManager(void);
 	~SubSystemManager(void);
 
-	virtual void init() = 0;	
 	virtual bool tick(FrameData &fd) = 0;
 	virtual bool registerComponent(GameComponent* component) = 0;
 	

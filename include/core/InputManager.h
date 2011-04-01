@@ -61,10 +61,12 @@ class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS
 {
 friend class Singleton<InputManager>;
 public:
-	InputManager (std::string windowHandle);
+	InputManager ();
 	~InputManager (void);
 
-	void tick(const Ogre::FrameEvent& evt);
+	void init(std::string windowHandle);
+	bool tick(FrameData&);
+	bool registerComponent(GameComponent*);
 	
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
