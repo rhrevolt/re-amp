@@ -96,6 +96,8 @@ class SoundManager: public SubSystemManager, public Ogre::Singleton<SoundManager
 		// careful : testSound should not be used it doesn't use the resource limitation
 		void testSound( const char* wavFile );
 
+		void changePitch(float pitch, unsigned int audioId);
+
 		// Aquire an Audio Source
 		// filename = pass in the sound file to play for this source (ex. "myfile.wav")
 		// audioId   = returns the AudioSource identifier you will need for the PlayAudioSource();
