@@ -37,6 +37,18 @@ void InputManager::init(std::string windowHandle) {
 	OIS::ParamList parameterList;
 	// Insert the Window ID
 	parameterList.insert(std::make_pair(std::string("WINDOW"), windowHandle));
+	// Make the input manager nonexclusive
+#if defined OIS_WIN32_PLATFORM
+	paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+	paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+	paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+	paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+#elif defined OIS_LINUX_PLATFORM
+	paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+	paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+	paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+	paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+#endif
 	// Initialize the input manager and the keyboard/mouse
 	oisInputManager = OIS::InputManager::createInputSystem (parameterList);
 	mKeyboard = static_cast<OIS::Keyboard*>(oisInputManager->createInputObject (OIS::OISKeyboard, true));
