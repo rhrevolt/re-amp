@@ -82,7 +82,7 @@ void BaseApplication::createFrameListener(void)
 	mWindow->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 
-	mInputManager = new InputManager();
+	mInputManager = InputManager::getInstance();
 	mInputManager->init(windowHndStr.str());
 
 	//Set initial mouse clipping size

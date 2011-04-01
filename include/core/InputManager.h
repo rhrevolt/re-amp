@@ -61,9 +61,6 @@ class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS
 {
 friend class Singleton<InputManager>;
 public:
-	InputManager ();
-	~InputManager (void);
-
 	void init(std::string windowHandle);
 	bool tick(FrameData&);
 	bool registerComponent(GameComponent*);
@@ -79,15 +76,14 @@ public:
 	bool mouseMoved (const OIS::MouseEvent &arg);
 	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
-	
-    static InputManager& getSingleton(void);
-    static InputManager* getSingletonPtr(void);
 
 
 protected:
 	;
 
 private:
+	InputManager ();
+	~InputManager (void);
 	int bufferedTicks;
 	
 	OIS::InputManager* oisInputManager;
