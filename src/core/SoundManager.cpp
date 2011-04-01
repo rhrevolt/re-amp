@@ -190,6 +190,12 @@ bool SoundManager::init( void )
 }
 
 /****************************************************************************/
+ void SoundManager::changePitch(float pitch, unsigned int audioId)
+ {
+    alSourcef(mAudioSources[audioId], AL_PITCH, pitch);
+ }
+
+/****************************************************************************/
 bool SoundManager::checkALError( void )
 {
 	ALenum errCode;
