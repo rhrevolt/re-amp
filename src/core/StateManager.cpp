@@ -24,17 +24,8 @@
 #include "states/InGameState.h"
 #include "states/MainMenuState.h"
 
-StateManager* StateManager::m_pInstance = NULL;
 int StateManager::currentEntityID = 0;
 int StateManager::currentStateID = -1;
-
-StateManager* StateManager::instance()
-{
-	if(!m_pInstance)
-		m_pInstance = new StateManager;
-
-	return m_pInstance;
-}
 
 StateManager::~StateManager() 
 {
@@ -47,7 +38,7 @@ StateManager::~StateManager()
  * (such as the sceneMgr) */
 GameState* StateManager::getCurrentState()
 {
-	return instance()->currentState;
+	return getInstance()->currentState;
 }
 
 void StateManager::switchState(int stateID)

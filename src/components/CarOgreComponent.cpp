@@ -21,12 +21,9 @@
 #define _CAROGRECOMPONENT_H_
 
 #include "core/GameComponent.h"
-<<<<<<< HEAD
+#include "component/CarOgreComponent.h"
 
-
-=======
 /*
->>>>>>> Commented out class with no header
 void CarOgreComponent::init()
 {
 	// Draw a car with Ogre
