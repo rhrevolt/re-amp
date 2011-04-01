@@ -17,19 +17,12 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CAROGRECOMPONENT_H_
-#define _CAROGRECOMPONENT_H_
+#include <stdio.h>
+#include "components/OgreComponent.h"
 
-#include "core/GameComponent.h"
-<<<<<<< HEAD
-
-
-=======
-/*
->>>>>>> Commented out class with no header
-void CarOgreComponent::init()
+bool OgreComponent::tick(FrameData &fd)
 {
-	// Draw a car with Ogre
+	//printf("Render\n");
 }
-*/
-#endif // _CAROGRECOMPONENT_H_
+
+
