@@ -30,9 +30,6 @@ class SubSystemManager
 {
 friend class Singleton<SubSystemManager>;
 public:
-	SubSystemManager(void);
-	~SubSystemManager(void);
-
 	virtual bool tick(FrameData &fd) = 0;
 	virtual bool registerComponent(GameComponent* component) = 0;
 	
