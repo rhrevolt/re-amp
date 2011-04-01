@@ -27,6 +27,10 @@
 int StateManager::currentEntityID = 0;
 int StateManager::currentStateID = -1;
 
+StateManager::StateManager()
+{
+}
+
 StateManager::~StateManager() 
 {
 	free(mmState);

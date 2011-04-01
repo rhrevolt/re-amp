@@ -61,7 +61,7 @@ protected:
 	static int		currentStateID;
 	
 private:
-	StateManager(){};
+	StateManager();
 	~StateManager();
 };
 
