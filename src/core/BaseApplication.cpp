@@ -82,7 +82,8 @@ void BaseApplication::createFrameListener(void)
 	mWindow->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 
-	mInputManager = new InputManager (windowHndStr.str());
+	mInputManager = new InputManager();
+	mInputManager->init(windowHndStr.str());
 
 	//Set initial mouse clipping size
 	windowResized(mWindow);
@@ -182,11 +183,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 	if(mShutDown | !mInputManager->getStatus())
 		return false;
-
-	//Need to capture the input system
-	mInputManager->capture();
-	// Tick the input manager
-	mInputManager->tick(evt);
 
 	mainLoopPostRender((FrameData&)evt);
 

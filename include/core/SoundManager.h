@@ -22,12 +22,14 @@
 #include <OgreQuaternion.h>
 
 #include "components/SoundComponent.h"
+#include "core/Singleton.h"
+#include "core/SubSystemManager.h"
 
 #define MAX_AUDIO_BUFFERS   64
 #define MAX_AUDIO_SOURCES   16
 #define MAX_FILENAME_LENGTH 40
 
-class SoundManager
+class SoundManager: public SubSystemManager, public Ogre::Singleton<SoundManager>
 {
 	private:
 		bool isInitialised;
@@ -69,15 +71,15 @@ class SoundManager
 	public:
 		static SoundManager* mSoundManager;
 
-		void tick(FrameData &fd);
+		bool tick(FrameData &fd);
 
 		SoundManager( void );
 		virtual ~SoundManager( void );
 		void selfDestruct( void );
 		static SoundManager* getInstance( void );
 		static SoundManager* getSingletonPtr( void ) { return mSoundManager; };
-		int registerComponent(SoundComponent* pSoundComponent);
-		int unregisterComponent(SoundComponent* pSoundComponent);
+		bool registerComponent(GameComponent* pSoundComponent);
+		bool unregisterComponent(GameComponent* pSoundComponent);
 
 		bool init( void );
 		bool getIsSoundOn( void ) { return isSoundOn; };

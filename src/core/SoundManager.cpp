@@ -10,7 +10,7 @@
 SoundManager* SoundManager::mSoundManager = NULL;
 
 /****************************************************************************/
-void SoundManager::tick(FrameData &fd)
+bool SoundManager::tick(FrameData &fd)
 {
 	BOOST_FOREACH(SoundComponent* comp, componentList) {
 		comp->tick(fd);
@@ -18,17 +18,17 @@ void SoundManager::tick(FrameData &fd)
 }
 
 /****************************************************************************/
-int SoundManager::registerComponent(SoundComponent* pSoundComponent)
+bool SoundManager::registerComponent(GameComponent* pSoundComponent)
 {
-	componentList.push_front(pSoundComponent);
+	componentList.push_front((SoundComponent*)pSoundComponent);
 	return 1;
 }
 
 /****************************************************************************/
 
-int SoundManager::unregisterComponent(SoundComponent* pSoundComponent)
+bool SoundManager::unregisterComponent(GameComponent* pSoundComponent)
 {
-	componentList.remove(pSoundComponent);
+	componentList.remove((SoundComponent*)pSoundComponent);
 	return 1;
 }
 

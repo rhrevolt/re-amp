@@ -33,6 +33,7 @@ InGameState::InGameState()
 	GameSceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
 	
 	physicsManager = PhysicsManager::getInstance();
+	inputManager = InputManager::getInstance();
 }	
 
 InGameState::~InGameState()
@@ -55,6 +56,8 @@ void InGameState::start()
 
 void InGameState::tick(FrameData &fd)
 {
+	inputManager->capture();
+	inputManager->tick(fd);
 	physicsManager->tick(fd);
 	
 	BOOST_FOREACH(GameEntity* ent, entityList) {

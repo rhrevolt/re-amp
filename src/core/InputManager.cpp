@@ -22,7 +22,7 @@
 #define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
 #define BUFFER_TIME_INTERVAL 0.1f // in seconds
 
-InputManager::InputManager (std::string windowHandle) :
+InputManager::InputManager () :
 	running(true),
 	bufferedTicks(0),
 	KEY_DOWN_DOWN(false),
@@ -31,6 +31,9 @@ InputManager::InputManager (std::string windowHandle) :
 	KEY_RIGHT_DOWN(false),
 	currentFrameDelay(0.01f)
 {
+}
+
+void InputManager::init(std::string windowHandle) {
 	OIS::ParamList parameterList;
 	// Insert the Window ID
 	parameterList.insert(std::make_pair(std::string("WINDOW"), windowHandle));
@@ -84,7 +87,7 @@ void InputManager::updateClippingArea (unsigned int width, unsigned int height)
 	}
 }
 
-void InputManager::tick(const Ogre::FrameEvent& evt) {
+bool InputManager::tick(FrameData& evt) {
 	// Increment the number of ticks we've incremented
 	bufferedTicks++;
 
