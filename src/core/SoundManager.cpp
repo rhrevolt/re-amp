@@ -12,7 +12,7 @@ SoundManager* SoundManager::mSoundManager = NULL;
 /****************************************************************************/
 bool SoundManager::tick(FrameData &fd)
 {
-	BOOST_FOREACH(SoundComponent* comp, componentList) {
+    BOOST_FOREACH(SoundComponent* comp, componentList) {
 		comp->tick(fd);
 	}
 }

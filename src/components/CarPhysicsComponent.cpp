@@ -159,7 +159,7 @@ void CarPhysicsComponent::createVehicle(){
 
 	mCarChassis = new WheeledRigidBody("carChassis", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape (node, compound, 0.6, 0.6, 800, Ogre::Vector3(15, 3,-15), Quaternion::IDENTITY);
+	mCarChassis->setShape (node, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();

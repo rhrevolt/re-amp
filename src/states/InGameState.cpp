@@ -34,6 +34,7 @@ InGameState::InGameState()
 	
 	physicsManager = PhysicsManager::getInstance();
 	inputManager = InputManager::getInstance();
+	soundManager = SoundManager::getInstance();
 }	
 
 InGameState::~InGameState()
@@ -59,6 +60,7 @@ void InGameState::tick(FrameData &fd)
 	inputManager->capture();
 	inputManager->tick(fd);
 	physicsManager->tick(fd);
+	soundManager->tick(fd);
 	
 	BOOST_FOREACH(GameEntity* ent, entityList) {
 		ent->tick(fd);

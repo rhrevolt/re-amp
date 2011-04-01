@@ -23,6 +23,7 @@
 #include "core/GameState.h"
 #include "core/PhysicsManager.h"
 #include "core/InputManager.h"
+#include "core/SoundManager.h"
 
 const int INGAMESTATE_ID = 1;
 
@@ -42,9 +43,11 @@ public:
 protected:
 
 private:
+	Ogre::SceneManager* GameSceneMgr;
+	
 	InputManager* inputManager;
 	PhysicsManager* physicsManager;
-	Ogre::SceneManager* GameSceneMgr;
+	SoundManager* soundManager;
 
 };
 

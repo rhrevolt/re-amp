@@ -31,6 +31,7 @@ public:
 	virtual ~Application(void);
 
 	Ogre::Root* getRoot(){return mRoot;};
+    Ogre::RenderWindow* getWindow(){return mWindow;};
 
 protected:
 	virtual void createScene(void);

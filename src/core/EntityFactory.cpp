@@ -20,15 +20,18 @@
 #include <string>
 #include "core/EntityFactory.h"
 #include "core/GameEntity.h"
+#include "core/PhysicsManager.h"
 
 #include "components/InputComponent.h"
 #include "components/CarOgreComponent.h"
 #include "components/CarPhysicsComponent.h"
 #include "components/TerrainOgreComponent.h"
+#include "components/PhysicsComponent.h"
+#include "components/CameraComponent.h"
+#include "components/CarSoundComponent.h"
+
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
-#include "components/PhysicsComponent.h"
-#include "core/PhysicsManager.h"
 
 
 GameEntity* EntityFactory::create(std::string name)
@@ -38,10 +41,14 @@ GameEntity* EntityFactory::create(std::string name)
 	// TODO: Perhaps this should be generated from a file?
 	if (name == ("example")) {
 		ent->addComponent((GameComponent*) new OgreComponent(0));
+		
 	} else if (name == "playerCar") {
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new InputComponent(0));
+		ent->addComponent((GameComponent*) new CameraComponent(0));
+		ent->addComponent((GameComponent*) new CarSoundComponent(0));
+		
 	} else if (name == "terrain") {
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
 		OgreBulletCollisions::CollisionShape *Shape;

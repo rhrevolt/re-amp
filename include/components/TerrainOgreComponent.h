@@ -25,9 +25,9 @@
 class TerrainOgreComponent: public OgreComponent 
 {
 	public:
-		TerrainOgreComponent(int ID): OgreComponent(ID){};
+		TerrainOgreComponent(int ID): OgreComponent(ID){init();};
 		~TerrainOgreComponent() {};
-		void init();
+		virtual void init();
 
 	protected:
 
