@@ -33,14 +33,6 @@ StateManager::~StateManager()
 	free(inGameState);
 }
 
-/* Static method which returns a pointer to the current game stateID
- * This should be used to access any global state variables 
- * (such as the sceneMgr) */
-GameState* StateManager::getCurrentState()
-{
-	return getInstance()->currentState;
-}
-
 void StateManager::switchState(int stateID)
 {
 	GameState* oldState = currentState;
