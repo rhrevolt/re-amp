@@ -25,6 +25,12 @@ InputComponent::InputComponent(int ID): GameComponent(ID)
 {
 	iManager = InputManager::getInstance();
 	iManager->registerComponent(this);
+	// Register with the event manager
+	EventTypeList evts;
+	evts.push_back(EVENT_ACCELERATION);
+	evts.push_back(EVENT_KEYDOWN);
+	evts.push_back(EVENT_KEYUP);
+	EventManager::instance()->registerEntity(componentID, evts);
 }
 
 InputComponent::~InputComponent() {
@@ -34,24 +40,12 @@ InputComponent::~InputComponent() {
 
 bool InputComponent::tick(FrameData &fd)
 {
-    //move the car as dictated by current input
-    //PhysicsComponent.alterMoveVector(iManager.bufferedVector);
-
-   // if (iManager->KEY_HORN)
-    {
-        //SoundComponent.playSound("horn");
-    }
-
-    //if (iManager->KEY_FIRE)
-    {
-        //RenderingComponent.fireWeapon();
-    }
-    /*
-    TODO: Retrieve the input list from iManager
-          Process each input, sending commands to the other components
-          For movement commands, send action to physicsComponent
-          For sounds (horn), send to soundComponent
-    */
-
-
+	// Poll the event manager for vectors
+	std::list<Event> evts = EventManager::instance()->pullEvent(componentID);
+	BOOST_FOREACH(Event evt, evts) 
+	{
+		if (evt.eventType == EVENT_ACCELERATION) {
+			InputEvent* iEvt = static_cast<InputEvent*>(&evt);
+		}
+	}
 }

@@ -105,4 +105,9 @@ private:
 	//std::list<InputComponent*> componentList;
 };
 
+struct InputEvent : public Event 
+{
+	Ogre::Vector2 vector;
+};
+
 #endif // _INPUT_MANAGER_H_

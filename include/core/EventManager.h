@@ -29,13 +29,12 @@ using namespace std;
 
 typedef enum {
 	EVENT_DAMAGE,
-	EVENT_ACCELERATE,
 	EVENT_SHUTDOWN,
-	EVENT_DECELERATE,
-	EVENT_LEFT_TURN,
 	EVENT_HORN,
-	EVENT_RIGHT_TURN,
-	EVENT_FIRE
+	EVENT_FIRE,
+	EVENT_ACCELERATION,
+	EVENT_KEYDOWN,
+	EVENT_KEYUP
 } EventType;
 
 typedef std::list<EventType> EventTypeList;
