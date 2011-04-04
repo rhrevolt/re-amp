@@ -74,6 +74,8 @@ void InputManager::shutdownManager(void)
 		oisInputManager->destroyInputObject (mMouse);
 		OIS::InputManager::destroyInputSystem (oisInputManager);
 		oisInputManager = 0;
+		mKeyboard = 0;
+		mMouse = 0;
 	}
 }
 
@@ -85,8 +87,10 @@ bool InputManager::registerComponent(GameComponent* pInputComponent)
 
 void InputManager::capture(void)
 {
-	mKeyboard->capture();
-	mMouse->capture();
+	if (mKeyboard)
+		mKeyboard->capture();
+	if (mMouse)
+		mMouse->capture();
 }
 
 bool InputManager::getStatus(void)
