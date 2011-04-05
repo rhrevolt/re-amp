@@ -31,10 +31,12 @@ EventManager* EventManager::instance()
 
 EventManager::EventManager()
 {
+	
 }
 
 EventManager::~EventManager(void)
 {
+
 }
 
 /* pushEvent
