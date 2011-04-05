@@ -24,47 +24,47 @@
 
 
 /*
-	GameSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-    GameSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+   GameSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
+   GameSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-	Ogre::Light* pointLight = GameSceneMgr->createLight("pointLight");
-    pointLight->setType(Ogre::Light::LT_POINT);
-    pointLight->setPosition(Ogre::Vector3(100, 150, 250));
+   Ogre::Light* pointLight = GameSceneMgr->createLight("pointLight");
+   pointLight->setType(Ogre::Light::LT_POINT);
+   pointLight->setPosition(Ogre::Vector3(100, 150, 250));
 
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+   Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
-    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+   Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+   plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
-    Ogre::Entity* entGround = GameSceneMgr->createEntity("GroundEntity", "ground");
-    GameSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
+   Ogre::Entity* entGround = GameSceneMgr->createEntity("GroundEntity", "ground");
+   GameSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
 
-    entGround->setCastShadows(false);
-*/
-	
+   entGround->setCastShadows(false);
+   */
+
 
 void TerrainOgreComponent::init()
 {
 	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
-	
+
 	// Copy-pasted from the tutorials, need to tweak
 	sMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-    sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-	
+	sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
-    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane, 15000, 15000, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			plane, 15000, 15000, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
-    Ogre::Entity* entGround =sMgr->createEntity("GroundEntity", "ground");
-    sMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
+	Ogre::Entity* entGround =sMgr->createEntity("GroundEntity", "ground");
+	sMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
 
-    entGround->setCastShadows(false);
+	entGround->setCastShadows(false);
 
-    Ogre::Light* pointLight = sMgr->createLight("pointLight");
-    pointLight->setType(Ogre::Light::LT_POINT);
-    pointLight->setPosition(Ogre::Vector3(0, 150, 250));
+	Ogre::Light* pointLight = sMgr->createLight("pointLight");
+	pointLight->setType(Ogre::Light::LT_POINT);
+	pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
-    pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-    pointLight->setSpecularColour(1.0, 0.0, 0.0);
+	pointLight->setDiffuseColour(1.0, 0.0, 0.0);
+	pointLight->setSpecularColour(1.0, 0.0, 0.0);
 }

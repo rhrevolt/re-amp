@@ -44,9 +44,9 @@ class GameComponent
 		
 	protected:
 		GameEntity* parentEntity;
-		
-	private:
 		int componentID;
+
+	private:
 		int priority; //TODO: Remove?
 		
 		

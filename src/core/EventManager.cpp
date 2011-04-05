@@ -67,7 +67,6 @@ std::list<Event> EventManager::pullEvent(int entityID)
 		{
 			if (pair.first == entityID)
 			{
-				
 				BOOST_FOREACH(EventType eventType, pair.second)
 				{
 					if (eventType == event.eventType)

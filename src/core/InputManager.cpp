@@ -18,6 +18,7 @@
  */
 
 #include "core/InputManager.h"
+#include "components/InputComponent.h"
 
 #define KEYBOARD_INCREMENT 0.1f // How much to increment acceleration vector per cycle.
 #define BUFFER_TIME_INTERVAL 0.1f // in seconds
@@ -74,19 +75,22 @@ void InputManager::shutdownManager(void)
 		oisInputManager->destroyInputObject (mMouse);
 		OIS::InputManager::destroyInputSystem (oisInputManager);
 		oisInputManager = 0;
+		mKeyboard = 0;
+		mMouse = 0;
 	}
 }
 
 bool InputManager::registerComponent(GameComponent* pInputComponent)
 {
-	//componentList.push_front((InputComponent*)pInputComponent);
-	return 1;
+	componentList.push_front((InputComponent*)pInputComponent);
 }
 
 void InputManager::capture(void)
 {
-	mKeyboard->capture();
-	mMouse->capture();
+	if (mKeyboard)
+		mKeyboard->capture();
+	if (mMouse)
+		mMouse->capture();
 }
 
 bool InputManager::getStatus(void)
@@ -121,7 +125,12 @@ bool InputManager::tick(FrameData& evt) {
 
 	// Check if we've buffered enough.
 	if (bufferedTicks >= (BUFFER_TIME_INTERVAL / currentFrameDelay)) {;
-		// TODO: Create a new buffer event
+		// Push an event to the event manager
+		InputEvent iEvt;
+		iEvt.toID = -1;
+		iEvt.vector.x = bufferedVector.x;
+		iEvt.vector.y = bufferedVector.y;
+		EventManager::instance()->pushEvent(iEvt);
 
 		// Dump to console
 		printf("Buffered Vector: (%f, %f)\n", bufferedVector.x,
@@ -140,6 +149,12 @@ bool InputManager::tick(FrameData& evt) {
 			currentFrameDelay = evt.timeSinceLastFrame;
 		printf("New max tick count: %f\n",
 				(BUFFER_TIME_INTERVAL / currentFrameDelay));
+	}
+
+	// Tick all of the components
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		comp->tick(evt);
 	}
 
 }

@@ -41,26 +41,26 @@ GameEntity* EntityFactory::create(std::string name)
 	// TODO: Perhaps this should be generated from a file?
 	if (name == ("example")) {
 		ent->addComponent((GameComponent*) new OgreComponent(0));
-		
+
 	} else if (name == "playerCar") {
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new InputComponent(0));
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
-		
+
 	} else if (name == "terrain") {
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
 		OgreBulletCollisions::CollisionShape *Shape;
- 		Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
- 		// a body is needed for the shape
- 		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
-  												    PhysicsManager::getInstance()->getWorld());
-        PhysicsComponent* physicsComp = new PhysicsComponent(0);
-        ent->addComponent(physicsComp);
-        physicsComp->addCollisionShape(Shape);
-        physicsComp->addRigidBody(defaultPlaneBody);
-        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+		Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
+		// a body is needed for the shape
+		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
+				PhysicsManager::getInstance()->getWorld());
+		PhysicsComponent* physicsComp = new PhysicsComponent(0);
+		ent->addComponent(physicsComp);
+		physicsComp->addCollisionShape(Shape);
+		physicsComp->addRigidBody(defaultPlaneBody);
+		defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
 
 
 	}
