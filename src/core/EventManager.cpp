@@ -85,12 +85,29 @@ std::list<Event> EventManager::pullEvent(int entityID)
 /* registerEntity
  * Params: entityID, eventTypes
  * Returns: success
- * Description: Takes an entityID and a list of eventTypes and registers that entity
- * 				for any Events of that type to be pulled in the future.
+ * Description: Takes an entityID and a list of eventTypes and registers that
+ * 				entity for any Events of that type to be pulled in the future.
  */
 bool EventManager::registerEntity(int entityID, EventTypeList eventTypes)
 {
 	// register a component for a specific event type
 	registeredEntities.insert(IDTypePair(entityID, eventTypes));	
+	return true;
+}
+
+/* unRegisterEntity
+ * Params: entityID, eventTypes
+ * Returns: success
+ * Description: Takes an entityID and a list of event types and unregisters the
+ * 				entity for any Events of that type to be pulled in the future.
+ */
+bool EventManager::unRegisterEntity(int entityID, EventTypeList eventTypes)
+{
+	// register a component for a specific event type
+	if (!registeredEntities.empty())
+	{
+		return false;
+	}
+	registeredEntities.erase(entityID);	
 	return true;
 }

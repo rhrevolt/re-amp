@@ -60,6 +60,7 @@ class EventManager
 		bool pushEvent(Event event);
 		std::list<Event> pullEvent(int entityID);
 		bool registerEntity(int entityID, EventTypeList eventTypes);
+		bool unRegisterEntity(int entityID, EventTypeList eventTypes);
 	private:
 		static EventManager* m_instance;
 		// Circular buffer of events waiting to be pulled
@@ -68,7 +69,7 @@ class EventManager
 		// associated with an entity
 
 		//TODO: Rething this implementation
-		std::multimap<int, EventTypeList> registeredEntities;
+		std::map<int, EventTypeList> registeredEntities;
 
 };
 
