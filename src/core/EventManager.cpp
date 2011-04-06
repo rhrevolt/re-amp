@@ -73,7 +73,6 @@ std::list<Event> EventManager::pullEvent(int entityID)
 				{
 					if (eventType == event.eventType)
 					{
-						// Pass reference to message to appropriate component
 						eventList.push_back(event);
 					} 
 				}

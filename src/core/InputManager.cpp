@@ -130,6 +130,7 @@ bool InputManager::tick(FrameData& evt) {
 		iEvt.toID = -1;
 		iEvt.vector.x = bufferedVector.x;
 		iEvt.vector.y = bufferedVector.y;
+		iEvt.eventType = EVENT_ACCELERATION;
 		EventManager::instance()->pushEvent(iEvt);
 
 		// Dump to console

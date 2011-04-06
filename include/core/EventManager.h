@@ -34,7 +34,8 @@ typedef enum {
 	EVENT_FIRE,
 	EVENT_ACCELERATION,
 	EVENT_KEYDOWN,
-	EVENT_KEYUP
+	EVENT_KEYUP,
+	EVENT_FIRED
 } EventType;
 
 typedef std::list<EventType> EventTypeList;
