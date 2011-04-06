@@ -20,10 +20,9 @@
 #ifndef _CARPHYSICSCOMPONENT_H_
 #define _CARPHYSICSCOMPONENT_H_
 
+#include <Ogre.h>
 #include "components/PhysicsComponent.h"
 #include "core/PhysicsManager.h"
-
-static int mNumEntitiesInstanced = 0;
 
 class CarPhysicsComponent: public PhysicsComponent
 {
@@ -32,7 +31,7 @@ public:
 	~CarPhysicsComponent();
 	virtual bool tick(FrameData &fd);
 	void init();
-	void createVehicle();
+	void createVehicle(Ogre::SceneNode *carNode, Ogre::Vector3 chassisShift, Ogre::SceneNode *mWheelNodes[4]);
 
 protected:
 
@@ -58,12 +57,6 @@ private:
     OgreBulletDynamics::VehicleTuning	        *mTuning;
     OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
     OgreBulletDynamics::RaycastVehicle	        *mVehicle;
-
-    Ogre::Entity    *mChassis;
-    Ogre::Entity    *mWheels[4];
-    Ogre::SceneNode *mWheelNodes[4];
-
-	Ogre::SceneManager *mSceneMgr;
 
     int mWheelsEngine[4];
     int mWheelsEngineCount;

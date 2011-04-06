@@ -43,6 +43,12 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new OgreComponent(0));
 
 	} else if (name == "playerCar") {
+		
+		CarOgreComponent* carOgre = new CarOgreComponent(0);
+		carOgre->init();
+		CarPhysicsComponent* carPhysics = new CarPhysicsComponent(0);
+		carPhysics->createVehicle(carOgre->carNode, carOgre->chassisShift, carOgre->mWheelNodes);
+		
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new InputComponent(0));
@@ -53,6 +59,10 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
 		OgreBulletCollisions::CollisionShape *Shape;
 		Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
+		
+		/* CONSIDER weirnc-comment: Should the below be put in some type of "TerrainPhysicsComponent" class? 
+		 * This seems like a weird place to put it.*/
+		
 		// a body is needed for the shape
 		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
 				PhysicsManager::getInstance()->getWorld());

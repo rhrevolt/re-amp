@@ -48,8 +48,8 @@ void TerrainOgreComponent::init()
 	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
 	// Copy-pasted from the tutorials, need to tweak
-	sMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-	sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	//sMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
+	//sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
@@ -61,10 +61,11 @@ void TerrainOgreComponent::init()
 
 	entGround->setCastShadows(false);
 
+/*
 	Ogre::Light* pointLight = sMgr->createLight("pointLight");
 	pointLight->setType(Ogre::Light::LT_POINT);
 	pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
 	pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-	pointLight->setSpecularColour(1.0, 0.0, 0.0);
+	pointLight->setSpecularColour(1.0, 0.0, 0.0); */
 }

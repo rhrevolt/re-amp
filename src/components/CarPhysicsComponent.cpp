@@ -32,9 +32,6 @@
 
 #include "core/StateManager.h"
 
-#include <OgreSceneQuery.h>
-
-
 //TODO: What does these do?
 #define CUBE_HALF_EXTENTS 0.5
 #define GEOMETRY_QUERY_MASK 0
@@ -44,8 +41,6 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
-
 	gMaxEngineForce = 3000.f;
 
 	gSteeringIncrement = 0.04f;
@@ -64,7 +59,6 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gFrictionSlip = 10.5;
 
 	init();
-	createVehicle();
 };
 
 CarPhysicsComponent::~CarPhysicsComponent() {
@@ -132,34 +126,17 @@ void CarPhysicsComponent::init() {
 	mSteering = 0;
 }
 
-void CarPhysicsComponent::createVehicle(){
-	const Ogre::Vector3 chassisShift(0, 1.0, 0);
+void CarPhysicsComponent::createVehicle(SceneNode *carNode, Vector3 chassisShift, Ogre::SceneNode *mWheelNodes[4]) {
+	
 	float connectionHeight = 0.7f;
-
-	mChassis = mSceneMgr->createEntity(
-			"chassis" + StringConverter::toString(0),
-			"chassis.mesh");
-
-	SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
-
-	SceneNode *chassisnode = node->createChildSceneNode ();
-	chassisnode->attachObject (mChassis);
-	chassisnode->setPosition (chassisShift);
-
-
-	mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-	mChassis->setNormaliseNormals(true);
-#endif
-	mChassis->setCastShadows(true);
-
+	
 	BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
 	CompoundCollisionShape* compound = new CompoundCollisionShape();
 	compound->addChildShape(chassisShape, chassisShift);
-
+	
 	mCarChassis = new WheeledRigidBody("carChassis", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape (node, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();
@@ -173,96 +150,74 @@ void CarPhysicsComponent::createVehicle(){
 	mVehicleRayCaster = new VehicleRayCaster(PhysicsManager::getInstance()->getWorld());
 	mVehicle = new RaycastVehicle(mCarChassis, mTuning, mVehicleRayCaster);
 
-	{
-		int rightIndex = 0;
-		int upIndex = 1;
-		int forwardIndex = 2;
+	int rightIndex = 0;
+	int upIndex = 1;
+	int forwardIndex = 2;
 
-		mVehicle->setCoordinateSystem(rightIndex, upIndex, forwardIndex);
+	mVehicle->setCoordinateSystem(rightIndex, upIndex, forwardIndex);
 
-		Ogre::Vector3 wheelDirectionCS0(0,-1,0);
-		Ogre::Vector3 wheelAxleCS(-1,0,0);
+	Ogre::Vector3 wheelDirectionCS0(0,-1,0);
+	Ogre::Vector3 wheelAxleCS(-1,0,0);
+	
+	bool isFrontWheel = true;
 
-		for (size_t i = 0; i < 4; i++)
-		{
-			mWheels[i] = mSceneMgr->createEntity(
-					"wheel" + StringConverter::toString(mNumEntitiesInstanced++),
-					"wheel.mesh");
-
-			mWheels[i]->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-			mWheels[i]->setNormaliseNormals(true);
-#endif
-			mWheels[i]->setCastShadows(true);
-
-			mWheelNodes[i] = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
-			mWheelNodes[i]->attachObject (mWheels[i]);
-
-		}
-
-		{
-			bool isFrontWheel = true;
-
-			Ogre::Vector3 connectionPointCS0 (
-					CUBE_HALF_EXTENTS-(0.3*gWheelWidth),
-					connectionHeight,
-					2*CUBE_HALF_EXTENTS-gWheelRadius);
+	Ogre::Vector3 connectionPointCS0 (
+			CUBE_HALF_EXTENTS-(0.3*gWheelWidth),
+			connectionHeight,
+			2*CUBE_HALF_EXTENTS-gWheelRadius);
 
 
-			mVehicle->addWheel(
-					mWheelNodes[0],
-					connectionPointCS0,
-					wheelDirectionCS0,
-					wheelAxleCS,
-					gSuspensionRestLength,
-					gWheelRadius,
-					isFrontWheel, gWheelFriction, gRollInfluence);
+	mVehicle->addWheel(
+			mWheelNodes[0],
+			connectionPointCS0,
+			wheelDirectionCS0,
+			wheelAxleCS,
+			gSuspensionRestLength,
+			gWheelRadius,
+			isFrontWheel, gWheelFriction, gRollInfluence);
 
-			connectionPointCS0 = Ogre::Vector3(
-					-CUBE_HALF_EXTENTS+(0.3*gWheelWidth),
-					connectionHeight,
-					2*CUBE_HALF_EXTENTS-gWheelRadius);
-
-
-			mVehicle->addWheel(
-					mWheelNodes[1],
-					connectionPointCS0,
-					wheelDirectionCS0,
-					wheelAxleCS,
-					gSuspensionRestLength,
-					gWheelRadius,
-					isFrontWheel, gWheelFriction, gRollInfluence);
+	connectionPointCS0 = Ogre::Vector3(
+			-CUBE_HALF_EXTENTS+(0.3*gWheelWidth),
+			connectionHeight,
+			2*CUBE_HALF_EXTENTS-gWheelRadius);
 
 
-			connectionPointCS0 = Ogre::Vector3(
-					-CUBE_HALF_EXTENTS+(0.3*gWheelWidth),
-					connectionHeight,
-					-2*CUBE_HALF_EXTENTS+gWheelRadius);
+	mVehicle->addWheel(
+			mWheelNodes[1],
+			connectionPointCS0,
+			wheelDirectionCS0,
+			wheelAxleCS,
+			gSuspensionRestLength,
+			gWheelRadius,
+			isFrontWheel, gWheelFriction, gRollInfluence);
 
-			isFrontWheel = false;
-			mVehicle->addWheel(
-					mWheelNodes[2],
-					connectionPointCS0,
-					wheelDirectionCS0,
-					wheelAxleCS,
-					gSuspensionRestLength,
-					gWheelRadius,
-					isFrontWheel, gWheelFriction, gRollInfluence);
 
-			connectionPointCS0 = Ogre::Vector3(
-					CUBE_HALF_EXTENTS-(0.3*gWheelWidth),
-					connectionHeight,
-					-2*CUBE_HALF_EXTENTS+gWheelRadius);
+	connectionPointCS0 = Ogre::Vector3(
+			-CUBE_HALF_EXTENTS+(0.3*gWheelWidth),
+			connectionHeight,
+			-2*CUBE_HALF_EXTENTS+gWheelRadius);
 
-			mVehicle->addWheel(
-					mWheelNodes[3],
-					connectionPointCS0,
-					wheelDirectionCS0,
-					wheelAxleCS,
-					gSuspensionRestLength,
-					gWheelRadius,
-					isFrontWheel, gWheelFriction, gRollInfluence);
-		}
-	}
+	isFrontWheel = false;
+	mVehicle->addWheel(
+			mWheelNodes[2],
+			connectionPointCS0,
+			wheelDirectionCS0,
+			wheelAxleCS,
+			gSuspensionRestLength,
+			gWheelRadius,
+			isFrontWheel, gWheelFriction, gRollInfluence);
+
+	connectionPointCS0 = Ogre::Vector3(
+			CUBE_HALF_EXTENTS-(0.3*gWheelWidth),
+			connectionHeight,
+			-2*CUBE_HALF_EXTENTS+gWheelRadius);
+
+	mVehicle->addWheel(
+			mWheelNodes[3],
+			connectionPointCS0,
+			wheelDirectionCS0,
+			wheelAxleCS,
+			gSuspensionRestLength,
+			gWheelRadius,
+			isFrontWheel, gWheelFriction, gRollInfluence);
 }
-

@@ -63,7 +63,7 @@ class EventManager
 	private:
 		static EventManager* m_instance;
 		// Circular buffer of events waiting to be pulled
-		boost::circular_buffer<Event> events(30);
+		boost::circular_buffer<Event> events;
 		// Multipmap to keep track of which Events are
 		// associated with an entity
 
