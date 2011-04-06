@@ -41,12 +41,18 @@ EventManager::~EventManager(void)
 
 /* pushEvent
  * Params: event
- * Returns: success
+ * Returns: success or failure if the event has a type
  * Description: Takes an event and adds it to the circular buffer of events
  */
 bool EventManager::pushEvent(Event event)
 {
 	// adds the event to the back of the circular buffer
+	// check if the event has a type, return false if it doesn't
+	if (event.eventType < 0)
+	{
+		return false;
+	}
+
 	events.push_back(event);
 	return true;
 }
