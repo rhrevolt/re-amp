@@ -28,8 +28,9 @@ InputComponent::InputComponent(int ID): GameComponent(ID)
 	// Register with the event manager
 	EventTypeList evts;
 	evts.push_back(EVENT_ACCELERATION);
-	evts.push_back(EVENT_KEYDOWN);
 	evts.push_back(EVENT_KEYUP);
+	evts.push_back(EVENT_KEYDOWN);
+	evts.push_back(EVENT_HORN);
 	EventManager::instance()->registerEntity(componentID, evts);
 }
 
@@ -42,10 +43,53 @@ bool InputComponent::tick(FrameData &fd)
 {
 	// Poll the event manager for vectors
 	std::list<Event> evts = EventManager::instance()->pullEvent(componentID);
-	BOOST_FOREACH(Event evt, evts) 
+	BOOST_FOREACH(Event evt, evts)
 	{
-		if (evt.eventType == EVENT_ACCELERATION) {
-			InputEvent* iEvt = static_cast<InputEvent*>(&evt);
+	    InputEvent* iEvt = static_cast<InputEvent*>(&evt);
+		if (evt.eventType == EVENT_ACCELERATION)
+		{
+			//CarPhysicsComponent::mAccelerate = false;
 		}
+		else
+		{
+		    //CarPhysicsComponent::mAccelerate = false;
+		}
+
+		if (evt.eventType == EVENT_KEYDOWN)
+		{
+            //CarPhysicsComponent::mBrake = true;
+		}
+		else
+		{
+		    //CarPhysicsComponent::mBrake = false;
+		}
+
+		if (evt.eventType == EVENT_HORN)
+        {
+            //send a horn signal to the car
+        }
+        else
+        {
+            //stop honking, damnit
+        }
+
+        if (evt.eventType == EVENT_RIGHT_TURN)
+        {
+            CarPhysicsComponent::mSteeringRight = true;
+        }
+        else
+        {
+            CarPhysicsComponent::mSteeringRight = false;
+        }
+
+        if (evt.eventType == EVENT_LEFT_TURN)
+        {
+            CarPhysicsComponent::mSteeringLeft = true;
+        }
+        else
+        {
+            CarPhysicsComponent::mSteeringLeft = false;
+        }
+
 	}
 }
