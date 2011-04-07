@@ -19,6 +19,7 @@
 
 #include "core/GameEntity.h"
 #include "boost/foreach.hpp"
+#include "core/GameComponent.h"
 #include <cstdlib>
 
 bool compareByPriority(GameComponent* first, GameComponent* second)
@@ -76,4 +77,15 @@ bool GameEntity::removeComponent(GameComponent* component)
 bool GameEntity::receiveMessage(ComponentType comp, int message)
 {
 	return true;
+}
+<<<<<<< HEAD
+=======
+
+GameComponent* GameEntity::getComponent(ComponentType type) 
+{
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		if (comp->getType() == type) {
+			return comp; }
+	}
 }

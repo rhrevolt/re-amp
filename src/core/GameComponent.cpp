@@ -19,7 +19,8 @@
 
 #include "core/GameComponent.h"
 
-GameComponent::GameComponent(int componentID, int priority) : componentID(componentID), priority(priority)
+GameComponent::GameComponent(int componentID, int priority) : 
+	componentID(componentID), priority(priority)
 {
 
 }

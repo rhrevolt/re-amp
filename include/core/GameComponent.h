@@ -24,7 +24,13 @@
 
 typedef enum {
 	COMPONENT_BROADCAST,
-	COMPONENT_PHYSICS
+	COMPONENT_PHYSICS,
+	COMPONENT_OGRE,
+	COMPONENT_INPUT,
+	COMPONENT_SOUND,
+	COMPONENT_TERRAINOGRE,
+	COMPONENT_WEAPON,
+	COMPONENT_CAMERA,
 } ComponentType;
 
 class GameEntity; // forward declaration
@@ -40,7 +46,7 @@ class GameComponent
 
 		virtual bool tick(FrameData &fd) = 0;
 
-		ComponentType type;
+		virtual ComponentType getType() = 0;
 		
 	protected:
 		GameEntity* parentEntity;
@@ -48,7 +54,6 @@ class GameComponent
 
 	private:
 		int priority; //TODO: Remove?
-		
 		
 };
 

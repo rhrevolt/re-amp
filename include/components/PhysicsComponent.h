@@ -35,6 +35,8 @@ class PhysicsComponent: public GameComponent
 		void addCollisionShape(OgreBulletCollisions::CollisionShape* shape);
 
 		virtual bool tick(FrameData &fd);
+		
+		virtual ComponentType getType() {return COMPONENT_PHYSICS;};
 
 	protected:
 

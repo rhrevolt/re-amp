@@ -29,6 +29,8 @@ class TerrainOgreComponent: public OgreComponent
 		~TerrainOgreComponent() {};
 		virtual void init();
 
+		virtual ComponentType getType() {return COMPONENT_TERRAINOGRE;};
+
 	protected:
 
 	private:

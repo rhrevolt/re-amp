@@ -28,7 +28,7 @@ PhysicsComponent::PhysicsComponent(int ID): GameComponent(ID)
 }
 
 PhysicsComponent::~PhysicsComponent() {
-	PhysicsManager* pManager = PhysicsManager::getInstance();
+	//PhysicsManager* pManager = PhysicsManager::getInstance();
 	//pManager->unregisterComponent(this);
 };
 

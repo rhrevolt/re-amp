@@ -30,6 +30,7 @@ class InputComponent: public GameComponent
 		~InputComponent();
 		virtual bool tick(FrameData &fd);
 
+		virtual ComponentType getType() {return COMPONENT_INPUT;};
 	
 	private:
 		InputManager* iManager;

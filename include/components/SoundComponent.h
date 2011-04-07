@@ -29,6 +29,8 @@ class SoundComponent: public GameComponent
 		~SoundComponent();
 		virtual bool tick(FrameData &fd);
 
+		virtual ComponentType getType() {return COMPONENT_SOUND;};
+
 	protected:
         std::map<std::string, unsigned int> audioFiles;
 

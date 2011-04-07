@@ -31,6 +31,8 @@ class CameraComponent: public GameComponent
 		
 		virtual bool tick(FrameData &fd);
 
+		virtual ComponentType getType() {return COMPONENT_CAMERA;};
+
 	protected:
 		void createCamera();
 		void createViewports(void);

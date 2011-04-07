@@ -30,8 +30,17 @@ class OgreComponent: public GameComponent
 		virtual bool tick(FrameData &fd);
 		virtual void init();
 
-	protected:
+		Ogre::SceneNode* getNode() { return mNode; };
+		
+		virtual ComponentType getType() {return COMPONENT_OGRE;};
 
+	protected:
+		std::string meshStr;
+		
+		Ogre::SceneNode *mNode;
+		Ogre::SceneNode *mMeshNode;
+		Ogre::Entity* mMesh;
+		
 	private:
 
 };
