@@ -75,20 +75,20 @@ bool InputComponent::tick(FrameData &fd)
 
         if (evt.eventType == EVENT_RIGHT_TURN)
         {
-            CarPhysicsComponent::mSteeringRight = true;
+            //CarPhysicsComponent::mSteeringRight = true;
         }
         else
         {
-            CarPhysicsComponent::mSteeringRight = false;
+            //CarPhysicsComponent::mSteeringRight = false;
         }
 
         if (evt.eventType == EVENT_LEFT_TURN)
         {
-            CarPhysicsComponent::mSteeringLeft = true;
+         //   CarPhysicsComponent::mSteeringLeft = true;
         }
         else
         {
-            CarPhysicsComponent::mSteeringLeft = false;
+            //CarPhysicsComponent::mSteeringLeft = false;
         }
 
 	}

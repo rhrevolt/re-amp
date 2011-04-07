@@ -56,6 +56,7 @@ void checkX11Events();
 #include "core/StateManager.h"
 #include "core/SubSystemManager.h"
 #include "core/Singleton.h"
+#include "components/CarPhysicsComponent.h"
 
 class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Singleton<InputManager>
 {
@@ -64,13 +65,13 @@ public:
 	void init(std::string windowHandle);
 	bool tick(FrameData&);
 	bool registerComponent(GameComponent*);
-	
+
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
 	void capture (void);
 	bool getStatus(void);
 	void updateTiming(float frameTiming);
-	
+
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
 	bool mouseMoved (const OIS::MouseEvent &arg);
@@ -85,14 +86,14 @@ private:
 	InputManager ();
 	~InputManager (void);
 	int bufferedTicks;
-	
+
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
 	float currentFrameDelay;
-	
-	bool running; 
+
+	bool running;
 
 	bool KEY_LEFT_DOWN;
 	bool KEY_RIGHT_DOWN;
@@ -105,7 +106,7 @@ private:
 	//std::list<InputComponent*> componentList;
 };
 
-struct InputEvent : public Event 
+struct InputEvent : public Event
 {
 	Ogre::Vector2 vector;
 };

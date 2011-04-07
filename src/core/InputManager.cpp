@@ -171,25 +171,25 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	}
 
 	if (arg.key == OIS::KC_UP || arg.key == OIS::KC_W) {
-	    evt.eventType = EVENT_ACCELERATION
+	    evt.eventType = EVENT_ACCELERATION;
 	    EventManager::instance()->pushEvent(evt);
 		KEY_UP_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_DOWN || arg.key == OIS::KC_S) {
-	    evt.eventType = EVENT_BRAKE
+	    evt.eventType = EVENT_BRAKE;
 	    EventManager::instance()->pushEvent(evt);
 		KEY_DOWN_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_RIGHT || arg.key == OIS::KC_D) {
-	    evt.eventType = EVENT_RIGHT_TURN
+	    evt.eventType = EVENT_RIGHT_TURN;
 	    EventManager::instance()->pushEvent(evt);
 		KEY_RIGHT_DOWN = true;
 	}
 
 	if (arg.key == OIS::KC_LEFT || arg.key == OIS::KC_A) {
-	    evt.eventType = EVENT_LEFT_TURN
+	    evt.eventType = EVENT_LEFT_TURN;
 	    EventManager::instance()->pushEvent(evt);
 		KEY_LEFT_DOWN = true;
 	}
