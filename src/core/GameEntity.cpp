@@ -65,27 +65,26 @@ bool GameEntity::removeComponent(GameComponent* component)
 	return false;
 }
 
-	bool GameEntity::tick(FrameData &fd) {
-		BOOST_FOREACH(GameComponent* comp, componentList)
-		{
-			comp->tick(fd);
-		}
-
-		return true;
+bool GameEntity::tick(FrameData &fd) {
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		comp->tick(fd);
 	}
+
+	return true;
+}
 
 bool GameEntity::receiveMessage(ComponentType comp, int message)
 {
 	return true;
 }
-<<<<<<< HEAD
-=======
 
 GameComponent* GameEntity::getComponent(ComponentType type) 
 {
 	BOOST_FOREACH(GameComponent* comp, componentList)
 	{
 		if (comp->getType() == type) {
-			return comp; }
+			return comp; 
+		}
 	}
 }

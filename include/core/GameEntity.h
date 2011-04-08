@@ -35,11 +35,12 @@ class GameEntity
 		
 		bool tick(FrameData &fd);
 		bool receiveMessage(ComponentType comp, int message);
-		
+			
 		bool addComponent(GameComponent* component);
 		bool removeComponent(GameComponent* component);
 		bool removeComponent(int componentID); 
 		
+		GameComponent* getComponent(ComponentType type);
 	private:
 		int entityID;
 		std::list<GameComponent*> componentList;
