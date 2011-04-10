@@ -23,6 +23,7 @@
 #include <Ogre.h>
 #include "components/PhysicsComponent.h"
 #include "core/PhysicsManager.h"
+#include "core/InputManager.h"
 
 class CarPhysicsComponent: public PhysicsComponent
 {
@@ -40,7 +41,8 @@ private:
 
     float	gSteeringIncrement; 
 	float	gSteeringClamp ;
-
+	
+	float gAcceleration;
 	float	gWheelRadius ;
 	float	gWheelWidth ;
 
@@ -72,7 +74,7 @@ private:
 
     bool mSteeringLeft;
     bool mSteeringRight;
-	
+	InputManager* mInputManager;
 };
 
 #endif // _CARPHYSICSCOMPONENT_H_

@@ -45,6 +45,7 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
+	gAcceleration = 5.0f;
 	gMaxEngineForce = 3000.f;
 
 	gSteeringIncrement = 0.04f;
@@ -61,8 +62,6 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gSuspensionRestLength = 0.6;
 	gMaxSuspensionTravelCm = 500.0;
 	gFrictionSlip = 10.5;
-
-	init();	
 };
 
 CarPhysicsComponent::~CarPhysicsComponent() {
@@ -71,25 +70,39 @@ CarPhysicsComponent::~CarPhysicsComponent() {
 
 bool CarPhysicsComponent::tick(FrameData &fd)
 {
-	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
-	{
-		mVehicle->applyEngineForce (mEngineForce, mWheelsEngine[i]);
+	if (mInputManager->KEY_ACCEL) {
+		mEngineForce += gAcceleration;
+		if (mEngineForce > gMaxEngineForce) {
+			mEngineForce = gMaxEngineForce;
+		}
 	}
 
-	if (mSteeringLeft)
+	if (mInputManager->KEY_BRAKE) {
+		mEngineForce -= gAcceleration;
+		if (mEngineForce < -gMaxEngineForce) {
+			mEngineForce = -gMaxEngineForce;
+		}
+	}
+
+	if (mInputManager->KEY_LEFT)
 	{
 		mSteering += gSteeringIncrement;
 		if (mSteering > gSteeringClamp)
 			mSteering = gSteeringClamp;
 	}
-	else if (mSteeringRight)
+	else if (mInputManager->KEY_RIGHT)
 	{
 		mSteering -= gSteeringIncrement;
 		if (mSteering < -gSteeringClamp)
 			mSteering = -gSteeringClamp;
 	}
 
-	// apply Steering on relevant wheels
+	// apply steering and engine force on wheels
+	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
+	{
+		mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
+	}
+
 	for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
 	{
 		if (i < 2)
@@ -102,6 +115,8 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 }
 
 void CarPhysicsComponent::init() {
+	// Get the input manager
+	mInputManager = InputManager::getInstance();
 
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0, 0);

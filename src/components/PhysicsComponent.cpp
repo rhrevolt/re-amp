@@ -38,14 +38,14 @@ bool PhysicsComponent::tick(FrameData &fd)
 }
 
 void PhysicsComponent::addRigidBody(OgreBulletDynamics::RigidBody* rigidBody){
-    PhysicsComponent::rigidBody = rigidBody;
-    PhysicsManager::getInstance()->getBodies()->push_back(rigidBody);
+	PhysicsComponent::rigidBody = rigidBody;
+	PhysicsManager::getInstance()->getBodies()->push_back(rigidBody);
 }
 
 
 void PhysicsComponent::addCollisionShape(OgreBulletCollisions::CollisionShape* shape){
-    PhysicsComponent::shape = shape;
-    PhysicsManager::getInstance()->getShapes()->push_back(shape);
+	PhysicsComponent::shape = shape;
+	PhysicsManager::getInstance()->getShapes()->push_back(shape);
 }
 
 

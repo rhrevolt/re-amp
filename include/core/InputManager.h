@@ -56,7 +56,7 @@ void checkX11Events();
 #include "core/StateManager.h"
 #include "core/SubSystemManager.h"
 #include "core/Singleton.h"
-#include "components/CarPhysicsComponent.h"
+//#include "components/CarPhysicsComponent.h"
 
 class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Singleton<InputManager>
 {
@@ -70,7 +70,6 @@ public:
 	void shutdownManager (void);
 	void capture (void);
 	bool getStatus(void);
-	void updateTiming(float frameTiming);
 
 	bool keyPressed (const OIS::KeyEvent &arg);
 	bool keyReleased (const OIS::KeyEvent &arg);
@@ -78,6 +77,13 @@ public:
 	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 
+	bool KEY_LEFT;
+	bool KEY_RIGHT;
+	bool KEY_ACCEL;
+	bool KEY_BRAKE;
+	bool KEY_HORN;
+	bool KEY_FIRE;
+	bool KEY_RESET;
 
 protected:
 	;
@@ -85,30 +91,13 @@ protected:
 private:
 	InputManager ();
 	~InputManager (void);
-	int bufferedTicks;
 
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
-	float currentFrameDelay;
-
 	bool running;
 
-	bool KEY_LEFT_DOWN;
-	bool KEY_RIGHT_DOWN;
-	bool KEY_UP_DOWN;
-	bool KEY_DOWN_DOWN;
-	bool KEY_HORN;
-	bool KEY_FIRE;
-	Ogre::Vector2 bufferedVector;
-
-	//std::list<InputComponent*> componentList;
-};
-
-struct InputEvent : public Event
-{
-	Ogre::Vector2 vector;
 };
 
 #endif // _INPUT_MANAGER_H_

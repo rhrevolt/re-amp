@@ -45,11 +45,6 @@ bool GameEntity::addComponent(GameComponent* component)
 {
 	// Add the component
 	componentList.push_front(component);
-
-	// Resort the list by priority
-	componentList.sort(compareByPriority);
-
-	// TODO: Add message bus firing here before returning.
 	return true;
 }
 
@@ -57,12 +52,7 @@ bool GameEntity::removeComponent(GameComponent* component)
 {
 	// Try to remove the component
 	componentList.remove(component);
-	if (true) {
-		// TODO: Add message bus firing
-		return true;
-	}
-
-	return false;
+	return true;
 }
 
 bool GameEntity::tick(FrameData &fd) {
@@ -83,8 +73,9 @@ GameComponent* GameEntity::getComponent(ComponentType type)
 {
 	BOOST_FOREACH(GameComponent* comp, componentList)
 	{
-		if (comp->getType() == type) {
+		if ((comp->getType()) == type) {
 			return comp; 
 		}
 	}
+	return NULL;
 }
