@@ -48,9 +48,9 @@ GameEntity* EntityFactory::create(std::string name)
 		carOgre->init();
 		ent->addComponent((GameComponent*) carOgre);
 		CarPhysicsComponent* carPhysics = new CarPhysicsComponent(0);
+		ent->addComponent((GameComponent*) carPhysics);
 		carPhysics->init();
 		carPhysics->createVehicle(carOgre->carNode, carOgre->chassisShift, carOgre->mWheelNodes);
-		ent->addComponent((GameComponent*) carPhysics);
 
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));

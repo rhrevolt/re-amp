@@ -44,6 +44,7 @@ GameEntity::~GameEntity(void)
 bool GameEntity::addComponent(GameComponent* component)
 {
 	// Add the component
+	component->setParentEntity(this);
 	componentList.push_front(component);
 	return true;
 }
@@ -77,5 +78,4 @@ GameComponent* GameEntity::getComponent(ComponentType type)
 			return comp; 
 		}
 	}
-	return NULL;
 }

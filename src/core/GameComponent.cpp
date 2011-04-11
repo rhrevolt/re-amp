@@ -35,3 +35,7 @@ int GameComponent::getPriority(void)
 	return priority;
 }
 
+bool GameComponent::setParentEntity(GameEntity* parent)
+{
+	parentEntity = parent;
+}
