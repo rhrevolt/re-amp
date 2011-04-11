@@ -21,6 +21,7 @@
 
 #include "components/CarPhysicsComponent.h"
 #include "components/OgreComponent.h"
+#include "components/CarOgreComponent.h"
 
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 #include "Shapes/OgreBulletCollisionsCompoundShape.h"
@@ -156,7 +157,7 @@ void CarPhysicsComponent::createVehicle(Ogre::SceneNode *carNode,
 	//TODO: Get this value from Ogre Component
 	float connectionHeight = 0.7f;
 
-	OgreComponent* ogre = (OgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
+	CarOgreComponent* ogre = (CarOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
 	Ogre::SceneNode* node = ogre->getNode();
 
 	BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
@@ -165,7 +166,7 @@ void CarPhysicsComponent::createVehicle(Ogre::SceneNode *carNode,
 	
 	mCarChassis = new WheeledRigidBody("carChassis", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(ogre->carNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();
