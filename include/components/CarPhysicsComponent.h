@@ -60,6 +60,9 @@ private:
     OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
     OgreBulletDynamics::RaycastVehicle	        *mVehicle;
 
+	Ogre::Entity    *mWheels[4];
+	Ogre::SceneNode *mWheelNodes[4];
+	
     int mWheelsEngine[4];
     int mWheelsEngineCount;
     int mWheelsSteerable[4];
