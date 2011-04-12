@@ -39,10 +39,7 @@ GameEntity* EntityFactory::create(std::string name)
 	GameEntity* ent = new(GameEntity);
 
 	// TODO: Perhaps this should be generated from a file?
-	if (name == ("example")) {
-		ent->addComponent((GameComponent*) new OgreComponent(0));
-
-	} else if (name == "playerCar") {
+	if (name == "playerCar") {
 		
 		CarOgreComponent* carOgre = new CarOgreComponent(0);
 		carOgre->init();

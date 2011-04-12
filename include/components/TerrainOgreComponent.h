@@ -28,7 +28,8 @@ class TerrainOgreComponent: public OgreComponent
 		TerrainOgreComponent(int ID): OgreComponent(ID){init();};
 		~TerrainOgreComponent() {};
 		virtual void init();
-
+		
+		virtual Ogre::SceneNode* getNode() { return NULL; };
 		virtual ComponentType getType() {return COMPONENT_TERRAINOGRE;};
 
 	protected:
