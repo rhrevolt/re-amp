@@ -32,7 +32,7 @@ public:
 	~CarPhysicsComponent();
 	virtual bool tick(FrameData &fd);
 	void init();
-	void createVehicle(Ogre::SceneNode *carNode, Ogre::Vector3 chassisShift, Ogre::SceneNode *mWheelNodes[4]);
+	void createVehicle(Ogre::Vector3 chassisShift);
 
 protected:
 

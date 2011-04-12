@@ -30,7 +30,7 @@ class OgreComponent: public GameComponent
 		virtual bool tick(FrameData &fd);
 		virtual void init();
 
-		Ogre::SceneNode* getNode() { return mNode; };
+		virtual Ogre::SceneNode* getNode() { return mNode; };
 
 		virtual ComponentType getType() {return COMPONENT_OGRE;};
 

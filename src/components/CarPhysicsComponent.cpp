@@ -121,7 +121,7 @@ void CarPhysicsComponent::init() {
 
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0, 0);
-	createVehicle(NULL, chassisShift, NULL);
+	createVehicle(chassisShift);
 	
 	for (int i = 0; i < 4; i++)
 	{
@@ -150,23 +150,23 @@ void CarPhysicsComponent::init() {
 	mSteering = 0;
 }
 
-void CarPhysicsComponent::createVehicle(Ogre::SceneNode *carNode, 
-                                        Ogre::Vector3 chassisShift, 
-                                        Ogre::SceneNode *mWheelNodes[4])
+void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 {
 	//TODO: Get this value from Ogre Component
 	float connectionHeight = 0.7f;
 
 	CarOgreComponent* ogre = (CarOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
-	Ogre::SceneNode* node = ogre->getNode();
+	Ogre::SceneNode* carRootNode = ogre->getNode();
+
+	assert(carRootNode);
 
 	BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
 	CompoundCollisionShape* compound = new CompoundCollisionShape();
 	compound->addChildShape(chassisShape, chassisShift);
 	
-	mCarChassis = new WheeledRigidBody("carChassis", PhysicsManager::getInstance()->getWorld());
+	mCarChassis = new WheeledRigidBody("carChassisPhysics", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(ogre->carNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();

@@ -34,9 +34,9 @@ void CarOgreComponent::init()
 			"chassis" + Ogre::StringConverter::toString(0),
 			"chassis.mesh");
 
-	carNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	mCarNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	Ogre::SceneNode *chassisnode = carNode->createChildSceneNode();
+	Ogre::SceneNode *chassisnode = mCarNode->createChildSceneNode();
 	chassisnode->attachObject (mChassis);
 	chassisnode->setPosition (chassisShift);
 
