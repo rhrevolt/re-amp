@@ -61,7 +61,7 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gSuspensionStiffness = 20.f;
 	gSuspensionDamping = 2.3f;
 	gSuspensionCompression = 4.4f;
-	gRollInfluence = 0.1f;//1.0f;
+	gRollInfluence = 0.3f;//1.0f;
 	gSuspensionRestLength = 0.6;
 	gMaxSuspensionTravelCm = 500.0;
 	gFrictionSlip = 10.5;
