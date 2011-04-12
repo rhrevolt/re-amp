@@ -27,57 +27,59 @@
 
 class CarPhysicsComponent: public PhysicsComponent
 {
-public:
-	CarPhysicsComponent(int ID);
-	~CarPhysicsComponent();
-	virtual bool tick(FrameData &fd);
-	void init();
-	void createVehicle(Ogre::Vector3 chassisShift);
+	public:
+		CarPhysicsComponent(int ID);
+		~CarPhysicsComponent();
+		virtual bool tick(FrameData &fd);
+		void init();
+		void createVehicle(Ogre::Vector3 chassisShift);
 
-protected:
+	protected:
 
-private:
-	float	gMaxEngineForce;
+	private:
+		float	gMaxEngineForce;
 
-    float	gSteeringIncrement; 
-	float	gSteeringClamp ;
-	
-	float gAcceleration;
-	float	gWheelRadius ;
-	float	gWheelWidth ;
+		float	gSteeringIncrement; 
+		float	gSteeringClamp ;
+		float	gSteeringDecayRate;
 
-	float	gWheelFriction;//1000;//1e30f;
-	float	gSuspensionStiffness;
-	float	gSuspensionDamping;
-	float	gSuspensionCompression;
-    float	gRollInfluence;//1.0f;
-	float   gSuspensionRestLength;
-	float   gMaxSuspensionTravelCm;
-	float   gFrictionSlip;
-	
-	OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
-    OgreBulletDynamics::VehicleTuning	        *mTuning;
-    OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
-    OgreBulletDynamics::RaycastVehicle	        *mVehicle;
+		float gAcceleration;
+		float	gWheelRadius ;
+		float	gWheelWidth ;
+		float	gEngineDecayRate;
 
-	Ogre::Entity    *mWheels[4];
-	Ogre::SceneNode *mWheelNodes[4];
-	
-    int mWheelsEngine[4];
-    int mWheelsEngineCount;
-    int mWheelsSteerable[4];
-    int mWheelsSteerableCount;
+		float	gWheelFriction;//1000;//1e30f;
+		float	gSuspensionStiffness;
+		float	gSuspensionDamping;
+		float	gSuspensionCompression;
+		float	gRollInfluence;//1.0f;
+		float   gSuspensionRestLength;
+		float   gMaxSuspensionTravelCm;
+		float   gFrictionSlip;
 
-    float mEngineForce;
-    float mSteering;
+		OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
+		OgreBulletDynamics::VehicleTuning	        *mTuning;
+		OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
+		OgreBulletDynamics::RaycastVehicle	        *mVehicle;
 
-    int mWheelEngineStyle;
-    int mWheelSteeringStyle;
+		Ogre::Entity    *mWheels[4];
+		Ogre::SceneNode *mWheelNodes[4];
+
+		int mWheelsEngine[4];
+		int mWheelsEngineCount;
+		int mWheelsSteerable[4];
+		int mWheelsSteerableCount;
+
+		float mEngineForce;
+		float mSteering;
+
+		int mWheelEngineStyle;
+		int mWheelSteeringStyle;
 
 
-    bool mSteeringLeft;
-    bool mSteeringRight;
-	InputManager* mInputManager;
+		bool mSteeringLeft;
+		bool mSteeringRight;
+		InputManager* mInputManager;
 };
 
 #endif // _CARPHYSICSCOMPONENT_H_

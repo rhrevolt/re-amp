@@ -48,9 +48,11 @@ using namespace OgreBulletDynamics;
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gAcceleration = 5.0f;
 	gMaxEngineForce = 3000.f;
+	gEngineDecayRate = 2.5f;
 
-	gSteeringIncrement = 0.04f;
+	gSteeringIncrement = 0.002f;
 	gSteeringClamp = 0.8f;
+	gSteeringDecayRate = 0.004f;
 
 	gWheelRadius = 0.5f;
 	gWheelWidth = 0.4f;
@@ -85,17 +87,35 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		}
 	}
 
+	if (!(mInputManager->KEY_ACCEL | mInputManager->KEY_BRAKE)) 
+	{
+		if (mEngineForce > 0) {
+			// Decay the engine force
+			mEngineForce -= gEngineDecayRate;
+		} else if (mEngineForce < 0) {
+			mEngineForce += gEngineDecayRate;
+		}
+	}
+
 	if (mInputManager->KEY_LEFT)
 	{
 		mSteering += gSteeringIncrement;
 		if (mSteering > gSteeringClamp)
 			mSteering = gSteeringClamp;
 	}
-	else if (mInputManager->KEY_RIGHT)
+	if (mInputManager->KEY_RIGHT)
 	{
 		mSteering -= gSteeringIncrement;
 		if (mSteering < -gSteeringClamp)
 			mSteering = -gSteeringClamp;
+	}
+
+	if (!(mInputManager->KEY_RIGHT | mInputManager->KEY_LEFT))
+	{
+		if (mSteering > 0)
+			mSteering -= gSteeringDecayRate;
+		if (mSteering < 0)
+			mSteering += gSteeringDecayRate;
 	}
 
 	// apply steering and engine force on wheels
@@ -122,7 +142,7 @@ void CarPhysicsComponent::init() {
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0, 0);
 	createVehicle(chassisShift);
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		mWheelsEngine[i] = 0;
@@ -163,7 +183,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 	BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
 	CompoundCollisionShape* compound = new CompoundCollisionShape();
 	compound->addChildShape(chassisShape, chassisShift);
-	
+
 	mCarChassis = new WheeledRigidBody("carChassisPhysics", PhysicsManager::getInstance()->getWorld());
 
 	mCarChassis->setShape(carRootNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
@@ -182,7 +202,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	/* Now construct our wheels */
 	SceneNode** mWheelNodes = ogreComp->getWheelNodes();
-	
+
 	{
 		int rightIndex = 0;
 		int upIndex = 1;
