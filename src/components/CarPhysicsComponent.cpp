@@ -38,7 +38,7 @@
 
 
 //TODO: What does these do?
-#define CUBE_HALF_EXTENTS 0.5
+#define CUBE_HALF_EXTENTS 1
 #define GEOMETRY_QUERY_MASK 0
 
 using namespace Ogre;
@@ -46,18 +46,18 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 5.0f;
-	gMaxEngineForce = 3000.f;
-	gEngineDecayRate = 2.5f;
+	gAcceleration = 50.0f;
+	gMaxEngineForce = 5000.f;
+	gEngineDecayRate = 1800.0f;
 
-	gSteeringIncrement = 0.002f;
-	gSteeringClamp = 0.8f;
-	gSteeringDecayRate = 0.004f;
+	gSteeringIncrement = 0.001f;
+	gSteeringClamp = 0.5f;
+	gSteeringDecayRate = 0.003f;
 
 	gWheelRadius = 0.5f;
 	gWheelWidth = 0.4f;
 
-	gWheelFriction = 1e30f;//1000;//1e30f;
+	gWheelFriction = 1e15f;//1000;//1e30f;
 	gSuspensionStiffness = 20.f;
 	gSuspensionDamping = 2.3f;
 	gSuspensionCompression = 4.4f;
@@ -148,17 +148,17 @@ void CarPhysicsComponent::init() {
 		mWheelsEngine[i] = 0;
 		mWheelsSteerable[i] = 0;
 	}
-	mWheelsEngineCount = 2;
+	mWheelsEngineCount = 4;
 	mWheelsEngine[0] = 0;
 	mWheelsEngine[1] = 1;
 	mWheelsEngine[2] = 2;
 	mWheelsEngine[3] = 3;
 
-	mWheelsSteerableCount = 2;
+	mWheelsSteerableCount = 4;
 	mWheelsSteerable[0] = 0;
 	mWheelsSteerable[1] = 1;
-	//mWheelsSteerable[2] = 2;
-	//mWheelsSteerable[3] = 3;
+	mWheelsSteerable[2] = 2;
+	mWheelsSteerable[3] = 3;
 
 	mWheelEngineStyle = 0;
 	mWheelSteeringStyle = 0;
@@ -186,7 +186,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carRootNode, compound, 0.6, 0.6, 800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 3200, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();
