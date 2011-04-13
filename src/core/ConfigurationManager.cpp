@@ -1,14 +1,14 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * ReAmp
+ * re-amp
  * Copyright (C)  2011 <>
  *
- * ReAmp is free software: you can redistribute it and/or modify it
+ * re-amp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * ReAmp is distributed in the hope that it will be useful, but
+ * re-amp is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -17,30 +17,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include "components/SoundComponent.h"
-#include "core/SoundManager.h"
+#include "core/ConfigurationManager.h"
 
-SoundComponent::SoundComponent(int ID): GameComponent(ID)
-{
-	SoundManager* pManager = SoundManager::getInstance();
-	pManager->registerComponent(this);
-}
-
-SoundComponent::~SoundComponent() {
-	SoundManager* pManager = SoundManager::getInstance();
-	pManager->unregisterComponent(this);
-};
-
-void SoundComponent::init()
+ConfigurationManager::ConfigurationManager()
 {
 }
 
-bool SoundComponent::tick(FrameData &fd)
+ConfigurationManager::~ConfigurationManager()
 {
-	return true;
 }
-
-
-
 

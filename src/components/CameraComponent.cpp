@@ -36,6 +36,10 @@ CameraComponent::~CameraComponent() {
 	//pManager->unregisterComponent(this);
 };
 
+void CameraComponent::init()
+{
+}
+
 void CameraComponent::createCamera(void)
 {
 	mCamera = mSceneMgr->createCamera("CarCam");  

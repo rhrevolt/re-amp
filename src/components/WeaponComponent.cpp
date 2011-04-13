@@ -33,6 +33,10 @@ WeaponComponent::~WeaponComponent()
 {
 }
 
+void WeaponComponent::init()
+{
+}
+
 // pickup a random weapon
 void WeaponComponent::pickupWeapon()
 {

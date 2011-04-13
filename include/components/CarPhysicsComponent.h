@@ -31,8 +31,8 @@ class CarPhysicsComponent: public PhysicsComponent
 		CarPhysicsComponent(int ID);
 		~CarPhysicsComponent();
 		virtual bool tick(FrameData &fd);
-		void init();
 		void createVehicle(Ogre::Vector3 chassisShift);
+		virtual void init();
 
 	protected:
 

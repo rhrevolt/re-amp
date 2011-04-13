@@ -23,14 +23,18 @@
 
 PhysicsComponent::PhysicsComponent(int ID): GameComponent(ID)
 {
-	PhysicsManager* pManager = PhysicsManager::getInstance();
-	pManager->registerComponent(this);
 }
 
 PhysicsComponent::~PhysicsComponent() {
 	//PhysicsManager* pManager = PhysicsManager::getInstance();
 	//pManager->unregisterComponent(this);
 };
+
+void PhysicsComponent::init()
+{
+	PhysicsManager* pManager = PhysicsManager::getInstance();
+	pManager->registerComponent(this);
+}
 
 bool PhysicsComponent::tick(FrameData &fd)
 {

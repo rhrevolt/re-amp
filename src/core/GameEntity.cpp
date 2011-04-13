@@ -22,11 +22,6 @@
 #include "core/GameComponent.h"
 #include <cstdlib>
 
-bool compareByPriority(GameComponent* first, GameComponent* second)
-{
-	return first->getPriority() > second->getPriority();
-}
-
 GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID(entityID)
 {
 	// Empty
@@ -45,7 +40,7 @@ bool GameEntity::addComponent(GameComponent* component)
 {
 	// Add the component
 	component->setParentEntity(this);
-	componentList.push_front(component);
+	componentList.push_back(component);
 	return true;
 }
 
@@ -54,6 +49,14 @@ bool GameEntity::removeComponent(GameComponent* component)
 	// Try to remove the component
 	componentList.remove(component);
 	return true;
+}
+
+void GameEntity::initializeComponents()
+{
+	BOOST_FOREACH(GameComponent* comp, componentList)
+	{
+		comp->init();
+	}
 }
 
 bool GameEntity::tick(FrameData &fd) {

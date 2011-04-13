@@ -39,6 +39,8 @@ class GameEntity
 		bool addComponent(GameComponent* component);
 		bool removeComponent(GameComponent* component);
 		bool removeComponent(int componentID); 
+
+		void initializeComponents();
 		
 		GameComponent* getComponent(ComponentType type);
 	private:

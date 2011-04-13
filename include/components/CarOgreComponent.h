@@ -27,9 +27,9 @@ class CarOgreComponent: public OgreComponent
 	public:
 		CarOgreComponent(int ID): OgreComponent(ID){};
 		~CarOgreComponent() {};
-		
-		void init();
-		
+
+		virtual void init();
+
 		virtual Ogre::SceneNode* getNode() { return mCarNode; };
 		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
 

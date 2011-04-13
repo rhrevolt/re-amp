@@ -50,6 +50,8 @@ class WeaponComponent: public GameComponent
 		~WeaponComponent();
 		
 		virtual bool tick(FrameData &fd);
+
+		virtual void init();
 		
 		virtual ComponentType getType() {return COMPONENT_PHYSICS;};
 

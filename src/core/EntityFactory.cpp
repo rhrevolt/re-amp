@@ -40,16 +40,11 @@ GameEntity* EntityFactory::create(std::string name)
 
 	// TODO: Perhaps this should be generated from a file?
 	if (name == "playerCar") {
-		
-		CarOgreComponent* carOgre = new CarOgreComponent(0);
-		carOgre->init();
-		ent->addComponent((GameComponent*) carOgre);
-		CarPhysicsComponent* carPhysics = new CarPhysicsComponent(0);
-		ent->addComponent((GameComponent*) carPhysics);
-		carPhysics->init();
-
+		ent->addComponent((GameComponent*) new CarOgreComponent(0));
+		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
+		ent->initializeComponents();
 
 	} else if (name == "terrain") {
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
@@ -67,7 +62,7 @@ GameEntity* EntityFactory::create(std::string name)
 		physicsComp->addCollisionShape(Shape);
 		physicsComp->addRigidBody(defaultPlaneBody);
 		defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
-
+		ent->initializeComponents();
 
 	}
 
