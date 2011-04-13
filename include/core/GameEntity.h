@@ -45,6 +45,7 @@ class GameEntity
 		GameComponent* getComponent(ComponentType type);
 	private:
 		int entityID;
+		bool initialized;
 		std::list<GameComponent*> componentList;
 };
 

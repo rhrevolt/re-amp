@@ -22,7 +22,7 @@
 #include "core/GameComponent.h"
 #include <cstdlib>
 
-GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID(entityID)
+GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID(entityID), initialized(false)
 {
 	// Empty
 }
@@ -53,6 +53,7 @@ bool GameEntity::removeComponent(GameComponent* component)
 
 void GameEntity::initializeComponents()
 {
+	initialized = true;
 	BOOST_FOREACH(GameComponent* comp, componentList)
 	{
 		comp->init();
@@ -60,11 +61,13 @@ void GameEntity::initializeComponents()
 }
 
 bool GameEntity::tick(FrameData &fd) {
-	BOOST_FOREACH(GameComponent* comp, componentList)
-	{
-		comp->tick(fd);
+	// TODO: this is a bit of a kludge..
+	if (initialized) {
+		BOOST_FOREACH(GameComponent* comp, componentList)
+		{
+			comp->tick(fd);
+		}
 	}
-
 	return true;
 }
 

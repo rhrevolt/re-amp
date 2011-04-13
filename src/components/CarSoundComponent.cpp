@@ -17,26 +17,25 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "components/CarSoundComponent.h"
+#include "components/CarSoundComponent.h"
 
 
- CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
-    init();
- }
+CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
+}
 
- CarSoundComponent::~CarSoundComponent() {
- }
+CarSoundComponent::~CarSoundComponent() {
+}
 
 bool CarSoundComponent::tick(FrameData &fd)
 {
-    pSoundManager->playAudio(audioFiles["HONK"], true);
+	pSoundManager->playAudio(audioFiles["HONK"], true);
 }
 
 void CarSoundComponent::init()
 {
-    pSoundManager = SoundManager::getInstance();
-    unsigned int honkId = 0;
-    pSoundManager->loadAudio("honka.wav", &honkId, false);
-    pSoundManager->registerComponent(this);
-    audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
+	pSoundManager = SoundManager::getInstance();
+	unsigned int honkId = 0;
+	pSoundManager->loadAudio("honka.wav", &honkId, false);
+	pSoundManager->registerComponent(this);
+	audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
 }

@@ -40,7 +40,7 @@
    GameSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
 
    entGround->setCastShadows(false);
-   */
+ */
 
 
 void TerrainOgreComponent::init()
@@ -61,11 +61,11 @@ void TerrainOgreComponent::init()
 
 	entGround->setCastShadows(false);
 
-/*
-	Ogre::Light* pointLight = sMgr->createLight("pointLight");
-	pointLight->setType(Ogre::Light::LT_POINT);
-	pointLight->setPosition(Ogre::Vector3(0, 150, 250));
+	/*
+	   Ogre::Light* pointLight = sMgr->createLight("pointLight");
+	   pointLight->setType(Ogre::Light::LT_POINT);
+	   pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
-	pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-	pointLight->setSpecularColour(1.0, 0.0, 0.0); */
+	   pointLight->setDiffuseColour(1.0, 0.0, 0.0);
+	   pointLight->setSpecularColour(1.0, 0.0, 0.0); */
 }

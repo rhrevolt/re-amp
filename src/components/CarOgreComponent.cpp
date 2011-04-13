@@ -55,9 +55,6 @@ void CarOgreComponent::init()
 				"wheel.mesh");
 
 		mWheels[i]->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-		mWheels[i]->setNormaliseNormals(true);
-#endif
 		mWheels[i]->setCastShadows(true);
 
 		mWheelNodes[i] = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();

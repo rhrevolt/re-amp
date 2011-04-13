@@ -23,8 +23,6 @@
 
 SoundComponent::SoundComponent(int ID): GameComponent(ID)
 {
-	SoundManager* pManager = SoundManager::getInstance();
-	pManager->registerComponent(this);
 }
 
 SoundComponent::~SoundComponent() {
@@ -34,6 +32,8 @@ SoundComponent::~SoundComponent() {
 
 void SoundComponent::init()
 {
+	SoundManager* pManager = SoundManager::getInstance();
+	pManager->registerComponent(this);
 }
 
 bool SoundComponent::tick(FrameData &fd)
