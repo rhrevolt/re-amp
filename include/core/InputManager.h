@@ -60,8 +60,8 @@ void checkX11Events();
 
 class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Singleton<InputManager>
 {
-friend class Singleton<InputManager>;
-public:
+	friend class Singleton<InputManager>;
+	public:
 	void init(std::string windowHandle);
 	bool tick(FrameData&);
 	bool registerComponent(GameComponent*);
@@ -85,10 +85,10 @@ public:
 	bool KEY_FIRE;
 	bool KEY_RESET;
 
-protected:
+	protected:
 	;
 
-private:
+	private:
 	InputManager ();
 	~InputManager (void);
 
