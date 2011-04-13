@@ -28,7 +28,7 @@ void CarOgreComponent::init()
 {
 	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 			
-	chassisShift = Ogre::Vector3(0, 1.0, 0);
+	chassisShift = Ogre::Vector3(0, 0.8, 0);
 
 	mChassis = mSceneMgr->createEntity(
 			"chassis" + Ogre::StringConverter::toString(0),
@@ -41,9 +41,6 @@ void CarOgreComponent::init()
 	chassisnode->setPosition (chassisShift);
 
 	mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-	mChassis->setNormaliseNormals(true);
-#endif
 	mChassis->setCastShadows(true);
 
 	int numEntitiesInstanced = 0;

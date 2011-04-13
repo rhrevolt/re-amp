@@ -140,7 +140,7 @@ void CarPhysicsComponent::init() {
 	mInputManager = InputManager::getInstance();
 
 	//Construct the physics basis for the vehicle
-	const Ogre::Vector3 chassisShift(0, 1.0, 0);
+	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
 	createVehicle(chassisShift);
 
 	for (int i = 0; i < 4; i++)
