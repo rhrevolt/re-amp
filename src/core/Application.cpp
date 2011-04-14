@@ -37,8 +37,6 @@ Application::~Application(void)
 //-------------------------------------------------------------------------------------
 void Application::createScene(void)
 {
-	//Start our sample game
-
 	//weirnc: Is this really the right place to put this?
 	stateMgr->newGame();
 }
@@ -67,7 +65,7 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	if (mShutDown) {
 		return false;
 	}
-
+	
 	// TODO: fire events to the statemanager
 	return true;
 }
