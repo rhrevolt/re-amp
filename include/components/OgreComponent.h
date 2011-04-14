@@ -28,9 +28,10 @@ class OgreComponent: public GameComponent
 		OgreComponent(int ID): GameComponent(ID){};
 		~OgreComponent() {};
 		virtual bool tick(FrameData &fd);
+
 		virtual void init();
 
-		Ogre::SceneNode* getNode() { return mNode; };
+		virtual Ogre::SceneNode* getNode() = 0;
 
 		virtual ComponentType getType() {return COMPONENT_OGRE;};
 

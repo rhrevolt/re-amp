@@ -27,17 +27,15 @@
 
 class CarSoundComponent: public SoundComponent
 {
-public:
-    CarSoundComponent(int id);
-    ~CarSoundComponent();
-    virtual bool tick(FrameData &fd);
-    void init();
-    void setParentEntity(GameEntity* pParentCar);
-protected:
+	public:
+		CarSoundComponent(int id);
+		~CarSoundComponent();
+		virtual bool tick(FrameData &fd);
+		virtual void init();
+	protected:
 
-private:
-    GameEntity* parentEntity;
-    SoundManager* pSoundManager;
+	private:
+		SoundManager* pSoundManager;
 };
 
 #endif

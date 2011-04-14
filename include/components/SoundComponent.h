@@ -29,6 +29,8 @@ class SoundComponent: public GameComponent
 		~SoundComponent();
 		virtual bool tick(FrameData &fd);
 
+		virtual void init();
+
 		virtual ComponentType getType() {return COMPONENT_SOUND;};
 
 	protected:

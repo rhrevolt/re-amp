@@ -20,6 +20,7 @@
 /* NOTE: This file is originally derived from the OgreWiki */
 
 #include "core/BaseApplication.h"
+#include "OgreWindowEventUtilities.h"
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
@@ -62,6 +63,9 @@ bool BaseApplication::configure(void)
 		}
 	}
 
+	// Force VSync on
+	mRoot->getRenderSystem()->setConfigOption("VSync", "Yes");
+	
 	// Here we choose to let the system create a default rendering window by passing 'true'
 	mWindow = mRoot->initialise(true, "Re-Amp");
 	return true;
@@ -136,7 +140,10 @@ void BaseApplication::go(void)
 		return;
 	}
 
-	mRoot->startRendering();
+	while (!mShutDown) {
+		Ogre::WindowEventUtilities::messagePump();
+		mRoot->renderOneFrame();
+	}
 
 }
 //-------------------------------------------------------------------------------------
@@ -178,10 +185,5 @@ void BaseApplication::windowResized(Ogre::RenderWindow* rw)
 //Unattach OIS before window shutdown (very important under Linux)
 void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 {
-	//Only close for window that created OIS (the main window in these demos)
-	if( rw == mWindow )
-	{
-		// Tell the input system to be destroyed
-		mInputManager->shutdownManager ();
-	}
+	mInputManager->shutdownManager ();
 }

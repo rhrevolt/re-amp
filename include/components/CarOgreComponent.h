@@ -27,17 +27,24 @@ class CarOgreComponent: public OgreComponent
 	public:
 		CarOgreComponent(int ID): OgreComponent(ID){};
 		~CarOgreComponent() {};
-		void init();
-		
-		Ogre::Vector3 chassisShift;
-		Ogre::SceneNode *carNode;
-		Ogre::SceneNode *mWheelNodes[4];
+
+		virtual void init();
+
+		virtual Ogre::SceneNode* getNode() { return mCarNode; };
+		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
 
 	protected:
 
 	private:
+		
+		Ogre::Vector3 chassisShift;
+		
+		Ogre::SceneNode *mCarNode;
+		Ogre::SceneNode *mWheelNodes[4];
+		
 		Ogre::Entity    *mChassis;
 		Ogre::Entity    *mWheels[4];
+		
 		Ogre::SceneManager *mSceneMgr;
 };
 

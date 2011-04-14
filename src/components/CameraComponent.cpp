@@ -24,17 +24,17 @@
 
 CameraComponent::CameraComponent(int ID): GameComponent(ID)
 {
-	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
-	createCamera();
-	createViewports();
-	//CameraManager* cManager = CameraManager::getInstance();
-	//cManager->registerComponent(this);
 }
 
 CameraComponent::~CameraComponent() {
-	//CameraManager* pManager = CameraManager::getInstance();
-	//pManager->unregisterComponent(this);
 };
+
+void CameraComponent::init()
+{
+	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
+	createCamera();
+	createViewports();
+}
 
 void CameraComponent::createCamera(void)
 {

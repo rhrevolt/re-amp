@@ -36,6 +36,8 @@ class PhysicsComponent: public GameComponent
 
 		virtual bool tick(FrameData &fd);
 		
+		virtual void init();
+
 		virtual ComponentType getType() {return COMPONENT_PHYSICS;};
 
 	protected:

@@ -47,6 +47,8 @@ class GameComponent
 		virtual bool tick(FrameData &fd) = 0;
 
 		virtual ComponentType getType() = 0;
+
+		virtual void init() = 0;
 		
 	protected:
 		GameEntity* parentEntity;

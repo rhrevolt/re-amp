@@ -29,6 +29,8 @@ class InputComponent: public GameComponent
 		InputComponent(int ID);
 		~InputComponent();
 		virtual bool tick(FrameData &fd);
+	
+		virtual void init();
 
 		virtual ComponentType getType() {return COMPONENT_INPUT;};
 	
