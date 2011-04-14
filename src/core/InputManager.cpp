@@ -19,16 +19,17 @@
 
 #include "core/InputManager.h"
 #include "components/InputComponent.h"
+#include "core/Application.h"
+
+#define KEYBOARD_INCREMENT 1.0f // How much to increment acceleration vector per cycle.
+#define BUFFER_TIME_INTERVAL 0.05f // in seconds
 
 InputManager::InputManager () :
-	running(true),
-	KEY_HORN(false),
-	KEY_RESET(false),
 	KEY_ACCEL(false),
 	KEY_BRAKE(false),
 	KEY_LEFT(false),
 	KEY_RIGHT(false),
-	KEY_FIRE(false)
+	currentFrameDelay(1.0f)
 {
 }
 
@@ -78,23 +79,12 @@ void InputManager::shutdownManager(void)
 	}
 }
 
-bool InputManager::registerComponent(GameComponent* comp){
-	return true;
-}
-
 void InputManager::capture(void)
 {
 	if (mKeyboard)
 		mKeyboard->capture();
 	if (mMouse)
 		mMouse->capture();
-}
-
-bool InputManager::getStatus(void)
-{
-	if (!running)
-		printf("stopping..");
-	return running;
 }
 
 void InputManager::updateClippingArea (unsigned int width, unsigned int height)
@@ -107,7 +97,22 @@ void InputManager::updateClippingArea (unsigned int width, unsigned int height)
 }
 
 bool InputManager::tick(FrameData& evt) {
+	// Fire an acceleration signal if any of those keys were pressed
+	if (KEY_ACCEL | KEY_BRAKE | KEY_RIGHT | KEY_LEFT)
+	{
+		Ogre::Vector2 inputVector(0, 0);
 
+		if (mKeyboard->isKeyDown(OIS::KC_UP) || mKeyboard->isKeyDown(OIS::KC_W))
+			inputVector.y += 1;
+		if (mKeyboard->isKeyDown(OIS::KC_DOWN) || mKeyboard->isKeyDown(OIS::KC_S))
+			inputVector.y -= 1;
+		if (mKeyboard->isKeyDown(OIS::KC_LEFT) || mKeyboard->isKeyDown(OIS::KC_A))
+			inputVector.x += 1;
+		if (mKeyboard->isKeyDown(OIS::KC_RIGHT) || mKeyboard->isKeyDown(OIS::KC_D))
+			inputVector.x -= 1;
+		// Push the vector
+		signal_acceleration(inputVector);
+	}
 }
 
 bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
@@ -115,7 +120,7 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	// Check for escape -- it's hard-wired as a quit
 
 	if (arg.key == OIS::KC_ESCAPE) {
-		running = false;
+		Application::getInstance()->signal_exitgame();
 	}
 
 	if (arg.key == OIS::KC_UP || arg.key == OIS::KC_W) {
@@ -135,14 +140,23 @@ bool InputManager::keyPressed (const OIS::KeyEvent &arg) {
 	}
 
 	if (arg.key == OIS::KC_H) {
+		signal_honk(true);
 		KEY_HORN = true;
 	}
 
 	if (arg.key == OIS::KC_SPACE){
+		signal_weapon();
 		KEY_FIRE = true;
 	}
 
-	printf("Got keypress event: %d\n", arg.key);
+	if (arg.key == OIS::KC_R) {
+		signal_reset();
+		KEY_RESET = true;
+	}
+
+	// Fire a generic signal
+	signal_keydown(arg);
+
 	return true;
 
 }
@@ -166,14 +180,16 @@ bool InputManager::keyReleased (const OIS::KeyEvent &arg) {
 	}
 
 	if (arg.key == OIS::KC_H) {
-		KEY_HORN = false;
+		signal_honk(false);
 	}
 
-	if (arg.key == OIS::KC_SPACE) {
+	if (arg.key == OIS::KC_SPACE){
 		KEY_FIRE = false;
 	}
 
-	printf("Got keyrelease event: %d\n", arg.key);
+	if (arg.key == OIS::KC_R) {
+		KEY_RESET = false;
+	}
 	return true;
 
 }

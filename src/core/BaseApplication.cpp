@@ -21,20 +21,19 @@
 
 #include "core/BaseApplication.h"
 
+bool BaseApplication::mShutDown = false;
+
 //-------------------------------------------------------------------------------------
-BaseApplication::BaseApplication(void)
-	: mRoot(0),
+BaseApplication::BaseApplication(void): mRoot(0),
 	mCamera(0),
 	mSceneMgr(0),
 	mWindow(0),
 	mResourcesCfg(Ogre::StringUtil::BLANK),
 	mPluginsCfg(Ogre::StringUtil::BLANK),
 	mCursorWasVisible(false),
-	mShutDown(false),
 	mInputManager(0)
 {
 }
-
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
@@ -66,11 +65,7 @@ bool BaseApplication::configure(void)
 	mWindow = mRoot->initialise(true, "Re-Amp");
 	return true;
 }
-void BaseApplication::shutdownGame(void)
-{
-	mShutDown = true;
-}
-//-------------------------------------------------------------------------------------
+
 void BaseApplication::createFrameListener(void)
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing Input Manager ***");
@@ -178,7 +173,6 @@ void BaseApplication::windowResized(Ogre::RenderWindow* rw)
 //Unattach OIS before window shutdown (very important under Linux)
 void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 {
-	//Only close for window that created OIS (the main window in these demos)
 	if( rw == mWindow )
 	{
 		// Tell the input system to be destroyed

@@ -41,7 +41,7 @@ find_package(OIS REQUIRED)
 
 # Find Boost
 set(Boost_USE_STATIC_LIBS ${STATIC_BUILD})
-find_package(Boost 1.40 REQUIRED)
+find_package(Boost 1.40 REQUIRED COMPONENTS date_time signals)
 
 # Find OpenAL, FreeAlut, Bullet, and OgreBullet
 find_package(OpenAL REQUIRED)

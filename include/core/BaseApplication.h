@@ -39,39 +39,39 @@
 
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener
 {
-	
-public:
-    BaseApplication(void);
-    virtual ~BaseApplication(void);
 
-    virtual void go(void);
+	public:
+		BaseApplication(void);
+		virtual ~BaseApplication(void);
 
-protected:
-    virtual bool setup();
-    virtual bool configure(void);
-    virtual void createScene(void) = 0;
-    virtual void createFrameListener(void);
-    virtual void setupResources(void);
-    virtual void loadResources(void);
-	virtual void shutdownGame(void);
-    
-    // Ogre::WindowEventListener
-    //Adjust mouse clipping area
-    virtual void windowResized(Ogre::RenderWindow* rw);
-    //Unattach OIS before window shutdown (very important under Linux)
-    virtual void windowClosed(Ogre::RenderWindow* rw);
+		virtual void go(void);
 
-    Ogre::Root *mRoot;
-    Ogre::Camera* mCamera;
-    Ogre::SceneManager* mSceneMgr;
-    Ogre::RenderWindow* mWindow;
-    Ogre::String mResourcesCfg;
-    Ogre::String mPluginsCfg;
+	protected:
+		virtual bool setup();
+		virtual bool configure(void);
+		virtual void createScene(void) = 0;
+		virtual void createFrameListener(void);
+		virtual void setupResources(void);
+		virtual void loadResources(void);
+		virtual void shutdownGame(void) = 0;
 
-    bool mCursorWasVisible;                    // was cursor visible before dialog appeared
-    bool mShutDown;
+		// Ogre::WindowEventListener
+		//Adjust mouse clipping area
+		virtual void windowResized(Ogre::RenderWindow* rw);
+		//Unattach OIS before window shutdown (very important under Linux)
+		virtual void windowClosed(Ogre::RenderWindow* rw);
 
-    InputManager* mInputManager;
+		Ogre::Root *mRoot;
+		Ogre::Camera* mCamera;
+		Ogre::SceneManager* mSceneMgr;
+		Ogre::RenderWindow* mWindow;
+		Ogre::String mResourcesCfg;
+		Ogre::String mPluginsCfg;
+
+		bool mCursorWasVisible;                    // was cursor visible before dialog appeared
+		static bool mShutDown;
+
+		InputManager* mInputManager;
 
 };
 

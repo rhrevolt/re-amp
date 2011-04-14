@@ -20,6 +20,8 @@
 #ifndef __Application_h_
 #define __Application_h_
 
+#include <boost/signals.hpp>
+
 #include "core/BaseApplication.h"
 #include "core/StateManager.h"
 
@@ -33,6 +35,24 @@ public:
 	Ogre::Root* getRoot(){return mRoot;};
     Ogre::RenderWindow* getWindow(){return mWindow;};
 
+	virtual void shutdownGame();
+
+	// BOOST Signals
+	/*
+	 * signal_exiting - fired when the game is exiting.
+	 * - no parameters
+	 */
+	boost::signal<void ()> signal_exiting;
+
+	/*
+	 * signal_exitgame - signal called when the game should exit.
+	 * CAVEAT: If you're wanting the status of when the game exits
+	 * listen to signal_exiting instead of this!
+	 * - no parameter
+	 */
+	boost::signal<void ()> signal_exitgame;
+
+
 protected:
 	virtual void createScene(void);
 
@@ -43,5 +63,6 @@ protected:
 
 	StateManager* stateMgr;
 };
+
 
 #endif // #ifndef __Application_h_

@@ -37,25 +37,6 @@ class InputComponent: public GameComponent
 
 		virtual ComponentType getType() {return COMPONENT_INPUT;};
 
-		// BOOST Signals
-		/*
-		 * signal_honk
-		 * - start - boolean - whether the signal indicates the honk key is down
-     */ 
-		boost::signal<void (bool)> signal_honk;
-
-		/*
-		 * signal_weapon
-		 * no parameters -- called once when the weapon button is pressed. no repeats.
-		 */
-		boost::signal<void ()> signal_weapon;
-
-		/*
-		 * signal_acceleration
-		 * - bufferedVector - Ogre::Vector2 - vector to indicate acceleration 
-		 *   contained in the event.
-		 */
-		boost::signal<void (Ogre::Vector2)> signal_acceleration;
 	
 	private:
 		InputManager* iManager;
