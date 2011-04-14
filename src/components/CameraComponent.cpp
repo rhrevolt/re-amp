@@ -34,7 +34,7 @@ void CameraComponent::init()
 {
 	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
     
-    currentPos = Ogre::Vector3(0, 15, 30);
+    currentPos = Ogre::Vector3(0, 10, -20);
     
 	createCamera();
 	createViewports();
@@ -52,7 +52,7 @@ void CameraComponent::createCamera(void)
     camNode->attachObject(mCamera);
       
     //mCamera->setPosition(Ogre::Vector3(0,15,30));
-    mCamera->lookAt(Ogre::Vector3(0,0,0));
+    mCamera->lookAt(Ogre::Vector3(0,0,80));
     mCamera->setNearClipDistance(5);
 	
     //mCameraMan = new OgreBites::SdkCameraMan(mCamera);
