@@ -80,7 +80,7 @@ bool Application::frameEnded(const Ogre::FrameEvent& evt)
 {
 	// Construct a FrameData event
 	FrameData& fd = (FrameData&)evt;
-	fd.frameType = FRAME_ENDED;
+	fd.frameType = FRAME_POSTRENDER;
 	// Fire an event 
 	signal_frameEnded(fd);
 
