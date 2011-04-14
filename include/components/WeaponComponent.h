@@ -21,7 +21,7 @@
 #define _WEAPONCOMPONENT_H_
 
 #include "core/GameComponent.h"
-#include "core/EventManager.h"
+#include "core/InputManager.h"
 #include <list>
 #include <time.h>
 
@@ -51,7 +51,7 @@ class WeaponComponent: public GameComponent
 		
 		virtual bool tick(FrameData &fd);
 		
-		virtual ComponentType getType() {return COMPONENT_PHYSICS;};
+		virtual ComponentType getType() {return COMPONENT_WEAPON;};
 
 	protected:
 		void pickupWeapon();
