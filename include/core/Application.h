@@ -52,6 +52,24 @@ public:
 	 */
 	boost::signal<void ()> signal_exitgame;
 
+	/*
+	   signal_frameStarted - signal called when the frameStarted event
+	   - FrameData fd - information about the frame event
+	*/
+	boost::signal<void (FrameData &fd)> signal_frameStarted;
+
+	/*
+	   signal_frameQueued - signal called when the frame has been queued to
+	   the GPU
+	   - FrameData fd - information about the frame event
+	*/
+	boost::signal<void (FrameData &fd)> signal_frameQueued;
+
+	/*
+	   signal_frameEnded - signal called when the frame is done.
+	   - FrameData fd - information about the frame event
+	*/
+	boost::signal<void (FrameData &fd)> signal_frameEnded;
 
 protected:
 	virtual void createScene(void);
