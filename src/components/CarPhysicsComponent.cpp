@@ -47,12 +47,12 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 50.0f;
+	gAcceleration = 5.0f;
 	gMaxEngineForce = 5000.f;
-	gEngineDecayRate = 1800.0f;
-	gBrakingIncrement = 8000.0f;
-	
-	gSteeringIncrement = 0.001f;
+	gEngineDecayRate = 180.0f;
+	gBrakingIncrement = 800.0f;
+
+	gSteeringIncrement = 0.0001f;
 	gSteeringClamp = 0.5f;
 	gSteeringDecayRate = 0.003f;
 
@@ -75,6 +75,7 @@ CarPhysicsComponent::~CarPhysicsComponent() {
 
 bool CarPhysicsComponent::tick(FrameData &fd)
 {
+	printf("ticking physics..\n");
 	// Decay the engine force
 	if (mEngineForce > 0) {
 		mEngineForce = std::max(0.0f, mEngineForce - gEngineDecayRate);
@@ -88,19 +89,32 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	} else if (mSteering < 0) {
 		mSteering = std::min(0.0f, mSteering + gSteeringDecayRate);
 	}
-	
+
+	printf("%f\n", fd.timeSinceLastFrame);
+
 	// apply steering and engine force on wheels
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
 	{
-		mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
+		// Try to scale the force
+		if (fd.timeSinceLastFrame > 0)
+			mVehicle->applyEngineForce(mEngineForce / fd.timeSinceLastFrame, mWheelsEngine[i]);
+		else
+			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
 	}
 
 	for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
 	{
-		if (i < 2)
-			mVehicle->setSteeringValue (mSteering, mWheelsSteerable[i]);
-		else
-			mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
+		if (i < 2) {
+			if (fd.timeSinceLastFrame > 0)
+				mVehicle->setSteeringValue (mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+			else
+				mVehicle->setSteeringValue(mSteering, mWheelsSteerable[i]);
+		} else {
+			if (fd.timeSinceLastFrame > 0)
+				mVehicle->setSteeringValue (-mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+			else
+				mVehicle->setSteeringValue(-mSteering, mWheelsSteerable[i]);
+		}
 	}
 
 	return true;

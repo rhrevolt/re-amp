@@ -25,7 +25,7 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
-PhysicsManager::PhysicsManager()
+PhysicsManager::PhysicsManager() : initialized(false)
 {
 }
 
@@ -67,25 +67,18 @@ void PhysicsManager::init()
 	assert(mSceneMgr != NULL);
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
-
-        // add Debug info display tool
-	debugDrawer = new OgreBulletCollisions::DebugDrawer();
-	debugDrawer->setDrawWireframe(true);	// we want to see the Bullet containers
-
-	mWorld->setDebugDrawer(debugDrawer);
-	mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
-	SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
-	node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));
+	
+	initialized = true;
 }
 
 bool PhysicsManager::tick(FrameData &fd)
 {
-	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
-		comp->tick(fd);
+	if (initialized) {
+		BOOST_FOREACH(PhysicsComponent* comp, componentList) {
+			comp->tick(fd);
+		}
+		mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
 	}
-
-	mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
-
 	return true;
 }
 
@@ -100,10 +93,10 @@ OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 }
 
 std::deque<OgreBulletDynamics::RigidBody *> * PhysicsManager::getBodies(){
-    return &mBodies;
+	return &mBodies;
 }
 
 std::deque<OgreBulletCollisions::CollisionShape *> * PhysicsManager::getShapes(){
-    return &mShapes;
+	return &mShapes;
 }
 
