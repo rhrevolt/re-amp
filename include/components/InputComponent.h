@@ -20,8 +20,11 @@
 #ifndef _INPUTCOMPONENT_H_
 #define _INPUTCOMPONENT_H_
 
+#include <boost/signals.hpp>
+
 #include "core/GameComponent.h"
 #include "core/InputManager.h"
+
 
 class InputComponent: public GameComponent
 {
@@ -33,6 +36,7 @@ class InputComponent: public GameComponent
 		virtual void init();
 
 		virtual ComponentType getType() {return COMPONENT_INPUT;};
+
 	
 	private:
 		InputManager* iManager;

@@ -18,6 +18,7 @@
  */
 
 #include <stdio.h>
+#include <algorithm>
 
 #include "components/CarPhysicsComponent.h"
 #include "components/OgreComponent.h"
@@ -46,13 +47,14 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 50.0f;
-	gMaxEngineForce = 5000.f;
-	gEngineDecayRate = 1800.0f;
+	gAcceleration = 0.1f;
+	gMaxEngineForce = 10.0f;
+	gEngineDecayRate = 3.0f;
+	gBrakingIncrement = 0.800f;
 
-	gSteeringIncrement = 0.001f;
-	gSteeringClamp = 0.5f;
-	gSteeringDecayRate = 0.003f;
+	gSteeringIncrement = 0.02f;
+	gSteeringClamp = 0.1f;
+	gSteeringDecayRate = 0.03f;
 
 	gWheelRadius = 0.5f;
 	gWheelWidth = 0.4f;
@@ -73,72 +75,91 @@ CarPhysicsComponent::~CarPhysicsComponent() {
 
 bool CarPhysicsComponent::tick(FrameData &fd)
 {
-	if (mInputManager->KEY_ACCEL) {
-		mEngineForce += gAcceleration;
-		if (mEngineForce > gMaxEngineForce) {
-			mEngineForce = gMaxEngineForce;
-		}
+	printf("ticking physics..\n");
+	// Decay the engine force
+	if (mEngineForce > 0) {
+		mEngineForce = std::max(0.0f, mEngineForce - gEngineDecayRate);
+	} else if (mEngineForce < 0) {
+		mEngineForce = std::min(0.0f, mEngineForce + gEngineDecayRate);
 	}
 
-	if (mInputManager->KEY_BRAKE) {
-		mEngineForce -= gAcceleration;
-		if (mEngineForce < -gMaxEngineForce) {
-			mEngineForce = -gMaxEngineForce;
-		}
+	// Decay the steering 
+	if (mSteering > 0) {
+		mSteering = std::max(0.0f, mSteering - gSteeringDecayRate);
+	} else if (mSteering < 0) {
+		mSteering = std::min(0.0f, mSteering + gSteeringDecayRate);
 	}
 
-	if (!(mInputManager->KEY_ACCEL | mInputManager->KEY_BRAKE)) 
-	{
-		if (mEngineForce > 0) {
-			// Decay the engine force
-			mEngineForce -= gEngineDecayRate;
-		} else if (mEngineForce < 0) {
-			mEngineForce += gEngineDecayRate;
-		}
-	}
-
-	if (mInputManager->KEY_LEFT)
-	{
-		mSteering += gSteeringIncrement;
-		if (mSteering > gSteeringClamp)
-			mSteering = gSteeringClamp;
-	}
-	if (mInputManager->KEY_RIGHT)
-	{
-		mSteering -= gSteeringIncrement;
-		if (mSteering < -gSteeringClamp)
-			mSteering = -gSteeringClamp;
-	}
-
-	if (!(mInputManager->KEY_RIGHT | mInputManager->KEY_LEFT))
-	{
-		if (mSteering > 0)
-			mSteering -= gSteeringDecayRate;
-		if (mSteering < 0)
-			mSteering += gSteeringDecayRate;
-	}
+	printf("%f\n", fd.timeSinceLastFrame);
 
 	// apply steering and engine force on wheels
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
 	{
-		mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
+		// Try to scale the force
+		if (fd.timeSinceLastFrame > 0)
+			mVehicle->applyEngineForce(mEngineForce / fd.timeSinceLastFrame, mWheelsEngine[i]);
+		else
+			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
 	}
 
 	for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
 	{
-		if (i < 2)
-			mVehicle->setSteeringValue (mSteering, mWheelsSteerable[i]);
-		else
-			mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
+		if (i < 2) {
+			if (fd.timeSinceLastFrame > 0)
+				mVehicle->setSteeringValue (mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+			else
+				mVehicle->setSteeringValue(mSteering, mWheelsSteerable[i]);
+		} else {
+			if (fd.timeSinceLastFrame > 0)
+				mVehicle->setSteeringValue (-mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+			else
+				mVehicle->setSteeringValue(-mSteering, mWheelsSteerable[i]);
+		}
 	}
 
 	return true;
+}
+
+void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
+{
+	// Check if the x (steering) component of the vector is non-zero
+	if (bufferedVector.x != 0)
+	{
+		// Apply the x vector (turning)
+		if (bufferedVector.x > 0)
+			mSteering = std::min(gSteeringClamp, mSteering + gSteeringIncrement + gSteeringDecayRate);
+		else
+			mSteering = std::max(-gSteeringClamp, mSteering - gSteeringIncrement - gSteeringDecayRate);
+	}
+
+	// Check if the y (acceleration) component of the vector is non-zero
+	if (bufferedVector.y != 0)
+	{
+		float vehicleSpeed =  mVehicle->getBulletVehicle()->getCurrentSpeedKmHour();
+		// Check if we're braking 
+		if ((bufferedVector.y > 0 && vehicleSpeed < 0) || (bufferedVector.y < 0 && vehicleSpeed > 0)) {
+			// Apply a braking force
+			if (vehicleSpeed > 0)
+				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gBrakingIncrement - gEngineDecayRate);
+			else
+				mEngineForce = std::min(gMaxEngineForce, mEngineForce + gBrakingIncrement + gEngineDecayRate);
+		} else {
+			// Apply a normal acceleration
+			if (bufferedVector.y > 0)
+				mEngineForce = std::min(gMaxEngineForce, mEngineForce + gAcceleration + gEngineDecayRate);
+			else
+				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gAcceleration - gEngineDecayRate);
+		}
+
+	}
 }
 
 void CarPhysicsComponent::init() {
 	// Get the input manager
 	mInputManager = InputManager::getInstance();
 
+	// Connect our events with the InputManager
+	printf(mInputManager->signal_acceleration.connect(boost::bind(&CarPhysicsComponent::handleVector, this, _1)).connected() ? "connected\n " : "disconnected\n");
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
 	createVehicle(chassisShift);
@@ -277,4 +298,5 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 					isFrontWheel, gWheelFriction, gRollInfluence);
 		}
 	}
+	mVehicle->setWheelsAttached();
 }

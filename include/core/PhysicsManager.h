@@ -34,8 +34,8 @@
 
 class PhysicsManager: public Singleton<PhysicsManager>
 {
-friend class Singleton<PhysicsManager>;
-public:
+	friend class Singleton<PhysicsManager>;
+	public:
 	PhysicsManager(void);
 	~PhysicsManager (void);
 
@@ -45,22 +45,24 @@ public:
 
 	OgreBulletDynamics::DynamicsWorld* getWorld();
 	std::deque<OgreBulletDynamics::RigidBody *> * getBodies();
- 	std::deque<OgreBulletCollisions::CollisionShape *> * getShapes();
+	std::deque<OgreBulletCollisions::CollisionShape *> * getShapes();
 
 
-protected:
+	protected:
 	;
 
-private:
+	private:
+	bool initialized;
+
 
 	Ogre::SceneManager* mSceneMgr;
- 	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
- 	OgreBulletCollisions::DebugDrawer *debugDrawer;
- 	int mNumEntitiesInstanced;
+	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
+	OgreBulletCollisions::DebugDrawer *debugDrawer;
+	int mNumEntitiesInstanced;
 
 	std::list<PhysicsComponent*> componentList;
- 	std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
- 	std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
+	std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
+	std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 
 	bool running;
 

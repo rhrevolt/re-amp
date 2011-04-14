@@ -33,12 +33,13 @@ class CarPhysicsComponent: public PhysicsComponent
 		virtual bool tick(FrameData &fd);
 		void createVehicle(Ogre::Vector3 chassisShift);
 		virtual void init();
+		virtual void handleVector(Ogre::Vector2);
 
 	protected:
 
 	private:
 		float	gMaxEngineForce;
-
+		float	gBrakingIncrement;
 		float	gSteeringIncrement; 
 		float	gSteeringClamp ;
 		float	gSteeringDecayRate;
