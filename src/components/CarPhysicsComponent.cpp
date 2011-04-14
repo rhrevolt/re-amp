@@ -47,14 +47,14 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 5.0f;
-	gMaxEngineForce = 5000.f;
-	gEngineDecayRate = 180.0f;
-	gBrakingIncrement = 800.0f;
+	gAcceleration = 0.1f;
+	gMaxEngineForce = 10.0f;
+	gEngineDecayRate = 3.0f;
+	gBrakingIncrement = 0.800f;
 
-	gSteeringIncrement = 0.0001f;
-	gSteeringClamp = 0.5f;
-	gSteeringDecayRate = 0.003f;
+	gSteeringIncrement = 0.02f;
+	gSteeringClamp = 0.1f;
+	gSteeringDecayRate = 0.03f;
 
 	gWheelRadius = 0.5f;
 	gWheelWidth = 0.4f;
