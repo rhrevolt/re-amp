@@ -1,0 +1,16 @@
+
+material Ground/Grid
+{
+	technique
+	{
+		pass
+		{
+//			lighting off
+			texture_unit
+			{				
+				texture grid.png
+				scale .05 .05
+			}
+		}
+	}
+}
