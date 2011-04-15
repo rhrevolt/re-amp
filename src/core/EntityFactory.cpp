@@ -60,7 +60,7 @@ GameEntity* EntityFactory::create(std::string name)
 		
 		/* CONSIDER weirnc-comment: Should the below be put in some type of "TerrainPhysicsComponent" class? 
 		 * This seems like a weird place to put it.*/
-		
+
 		// a body is needed for the shape
 		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
 				PhysicsManager::getInstance()->getWorld());
