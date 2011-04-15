@@ -43,6 +43,9 @@ class PhysicsManager: public Singleton<PhysicsManager>
 	bool tick(FrameData &fd);
 	bool registerComponent(PhysicsComponent* component);
 
+	void btTickCallback(btDynamicsWorld* world, btScalar timeStep);
+	static void btTickCallbackWrapper(btDynamicsWorld* world, btScalar timeStep);
+
 	OgreBulletDynamics::DynamicsWorld* getWorld();
 	std::deque<OgreBulletDynamics::RigidBody *> * getBodies();
 	std::deque<OgreBulletCollisions::CollisionShape *> * getShapes();

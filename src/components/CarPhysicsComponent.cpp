@@ -47,19 +47,19 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 0.1f;
-	gMaxEngineForce = 10.0f;
-	gEngineDecayRate = 3.0f;
-	gBrakingIncrement = 0.800f;
+	gAcceleration = 120.0f;
+	gMaxEngineForce = 3000.0f;
+	gEngineDecayRate = 400.0f;
+	gBrakingIncrement = 1500.0f;
 
-	gSteeringIncrement = 0.02f;
-	gSteeringClamp = 0.1f;
-	gSteeringDecayRate = 0.03f;
+	gSteeringIncrement = 0.024f;
+	gSteeringClamp = 0.5f;
+	gSteeringDecayRate = 0.05f;
 
 	gWheelRadius = 0.5f;
 	gWheelWidth = 0.4f;
 
-	gWheelFriction = 1e15f;//1000;//1e30f;
+	gWheelFriction = 1000.0f;//1000;//1e30f;
 	gSuspensionStiffness = 20.f;
 	gSuspensionDamping = 2.3f;
 	gSuspensionCompression = 4.4f;
@@ -97,7 +97,7 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	{
 		// Try to scale the force
 		if (fd.timeSinceLastFrame > 0)
-			mVehicle->applyEngineForce(mEngineForce / fd.timeSinceLastFrame, mWheelsEngine[i]);
+			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
 		else
 			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
 	}
@@ -106,17 +106,19 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	{
 		if (i < 2) {
 			if (fd.timeSinceLastFrame > 0)
-				mVehicle->setSteeringValue (mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+				mVehicle->setSteeringValue (mSteering, mWheelsSteerable[i]);
 			else
 				mVehicle->setSteeringValue(mSteering, mWheelsSteerable[i]);
 		} else {
 			if (fd.timeSinceLastFrame > 0)
-				mVehicle->setSteeringValue (-mSteering / fd.timeSinceLastFrame, mWheelsSteerable[i]);
+				mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
 			else
 				mVehicle->setSteeringValue(-mSteering, mWheelsSteerable[i]);
 		}
 	}
 
+	// Fire an event with the vehicle speed
+	signal_speedUpdated(mVehicle->getBulletVehicle()->getCurrentSpeedKmHour());
 	return true;
 }
 
@@ -207,7 +209,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics", PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 3200, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 1800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();

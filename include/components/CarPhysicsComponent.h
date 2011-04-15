@@ -35,6 +35,14 @@ class CarPhysicsComponent: public PhysicsComponent
 		virtual void init();
 		virtual void handleVector(Ogre::Vector2);
 
+		// BOOST signals
+		/*
+		   signal_speedUpdated - fires when the speed of the vehicle 
+		   changed
+		   - one param - the new speed (in km/h)
+		*/
+		boost::signal<void (float speed)> signal_speedUpdated;
+
 	protected:
 
 	private:

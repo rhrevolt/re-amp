@@ -48,8 +48,6 @@ PhysicsManager::~PhysicsManager (void)
 
 	mBodies.clear();
 	mShapes.clear();
-	delete mWorld->getDebugDrawer();
-	mWorld->setDebugDrawer(0);
 	delete mWorld;
 }
 
@@ -67,19 +65,33 @@ void PhysicsManager::init()
 	assert(mSceneMgr != NULL);
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
-	
+
+	// Setup the tick callback
+	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
+
 	initialized = true;
 }
 
 bool PhysicsManager::tick(FrameData &fd)
 {
 	if (initialized) {
-		BOOST_FOREACH(PhysicsComponent* comp, componentList) {
-			comp->tick(fd);
-		}
 		mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
 	}
 	return true;
+}
+
+void PhysicsManager::btTickCallbackWrapper(btDynamicsWorld* world, btScalar timeStep)
+{
+	PhysicsManager::getInstance()->btTickCallback(world, timeStep);
+}
+
+void PhysicsManager::btTickCallback(btDynamicsWorld* world, btScalar timeStep)
+{
+	FrameData fd;
+	fd.timeSinceLastFrame = timeStep;
+	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
+		comp->tick(fd);
+	}
 }
 
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
