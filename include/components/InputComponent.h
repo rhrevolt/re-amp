@@ -30,7 +30,7 @@
 class InputComponent: public GameComponent
 {
 	public:
-		InputComponent(int ID) {};
+		InputComponent(int ID) : GameComponent(ID) {};
 		~InputComponent() {};
         
         void doNothing(){};

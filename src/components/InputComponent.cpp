@@ -21,18 +21,18 @@
 
 bool InputComponent::tick(FrameData &fd)
 {
-    
+
 }
 
 void InputComponent::init()
 {
-    mInputManager = InputManager::getInstance();
+	mInputManager = InputManager::getInstance();
 
-    // Connect our events with the InputManager
-    mInputManager->signal_acceleration.connect(boost::bind(
-            &CarPhysicsComponent::handleVector, 
-            (CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS), 
-            _1));
-            
-    //printf(mInputManager->signal_acceleration.connected() ? "connected\n " : "disconnected\n"); 
+	// Connect our events with the InputManager
+	mInputManager->signal_acceleration.connect(boost::bind(
+				&CarPhysicsComponent::handleVector, 
+				(CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS), 
+				_1));
+
+	//printf(mInputManager->signal_acceleration.connected() ? "connected\n " : "disconnected\n"); 
 }
