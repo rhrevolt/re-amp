@@ -44,6 +44,7 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
+		ent->addComponent((GameComponent*) new InputComponent(0));
 		ent->initializeComponents();
         
     } else if (name == "car") {

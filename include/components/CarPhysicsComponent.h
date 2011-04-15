@@ -33,7 +33,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		virtual bool tick(FrameData &fd);
 		void createVehicle(Ogre::Vector3 chassisShift);
 		virtual void init();
-		virtual void handleVector(Ogre::Vector2);
+		virtual void handleVector(Ogre::Vector2 vec);
 
 		// BOOST signals
 		/*
@@ -88,7 +88,6 @@ class CarPhysicsComponent: public PhysicsComponent
 
 		bool mSteeringLeft;
 		bool mSteeringRight;
-		InputManager* mInputManager;
 };
 
 #endif // _CARPHYSICSCOMPONENT_H_

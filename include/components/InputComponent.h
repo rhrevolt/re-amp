@@ -24,22 +24,25 @@
 
 #include "core/GameComponent.h"
 #include "core/InputManager.h"
+#include "components/CarPhysicsComponent.h"
 
 
 class InputComponent: public GameComponent
 {
 	public:
-		InputComponent(int ID);
-		~InputComponent();
+		InputComponent(int ID) {};
+		~InputComponent() {};
+        
+        void doNothing(){};
+        
 		virtual bool tick(FrameData &fd);
-	
 		virtual void init();
 
 		virtual ComponentType getType() {return COMPONENT_INPUT;};
 
 	
 	private:
-		InputManager* iManager;
+		InputManager* mInputManager;
 };
 
 #endif // _INPUTCOMPONENT_H_

@@ -159,11 +159,7 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 }
 
 void CarPhysicsComponent::init() {
-	// Get the input manager
-	mInputManager = InputManager::getInstance();
-
-	// Connect our events with the InputManager
-	printf(mInputManager->signal_acceleration.connect(boost::bind(&CarPhysicsComponent::handleVector, this, _1)).connected() ? "connected\n " : "disconnected\n");
+    
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
 	createVehicle(chassisShift);
