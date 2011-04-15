@@ -5,11 +5,25 @@ material Ground/Grid
 	{
 		pass
 		{
-//			lighting off
+			lighting off
 			texture_unit
 			{				
 				texture grid.png
 				scale .05 .05
+			}
+		}
+	}
+}
+
+material Sky/Stars
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{				
+				texture space_154.gif
 			}
 		}
 	}
