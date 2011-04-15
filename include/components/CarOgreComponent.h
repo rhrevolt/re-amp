@@ -30,7 +30,6 @@ class CarOgreComponent: public OgreComponent
 
 		virtual void init();
 
-		virtual Ogre::SceneNode* getNode() { return mCarNode; };
 		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
 
 	protected:
@@ -39,13 +38,11 @@ class CarOgreComponent: public OgreComponent
 		
 		Ogre::Vector3 chassisShift;
 		
-		Ogre::SceneNode *mCarNode;
+		Ogre::SceneNode *mChassisNode;
 		Ogre::SceneNode *mWheelNodes[4];
 		
 		Ogre::Entity    *mChassis;
 		Ogre::Entity    *mWheels[4];
-		
-		Ogre::SceneManager *mSceneMgr;
 };
 
 #endif // _CAROGRECOMPONENT_H_

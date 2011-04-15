@@ -31,17 +31,17 @@ class OgreComponent: public GameComponent
 
 		virtual void init();
 
-		virtual Ogre::SceneNode* getNode() = 0;
+        virtual Ogre::SceneNode* getNode() { return mRootNode; };
+        virtual void setInitialPosition(Ogre::Vector3& pos);
 
 		virtual ComponentType getType() {return COMPONENT_OGRE;};
 
 	protected:
 		std::string meshStr;
-
-		Ogre::SceneNode *mNode;
-		Ogre::SceneNode *mMeshNode;
-		Ogre::Entity* mMesh;
-
+		
+		Ogre::SceneManager  *mSceneMgr;
+		Ogre::SceneNode     *mRootNode;
+        
 	private:
 
 };

@@ -46,6 +46,8 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
+int numPhysicsInstanced = 0;
+
 CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gAcceleration = 120.0f;
 	gMaxEngineForce = 3000.0f;
@@ -75,7 +77,7 @@ CarPhysicsComponent::~CarPhysicsComponent() {
 
 bool CarPhysicsComponent::tick(FrameData &fd)
 {
-	printf("ticking physics..\n");
+	//printf("ticking physics..\n");
 	// Decay the engine force
 	if (mEngineForce > 0) {
 		mEngineForce = std::max(0.0f, mEngineForce - gEngineDecayRate);
@@ -90,7 +92,7 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		mSteering = std::min(0.0f, mSteering + gSteeringDecayRate);
 	}
 
-	printf("%f\n", fd.timeSinceLastFrame);
+	//printf("%f\n", fd.timeSinceLastFrame);
 
 	// apply steering and engine force on wheels
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
@@ -207,7 +209,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 	CompoundCollisionShape* compound = new CompoundCollisionShape();
 	compound->addChildShape(chassisShape, chassisShift);
 
-	mCarChassis = new WheeledRigidBody("carChassisPhysics", PhysicsManager::getInstance()->getWorld());
+	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
 
 	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 1800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);

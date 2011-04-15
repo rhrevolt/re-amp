@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include "components/OgreComponent.h"
+#include "core/StateManager.h"
 
 bool OgreComponent::tick(FrameData &fd)
 {
@@ -27,7 +28,12 @@ bool OgreComponent::tick(FrameData &fd)
 
 void OgreComponent::init()
 {
-	// Do nothing
+	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();
+	mRootNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 }
 
+void OgreComponent::setInitialPosition(Ogre::Vector3& pos)
+{
+	mRootNode->setPosition(pos);
+}
 
