@@ -20,6 +20,8 @@
 #ifndef __GameComponent_h__
 #define __GameComponent_h__
 
+#include <boost/signals.hpp>
+
 #include "core/FrameData.h"
 
 typedef enum {
@@ -35,7 +37,7 @@ typedef enum {
 
 class GameEntity; // forward declaration
 
-class GameComponent
+class GameComponent : public boost::signals::trackable
 {
 	public:
 		GameComponent(int componentID, int priority = 0);
