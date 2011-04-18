@@ -21,7 +21,6 @@
 #define _WEAPONCOMPONENT_H_
 
 #include "core/GameComponent.h"
-#include "core/EventManager.h"
 #include <list>
 #include <time.h>
 
@@ -36,12 +35,6 @@ typedef enum
 	NUM_WEAPONS,
 	NO_WEAPON
 } WeaponTypes;
-
-// weapon fired evt
-struct WeaponFiredEvent : public Event
-{
-	int weaponType;
-};
 
 class WeaponComponent: public GameComponent
 {

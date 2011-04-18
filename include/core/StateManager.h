@@ -20,6 +20,8 @@
 #ifndef _STATE_MANAGER_H_
 #define _STATE_MANAGER_H_
 
+#include <boost/signals.hpp>
+
 #include "core/GameEntity.h"
 #include "core/GameState.h"
 #include "core/FrameData.h"
@@ -48,7 +50,7 @@ class StateManager: public Singleton<StateManager>
 	GameState*	inGameState; 
 
 	// BOOST signals
-	boost::signals<void (int oldState, int newState)> signal_stateChanged;
+	boost::signal<void (int oldState, int newState)> signal_stateChanged;
 
 	protected:
 	static int		currentEntityID;
