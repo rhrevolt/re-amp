@@ -22,7 +22,6 @@
 
 #include "core/GameEntity.h"
 #include "core/GameState.h"
-#include "core/EventManager.h"
 #include "core/FrameData.h"
 #include "core/Singleton.h"
 

@@ -54,7 +54,6 @@ void checkX11Events();
 #include <OgreVector2.h>
 
 // Our includes
-#include "core/EventManager.h"
 #include "core/StateManager.h"
 #include "core/SubSystemManager.h"
 #include "core/Singleton.h"

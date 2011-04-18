@@ -24,7 +24,6 @@
 //#include <Ogre.h>
 
 // Our includes
-#include "core/EventManager.h"
 #include "core/StateManager.h"
 #include "components/PhysicsComponent.h"
 #include <vector>
