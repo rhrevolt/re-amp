@@ -20,7 +20,6 @@
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 
-#include "core/EventManager.h"
 #include "core/GameEntity.h"
 #include <Ogre.h>
 #include "core/FrameData.h"

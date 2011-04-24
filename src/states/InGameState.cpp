@@ -52,6 +52,7 @@ void InGameState::start()
 	
 	entityList.push_back(EntityFactory::create("terrain"));
 	entityList.push_back(EntityFactory::create("playerCar"));
+	entityList.push_back(EntityFactory::create("car"));
 }
 
 

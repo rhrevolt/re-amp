@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include "components/CameraComponent.h"
+#include "components/CarOgreComponent.h"
 #include "core/StateManager.h"
 #include "core/Application.h"
 
@@ -32,17 +33,28 @@ CameraComponent::~CameraComponent() {
 void CameraComponent::init()
 {
 	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();
+    
+    currentPos = Ogre::Vector3(0, 10, -20);
+    
 	createCamera();
 	createViewports();
 }
 
 void CameraComponent::createCamera(void)
 {
-	mCamera = mSceneMgr->createCamera("CarCam");  
-    mCamera->setPosition(Ogre::Vector3(0,15,30));
-    mCamera->lookAt(Ogre::Vector3(0,0,0));
+	mCamera = mSceneMgr->createCamera("CarCam");
+
+    /* Attach the camera to our car and place it in the correct position */
+    CarOgreComponent* ogreComp = (CarOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
+	Ogre::SceneNode* carRootNode = ogreComp->getNode();
+    Ogre::SceneNode* camNode = carRootNode->createChildSceneNode("CamNode");
+    camNode->translate(currentPos);
+    camNode->attachObject(mCamera);
+      
+    //mCamera->setPosition(Ogre::Vector3(0,15,30));
+    mCamera->lookAt(Ogre::Vector3(0,0,80));
     mCamera->setNearClipDistance(5);
-    
+	
     //mCameraMan = new OgreBites::SdkCameraMan(mCamera);
 }
 

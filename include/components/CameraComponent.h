@@ -42,6 +42,8 @@ class CameraComponent: public GameComponent
 	private:
 		Ogre::SceneManager* mSceneMgr;
 		Ogre::Camera* mCamera;
+        
+        Ogre::Vector3 currentPos;
 };
 
 #endif

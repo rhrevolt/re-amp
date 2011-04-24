@@ -24,26 +24,22 @@
 
 #define GEOMETRY_QUERY_MASK 0
 
+int numEntitiesInstanced = 0;
+
 void CarOgreComponent::init()
-{
-	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();
-			
+{		
+    OgreComponent::init();
 	chassisShift = Ogre::Vector3(0, 0.8, 0);
 
 	mChassis = mSceneMgr->createEntity(
-			"chassis" + Ogre::StringConverter::toString(0),
+			"chassis" + Ogre::StringConverter::toString(numEntitiesInstanced++),
 			"chassis.mesh");
-
-	mCarNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-
-	Ogre::SceneNode *chassisnode = mCarNode->createChildSceneNode();
-	chassisnode->attachObject (mChassis);
-	chassisnode->setPosition (chassisShift);
-
 	mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
 	mChassis->setCastShadows(true);
 
-	int numEntitiesInstanced = 0;
+	mChassisNode = mRootNode->createChildSceneNode();
+	mChassisNode->attachObject (mChassis);
+	mChassisNode->setPosition (chassisShift);
 
 	for (size_t i = 0; i < 4; i++)
 	{
@@ -54,7 +50,7 @@ void CarOgreComponent::init()
 		mWheels[i]->setQueryFlags (GEOMETRY_QUERY_MASK);
 		mWheels[i]->setCastShadows(true);
 
-		mWheelNodes[i] = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
+		mWheelNodes[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		mWheelNodes[i]->attachObject (mWheels[i]);
 	}
 }

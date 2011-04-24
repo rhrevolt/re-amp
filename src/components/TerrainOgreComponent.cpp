@@ -21,6 +21,7 @@
 #include "states/InGameState.h"
 #include "core/GameComponent.h"
 #include "components/TerrainOgreComponent.h"
+#include "core/Application.h"
 
 
 /*
@@ -34,10 +35,11 @@
    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-   plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+   plane, 1500, 1500, 20
+   * , 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
    Ogre::Entity* entGround = GameSceneMgr->createEntity("GroundEntity", "ground");
-   GameSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
+   GameSceneMgr->getRootSceneNode()->createChildScceneNode()->attachObject(entGround);
 
    entGround->setCastShadows(false);
  */
@@ -48,24 +50,33 @@ void TerrainOgreComponent::init()
 	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
 	// Copy-pasted from the tutorials, need to tweak
-	//sMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-	//sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	sMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+	sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			plane, 15000, 15000, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+			plane, 150, 150, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	Ogre::Entity* entGround =sMgr->createEntity("GroundEntity", "ground");
 	sMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
 
 	entGround->setCastShadows(false);
+	entGround->setMaterialName("Ground/Grid");
 
-	/*
+	
 	   Ogre::Light* pointLight = sMgr->createLight("pointLight");
 	   pointLight->setType(Ogre::Light::LT_POINT);
 	   pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
 	   pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-	   pointLight->setSpecularColour(1.0, 0.0, 0.0); */
+	   pointLight->setSpecularColour(1.0, 0.0, 0.0);
+	   
+	   	sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
+	   
+	   /* Consider: weirnc: Add fog in the future? Can't get the 2nd line to work
+	   Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
+	   Application::getInstance()->getWindow()->getViewport(0)->setBackgroundColour(fadeColour);
+		sMgr->setFog(Ogre::FOG_EXP, fadeColour, 0.0, 50, 500);
+		*/
 }

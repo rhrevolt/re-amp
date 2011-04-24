@@ -24,9 +24,6 @@
 WeaponComponent::WeaponComponent(int ID): GameComponent(ID)
 {
 	srand(time(NULL));
-	EventTypeList evts;
-	evts.push_back(EVENT_FIRE);
-	EventManager::instance()->registerEntity(componentID, evts);
 }
 
 WeaponComponent::~WeaponComponent()
@@ -55,11 +52,6 @@ void WeaponComponent::pickupWeapon()
 void WeaponComponent::fireWeapon()
 {
 	// TODO: Display no weapon on UI
-	// DONE: Push a weaponfired event
-	WeaponFiredEvent evt;
-	evt.weaponType = curWeapon;
-	evt.eventType = EVENT_FIRED;
-	EventManager::instance()->pushEvent(evt);
 
 	curWeapon = NO_WEAPON;
 }

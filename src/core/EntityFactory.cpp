@@ -47,6 +47,13 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
+		ent->addComponent((GameComponent*) new InputComponent(0));
+		ent->initializeComponents();
+        
+    } else if (name == "car") {
+		ent->addComponent((GameComponent*) new CarOgreComponent(0));
+		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
+		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->initializeComponents();
 
 	} else if (name == "terrain") {
@@ -56,7 +63,7 @@ GameEntity* EntityFactory::create(std::string name)
 		
 		/* CONSIDER weirnc-comment: Should the below be put in some type of "TerrainPhysicsComponent" class? 
 		 * This seems like a weird place to put it.*/
-		
+
 		// a body is needed for the shape
 		OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
 				PhysicsManager::getInstance()->getWorld());

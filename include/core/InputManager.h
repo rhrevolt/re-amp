@@ -23,6 +23,8 @@
 #include <cstdlib>
 #include <stdio.h>
 
+#include <boost/signals.hpp>
+
 // OIS Includes
 #include "OISInputManager.h"
 #include "OISException.h"
@@ -52,19 +54,19 @@ void checkX11Events();
 #include <OgreVector2.h>
 
 // Our includes
-#include "core/EventManager.h"
 #include "core/StateManager.h"
 #include "core/SubSystemManager.h"
 #include "core/Singleton.h"
 //#include "components/CarPhysicsComponent.h"
 
+
 class InputManager: public SubSystemManager, public OIS::KeyListener, public OIS::MouseListener, public Singleton<InputManager>
 {
-friend class Singleton<InputManager>;
-public:
+	friend class Singleton<InputManager>;
+	public:
 	void init(std::string windowHandle);
 	bool tick(FrameData&);
-	bool registerComponent(GameComponent*);
+	bool registerComponent(GameComponent*) {};
 
 	void updateClippingArea(unsigned int height, unsigned int width);
 	void shutdownManager (void);
@@ -77,26 +79,63 @@ public:
 	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 
-	bool KEY_LEFT;
-	bool KEY_RIGHT;
-	bool KEY_ACCEL;
-	bool KEY_BRAKE;
-	bool KEY_HORN;
-	bool KEY_FIRE;
-	bool KEY_RESET;
+	/*
+	 * signal_honk
+	 * - start - boolean - whether the signal indicates the honk key is down
+	 */ 
+	boost::signal<void (bool buttonDown)> signal_honk;
 
-protected:
+	/*
+	 * signal_weapon
+	 * no parameters -- called once when the weapon button is pressed. no repeats.
+	 */
+	boost::signal<void ()> signal_weapon;
+
+	/*
+	 * signal_acceleration
+	 * - bufferedVector - Ogre::Vector2 - vector to indicate acceleration 
+	 *   contained in the event.
+	 */
+	boost::signal<void (Ogre::Vector2 bufferedVector)> signal_acceleration;
+
+	/*
+	 * signal_reset
+	 * fired when the reset button is pressed
+	 * no parameters
+	 */
+	boost::signal<void ()> signal_reset;
+
+	/*
+	 * signal_keydown
+	 * A generic keypress
+	 * takes OIS::KeyEvent as an argument
+	 */
+	boost::signal<void (OIS::KeyEvent keyEvent)> signal_keydown;
+
+	// Signal connections
+
+	protected:
 	;
 
-private:
+	private:
 	InputManager ();
 	~InputManager (void);
+
+	int bufferedTicks;
+	float currentFrameDelay;
+	Ogre::Vector2 bufferedVector;
 
 	OIS::InputManager* oisInputManager;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;
 
-	bool running;
+	bool KEY_ACCEL;
+	bool KEY_BRAKE;
+	bool KEY_LEFT;
+	bool KEY_RIGHT;
+	bool KEY_HORN;
+	bool KEY_RESET;
+	bool KEY_FIRE;
 
 };
 

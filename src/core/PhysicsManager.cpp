@@ -17,6 +17,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/foreach.hpp>
+
 #include "core/PhysicsManager.h"
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include <OgreAxisAlignedBox.h>
@@ -25,7 +27,7 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
-PhysicsManager::PhysicsManager()
+PhysicsManager::PhysicsManager() : initialized(false)
 {
 }
 
@@ -48,8 +50,6 @@ PhysicsManager::~PhysicsManager (void)
 
 	mBodies.clear();
 	mShapes.clear();
-	delete mWorld->getDebugDrawer();
-	mWorld->setDebugDrawer(0);
 	delete mWorld;
 }
 
@@ -68,25 +68,32 @@ void PhysicsManager::init()
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
 
-        // add Debug info display tool
-	debugDrawer = new OgreBulletCollisions::DebugDrawer();
-	debugDrawer->setDrawWireframe(true);	// we want to see the Bullet containers
+	// Setup the tick callback
+	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
 
-	mWorld->setDebugDrawer(debugDrawer);
-	mWorld->setShowDebugShapes(true);		// enable it if you want to see the Bullet containers
-	SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
-	node->attachObject(static_cast <SimpleRenderable *> (debugDrawer));
+	initialized = true;
 }
 
 bool PhysicsManager::tick(FrameData &fd)
 {
+	if (initialized) {
+		mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
+	}
+	return true;
+}
+
+void PhysicsManager::btTickCallbackWrapper(btDynamicsWorld* world, btScalar timeStep)
+{
+	PhysicsManager::getInstance()->btTickCallback(world, timeStep);
+}
+
+void PhysicsManager::btTickCallback(btDynamicsWorld* world, btScalar timeStep)
+{
+	FrameData fd;
+	fd.timeSinceLastFrame = timeStep;
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
 		comp->tick(fd);
 	}
-
-	mWorld->stepSimulation(fd.timeSinceLastFrame);	// update Bullet Physics animation
-
-	return true;
 }
 
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
@@ -100,10 +107,10 @@ OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 }
 
 std::deque<OgreBulletDynamics::RigidBody *> * PhysicsManager::getBodies(){
-    return &mBodies;
+	return &mBodies;
 }
 
 std::deque<OgreBulletCollisions::CollisionShape *> * PhysicsManager::getShapes(){
-    return &mShapes;
+	return &mShapes;
 }
 

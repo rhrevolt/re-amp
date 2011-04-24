@@ -20,25 +20,18 @@
 #ifndef _STATE_MANAGER_H_
 #define _STATE_MANAGER_H_
 
+#include <boost/signals.hpp>
+
 #include "core/GameEntity.h"
 #include "core/GameState.h"
-#include "core/EventManager.h"
 #include "core/FrameData.h"
 #include "core/Singleton.h"
-
-/**
- An event for when the state changes
- */
-struct StateChangeEvent : public Event {
-	int oldState;
-	int newState;
-};
 
 //StateManager is a singleton!
 class StateManager: public Singleton<StateManager>
 {
-friend class Singleton<StateManager>;
-public:
+	friend class Singleton<StateManager>;
+	public:
 	static GameState* getCurrentState();
 
 	const static int menuID;
@@ -51,16 +44,19 @@ public:
 	void switchState(int stateID);
 
 	int getEntityID();
-	
+
 	GameState* currentState;
 	GameState*  mmState;
 	GameState*	inGameState; 
 
-protected:
+	// BOOST signals
+	boost::signal<void (int oldState, int newState)> signal_stateChanged;
+
+	protected:
 	static int		currentEntityID;
 	static int		currentStateID;
-	
-private:
+
+	private:
 	StateManager();
 	~StateManager();
 };

@@ -20,12 +20,13 @@
 #ifndef _SUBSYSTEM_MANAGER_H_
 #define _SUBSYSTEM_MANAGER_H_
 
+#include <boost/signal.hpp>
+
 // Our includes
-#include "core/EventManager.h"
 #include "core/StateManager.h"
 #include "core/Singleton.h"
 
-class SubSystemManager
+class SubSystemManager : public boost::signals::trackable
 {
 friend class Singleton<SubSystemManager>;
 public:

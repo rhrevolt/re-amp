@@ -33,12 +33,21 @@ class CarPhysicsComponent: public PhysicsComponent
 		virtual bool tick(FrameData &fd);
 		void createVehicle(Ogre::Vector3 chassisShift);
 		virtual void init();
+		virtual void handleVector(Ogre::Vector2 vec);
+
+		// BOOST signals
+		/*
+		   signal_speedUpdated - fires when the speed of the vehicle 
+		   changed
+		   - one param - the new speed (in km/h)
+		*/
+		boost::signal<void (float speed)> signal_speedUpdated;
 
 	protected:
 
 	private:
 		float	gMaxEngineForce;
-
+		float	gBrakingIncrement;
 		float	gSteeringIncrement; 
 		float	gSteeringClamp ;
 		float	gSteeringDecayRate;
@@ -79,7 +88,6 @@ class CarPhysicsComponent: public PhysicsComponent
 
 		bool mSteeringLeft;
 		bool mSteeringRight;
-		InputManager* mInputManager;
 };
 
 #endif // _CARPHYSICSCOMPONENT_H_

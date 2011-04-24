@@ -55,10 +55,8 @@ void StateManager::switchState(int stateID)
 	oldState->deactivate();
 	currentState->activate();
 	// Fire an event notifying of the state change
-	StateChangeEvent evt;
-	evt.oldState = currentStateID;
-	evt.newState = stateID;
-	EventManager::instance()->pushEvent(evt);
+	signal_stateChanged(currentStateID, stateID);
+	
 	// Change the current state ID
 	currentStateID = stateID;
 }
@@ -86,4 +84,4 @@ GameState* StateManager::getCurrentState()
 {
 	return StateManager::getInstance()->currentState;
 }
-	
+

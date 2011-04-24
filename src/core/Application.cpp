@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <boost/signals.hpp>
 
 #include "config.h"
 #include "core/Application.h"
@@ -25,6 +26,7 @@
 Application::Application(void)
 {
 	stateMgr = StateManager::getInstance();
+	signal_exitgame.connect(boost::bind(&Application::shutdownGame, this));
 }
 //-------------------------------------------------------------------------------------
 Application::~Application(void)
@@ -46,7 +48,9 @@ bool Application::frameStarted(const Ogre::FrameEvent& evt)
 	fd.frameType = FRAME_PRERENDER;
 	// Tick the state manager
 	stateMgr->tick(fd);
-
+	// Fire an event 
+	signal_frameStarted(fd);
+	
 	return true;
 }
 
@@ -58,18 +62,32 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	}
 
 	// Make sure that we aren't shutting down
-	// TODO: Instead of polling the inputmanager for status, have it listen
-	// for the event
-	if (!mInputManager->getStatus()) {
+	if (mShutDown) {
 		return false;
 	}
-	
-	// TODO: fire events to the statemanager
+
+
+	// Construct a FrameData event
+	FrameData& fd = (FrameData&)evt;
+	fd.frameType = FRAME_QUEUED;
+	// Fire an event 
+	signal_frameQueued(fd);
+
 	return true;
 }
 
 bool Application::frameEnded(const Ogre::FrameEvent& evt) 
 {
-	// TODO: fire events to the statemanager
+	// Construct a FrameData event
+	FrameData& fd = (FrameData&)evt;
+	fd.frameType = FRAME_POSTRENDER;
+	// Fire an event 
+	signal_frameEnded(fd);
+
 	return true;
+}
+
+void Application::shutdownGame()
+{
+	mShutDown = true;
 }

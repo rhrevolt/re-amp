@@ -22,20 +22,19 @@
 #include "core/BaseApplication.h"
 #include "OgreWindowEventUtilities.h"
 
+bool BaseApplication::mShutDown = false;
+
 //-------------------------------------------------------------------------------------
-BaseApplication::BaseApplication(void)
-	: mRoot(0),
+BaseApplication::BaseApplication(void): mRoot(0),
 	mCamera(0),
 	mSceneMgr(0),
 	mWindow(0),
 	mResourcesCfg(Ogre::StringUtil::BLANK),
 	mPluginsCfg(Ogre::StringUtil::BLANK),
 	mCursorWasVisible(false),
-	mShutDown(false),
 	mInputManager(0)
 {
 }
-
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
@@ -70,11 +69,7 @@ bool BaseApplication::configure(void)
 	mWindow = mRoot->initialise(true, "Re-Amp");
 	return true;
 }
-void BaseApplication::shutdownGame(void)
-{
-	mShutDown = true;
-}
-//-------------------------------------------------------------------------------------
+
 void BaseApplication::createFrameListener(void)
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing Input Manager ***");

@@ -37,12 +37,6 @@ typedef enum
 	NO_WEAPON
 } WeaponTypes;
 
-// weapon fired evt
-struct WeaponFiredEvent : public Event
-{
-	int weaponType;
-};
-
 class WeaponComponent: public GameComponent
 {
 	public:
