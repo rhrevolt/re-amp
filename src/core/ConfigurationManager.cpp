@@ -27,3 +27,14 @@ ConfigurationManager::~ConfigurationManager()
 {
 }
 
+void ConfigurationManager::init() {
+	// Open the main, which includes paths to other configuration files
+	const char* configurationName = "config.ini";
+	fh.open(configurationName);
+}
+
+void ConfigurationManager::openConfiguration(std::string configurationFile) {
+	// TODO: Look in the configuration cache. If the file isn't open, go
+	// ahead and search the main config paths for the file, open it and put 
+	// it in the file handle cache
+}

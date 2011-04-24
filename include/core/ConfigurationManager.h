@@ -6,8 +6,7 @@
 
 #include "core/Singleton.h"
 
-typedef std::pair<std::string, Ogre::ConfigFile> ConfigFilePair;
-
+typedef std::pair<std::string, std::ifstream> ConfigFilePair;
 
 class ConfigurationManager: public Singleton<ConfigurationManager>
 {
@@ -15,7 +14,10 @@ class ConfigurationManager: public Singleton<ConfigurationManager>
 	public:
 	ConfigurationManager();
 	~ConfigurationManager();
+	void init();
+	void openConfiguration(std::string);
 	protected:
-	std::map<std::string, Ogre::ConfigFile> fileCache;
+	std::map<std::string, std::ifstream> fhCache;
+	std::ifstream fh;
 };	
 #endif

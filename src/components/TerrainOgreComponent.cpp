@@ -36,12 +36,12 @@
 
    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
    plane, 1500, 1500, 20
-   * , 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+ * , 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
-   Ogre::Entity* entGround = GameSceneMgr->createEntity("GroundEntity", "ground");
-   GameSceneMgr->getRootSceneNode()->createChildScceneNode()->attachObject(entGround);
+ Ogre::Entity* entGround = GameSceneMgr->createEntity("GroundEntity", "ground");
+ GameSceneMgr->getRootSceneNode()->createChildScceneNode()->attachObject(entGround);
 
-   entGround->setCastShadows(false);
+ entGround->setCastShadows(false);
  */
 
 
@@ -64,19 +64,19 @@ void TerrainOgreComponent::init()
 	entGround->setCastShadows(false);
 	entGround->setMaterialName("Ground/Grid");
 
-	
-	   Ogre::Light* pointLight = sMgr->createLight("pointLight");
-	   pointLight->setType(Ogre::Light::LT_POINT);
-	   pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
-	   pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-	   pointLight->setSpecularColour(1.0, 0.0, 0.0);
-	   
-	   	sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
-	   
-	   /* Consider: weirnc: Add fog in the future? Can't get the 2nd line to work
+	Ogre::Light* pointLight = sMgr->createLight("pointLight");
+	pointLight->setType(Ogre::Light::LT_POINT);
+	pointLight->setPosition(Ogre::Vector3(0, 150, 250));
+
+	pointLight->setDiffuseColour(1.0, 0.0, 0.0);
+	pointLight->setSpecularColour(1.0, 0.0, 0.0);
+
+	sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
+
+	/* Consider: weirnc: Add fog in the future? Can't get the 2nd line to work
 	   Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
 	   Application::getInstance()->getWindow()->getViewport(0)->setBackgroundColour(fadeColour);
-		sMgr->setFog(Ogre::FOG_EXP, fadeColour, 0.0, 50, 500);
-		*/
+	   sMgr->setFog(Ogre::FOG_EXP, fadeColour, 0.0, 50, 500);
+	 */
 }
