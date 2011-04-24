@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 <>
+ * Copyright (C)  2011 ReAmp Contributors
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,46 +17,30 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _WEAPONCOMPONENT_H_
-#define _WEAPONCOMPONENT_H_
+#ifndef _WEAPONOGRECOMPONENT_H_
+#define _WEAPONOGRECOMPONENT_H_
 
-#include "core/GameComponent.h"
-#include "core/InputManager.h"
-#include <list>
-#include <time.h>
+#include "components/OgreComponent.h"
 
-using namespace std;
-
-// weapon types - add new weapon types above NUM_WEAPONS
-typedef enum 
-{
-	OIL_SLICK,
-	FIREWORK,
-	WATER_BALLOON,
-	NUM_WEAPONS,
-	NO_WEAPON
-} WeaponTypes;
-
-class WeaponComponent: public GameComponent
+class WeaponOgreComponent: public OgreComponent 
 {
 	public:
-		WeaponComponent(int ID);
-		~WeaponComponent();
+		WeaponOgreComponent(int ID): OgreComponent(ID){};
+		~WeaponOgreComponent() {};
+		void init();
 		
-		virtual bool tick(FrameData &fd);
-
-		virtual void init();
-		
-		virtual ComponentType getType() {return COMPONENT_WEAPON;};
+		//Ogre::Vector3 chassisShift;
+		//Ogre::SceneNode *carNode;
+		//Ogre::SceneNode *mWheelNodes[4];
+		//
+		//virtual Ogre::SceneNode* getNode() { return mCarNode; };
 
 	protected:
-		void pickupWeapon();
-		void fireWeapon();
 
 	private:
-		// This keeps track of the current weapon
-		int curWeapon;
-		int ID;
+		//Ogre::Entity    *mChassis;
+		//Ogre::Entity    *mWheels[4];
+		//Ogre::SceneManager *mSceneMgr;
 };
 
-#endif
+#endif // _WEAPONOGRECOMPONENT_H_

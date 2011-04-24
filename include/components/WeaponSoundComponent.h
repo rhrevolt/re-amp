@@ -17,46 +17,27 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _WEAPONCOMPONENT_H_
-#define _WEAPONCOMPONENT_H_
+#ifndef _WEAPONSOUNDCOMPONENT_H_
+#define _WEAPONSOUNDCOMPONENT_H_
 
-#include "core/GameComponent.h"
-#include "core/InputManager.h"
-#include <list>
-#include <time.h>
+#include "components/SoundComponent.h"
+#include "core/SoundManager.h"
+#include "core/GameEntity.h"
 
-using namespace std;
 
-// weapon types - add new weapon types above NUM_WEAPONS
-typedef enum 
+class WeaponSoundComponent: public SoundComponent
 {
-	OIL_SLICK,
-	FIREWORK,
-	WATER_BALLOON,
-	NUM_WEAPONS,
-	NO_WEAPON
-} WeaponTypes;
+public:
+    WeaponSoundComponent(int id);
+    ~WeaponSoundComponent();
+    virtual bool tick(FrameData &fd);
+    void init();
+    void setParentEntity(GameEntity* pParentCar);
+protected:
 
-class WeaponComponent: public GameComponent
-{
-	public:
-		WeaponComponent(int ID);
-		~WeaponComponent();
-		
-		virtual bool tick(FrameData &fd);
-
-		virtual void init();
-		
-		virtual ComponentType getType() {return COMPONENT_WEAPON;};
-
-	protected:
-		void pickupWeapon();
-		void fireWeapon();
-
-	private:
-		// This keeps track of the current weapon
-		int curWeapon;
-		int ID;
+private:
+    GameEntity* parentEntity;
+    SoundManager* pSoundManager;
 };
 
 #endif

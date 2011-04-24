@@ -29,6 +29,9 @@
 #include "components/PhysicsComponent.h"
 #include "components/CameraComponent.h"
 #include "components/CarSoundComponent.h"
+#include "components/WeaponOgreComponent.h"
+#include "components/WeaponPhysicsComponent.h"
+#include "components/WeaponSoundComponent.h"
 
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
@@ -71,6 +74,13 @@ GameEntity* EntityFactory::create(std::string name)
 		defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
 		ent->initializeComponents();
 
+	} else if (name == "firework") {
+		WeaponOgreComponent* fireworkOgre = new WeaponOgreComponent(0);
+		ent->addComponent((GameComponent*) fireworkOgre);
+		fireworkOgre->init();
+		WeaponPhysicsComponent* weaponPhysics = new WeaponPhysicsComponent(0);
+		ent->addComponent((GameComponent*) weaponPhysics);
+		weaponPhysics->init();
 	}
 
 	return ent;

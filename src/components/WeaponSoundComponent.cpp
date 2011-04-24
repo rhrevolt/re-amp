@@ -17,46 +17,26 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _WEAPONCOMPONENT_H_
-#define _WEAPONCOMPONENT_H_
+ #include "components/WeaponSoundComponent.h"
 
-#include "core/GameComponent.h"
-#include "core/InputManager.h"
-#include <list>
-#include <time.h>
 
-using namespace std;
+ WeaponSoundComponent::WeaponSoundComponent(int ID) : SoundComponent(ID) {
+    init();
+ }
 
-// weapon types - add new weapon types above NUM_WEAPONS
-typedef enum 
+ WeaponSoundComponent::~WeaponSoundComponent() {
+ }
+
+bool WeaponSoundComponent::tick(FrameData &fd)
 {
-	OIL_SLICK,
-	FIREWORK,
-	WATER_BALLOON,
-	NUM_WEAPONS,
-	NO_WEAPON
-} WeaponTypes;
+    //pSoundManager->playAudio(audioFiles["HONK"], true);
+}
 
-class WeaponComponent: public GameComponent
+void WeaponSoundComponent::init()
 {
-	public:
-		WeaponComponent(int ID);
-		~WeaponComponent();
-		
-		virtual bool tick(FrameData &fd);
-
-		virtual void init();
-		
-		virtual ComponentType getType() {return COMPONENT_WEAPON;};
-
-	protected:
-		void pickupWeapon();
-		void fireWeapon();
-
-	private:
-		// This keeps track of the current weapon
-		int curWeapon;
-		int ID;
-};
-
-#endif
+    pSoundManager = SoundManager::getInstance();
+    //unsigned int honkId = 0;
+    //pSoundManager->loadAudio("honka.wav", &honkId, false);
+    pSoundManager->registerComponent(this);
+    //audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
+}
