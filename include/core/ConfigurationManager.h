@@ -14,6 +14,8 @@ class ConfigurationManager: public Singleton<ConfigurationManager>
 	public:
 	ConfigurationManager();
 	~ConfigurationManager();
+	void init();
+	void openConfiguration(std::string);
 	protected:
 	std::map<std::string, std::ifstream> fhCache;
 	std::ifstream fh;
