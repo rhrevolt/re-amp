@@ -27,3 +27,11 @@ ConfigurationManager::~ConfigurationManager()
 {
 }
 
+void ConfigurationManager::init() {
+	// Open the configuration file
+	const char* configurationName = "config.ini";
+	std::ifstream fh;
+	fh.open(configurationName);
+}
+
+ConfigurationManager::
