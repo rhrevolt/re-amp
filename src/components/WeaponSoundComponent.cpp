@@ -17,26 +17,25 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "components/WeaponSoundComponent.h"
+#include "components/WeaponSoundComponent.h"
 
 
- WeaponSoundComponent::WeaponSoundComponent(int ID) : SoundComponent(ID) {
-    init();
- }
+WeaponSoundComponent::WeaponSoundComponent(int ID) : SoundComponent(ID) {
+}
 
- WeaponSoundComponent::~WeaponSoundComponent() {
- }
+WeaponSoundComponent::~WeaponSoundComponent() {
+}
 
 bool WeaponSoundComponent::tick(FrameData &fd)
 {
-    //pSoundManager->playAudio(audioFiles["HONK"], true);
+	//pSoundManager->playAudio(audioFiles["HONK"], true);
 }
 
 void WeaponSoundComponent::init()
 {
-    pSoundManager = SoundManager::getInstance();
-    //unsigned int honkId = 0;
-    //pSoundManager->loadAudio("honka.wav", &honkId, false);
-    pSoundManager->registerComponent(this);
-    //audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
+	pSoundManager = SoundManager::getInstance();
+	//unsigned int honkId = 0;
+	//pSoundManager->loadAudio("honka.wav", &honkId, false);
+	pSoundManager->registerComponent(this);
+	//audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
 }
