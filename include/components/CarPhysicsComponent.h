@@ -40,7 +40,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		   signal_speedUpdated - fires when the speed of the vehicle 
 		   changed
 		   - one param - the new speed (in km/h)
-		*/
+		 */
 		boost::signal<void (float speed)> signal_speedUpdated;
 
 	protected:
@@ -82,12 +82,6 @@ class CarPhysicsComponent: public PhysicsComponent
 		float mEngineForce;
 		float mSteering;
 
-		int mWheelEngineStyle;
-		int mWheelSteeringStyle;
-
-
-		bool mSteeringLeft;
-		bool mSteeringRight;
 };
 
 #endif // _CARPHYSICSCOMPONENT_H_

@@ -25,56 +25,22 @@
 #include "core/PhysicsManager.h"
 #include "core/InputManager.h"
 
+class CarOgreComponent; // forward declaration
+
 class WeaponPhysicsComponent: public PhysicsComponent
 {
-public:
-	WeaponPhysicsComponent(int ID);
-	~WeaponPhysicsComponent();
-	virtual bool tick(FrameData &fd);
-	void init();
-	void createVehicle(Ogre::SceneNode *carNode, Ogre::Vector3 chassisShift, Ogre::SceneNode *mWheelNodes[4]);
+	public:
+		WeaponPhysicsComponent(int ID);
+		~WeaponPhysicsComponent();
+		virtual bool tick(FrameData &fd);
+		void init();
+		void createMissile(CarOgreComponent source);
 
-protected:
+		// BOOST signals
+		boost::signal<void (CarOgreComponent source)> signal_targetHit;
+	protected:
 
-private:
-	//float	gMaxEngineForce;
-
-    //float	gSteeringIncrement; 
-	//float	gSteeringClamp ;
-
-	float gAcceleration;
-	//float	gWheelRadius ;
-	//float	gWheelWidth ;
-
-	//float	gWheelFriction;//1000;//1e30f;
-	//float	gSuspensionStiffness;
-	//float	gSuspensionDamping;
-	//float	gSuspensionCompression;
-    float	gRollInfluence;//1.0f;
-	float   gSuspensionRestLength;
-	float   gMaxSuspensionTravelCm;
-	float   gFrictionSlip;
-	
-	OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
-    OgreBulletDynamics::VehicleTuning	        *mTuning;
-    OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
-    OgreBulletDynamics::RaycastVehicle	        *mVehicle;
-
-    //int mWheelsEngine[4];
-    //int mWheelsEngineCount;
-    //int mWheelsSteerable[4];
-    //int mWheelsSteerableCount;
-
-    //float mEngineForce;
-    //float mSteering;
-
-    //int mWheelEngineStyle;
-    //int mWheelSteeringStyle;
-
-
-    //bool mSteeringLeft;
-    //bool mSteeringRight;
-	InputManager* mInputManager;
+	private:
 };
 
 #endif // _WEAPONPHYSICSCOMPONENT_H_

@@ -181,12 +181,6 @@ void CarPhysicsComponent::init() {
 	mWheelsSteerable[2] = 2;
 	mWheelsSteerable[3] = 3;
 
-	mWheelEngineStyle = 0;
-	mWheelSteeringStyle = 0;
-
-	mSteeringLeft = false;
-	mSteeringRight = false;
-
 	mEngineForce = 0;
 	mSteering = 0;
 }

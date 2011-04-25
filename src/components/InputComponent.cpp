@@ -33,6 +33,4 @@ void InputComponent::init()
 				&CarPhysicsComponent::handleVector, 
 				(CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS), 
 				_1));
-
-	//printf(mInputManager->signal_acceleration.connected() ? "connected\n " : "disconnected\n"); 
-}
+};
