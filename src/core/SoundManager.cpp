@@ -6,6 +6,7 @@
  *
  */
 #include "core/SoundManager.h"
+#include <iostream>
 
 SoundManager* SoundManager::mSoundManager = NULL;
 
@@ -21,7 +22,7 @@ bool SoundManager::tick(FrameData &fd)
 bool SoundManager::registerComponent(GameComponent* pSoundComponent)
 {
 	componentList.push_front((SoundComponent*)pSoundComponent);
-	return 1;
+	return true;
 }
 
 /****************************************************************************/
@@ -29,7 +30,7 @@ bool SoundManager::registerComponent(GameComponent* pSoundComponent)
 bool SoundManager::unregisterComponent(GameComponent* pSoundComponent)
 {
 	componentList.remove((SoundComponent*)pSoundComponent);
-	return 1;
+	return true;
 }
 
 /****************************************************************************/
@@ -42,7 +43,7 @@ SoundManager::SoundManager( void )
 	mSoundDevice = 0;
 	mSoundContext = 0;
 
-	mAudioPath = ".\\dist\\media\\sound";
+	mAudioPath = "..\\media\\sound";
 
 	// Initial position of the listener
 	position[0] = 0.0;
@@ -79,7 +80,7 @@ SoundManager::SoundManager( void )
 		mAudioBufferInUse[i] = false;
 	}
 
-	printf("SoudManager Created.\n");
+	printf("\n\nSoudManager Created.\n\n");
 }
 
 /****************************************************************************/
@@ -111,8 +112,10 @@ void SoundManager::selfDestruct( void )
 /****************************************************************************/
 SoundManager* SoundManager::getInstance( void )
 {
-	if (mSoundManager == 0)
+	if (mSoundManager == 0) {
 		mSoundManager = new SoundManager();
+		mSoundManager->init();
+	}
 	return mSoundManager;
 }
 
@@ -122,8 +125,10 @@ bool SoundManager::init( void )
 	// It's an error to initialise twice OpenAl
 	if ( isInitialised ) return true;
 
+
 	// Open an audio device
 	mSoundDevice = alcOpenDevice( NULL ); // TODO ((ALubyte*) "DirectSound3D");
+
 	// mSoundDevice = alcOpenDevice( "DirectSound3D" );
 
 	// Check for errors
@@ -157,6 +162,8 @@ bool SoundManager::init( void )
 	if (checkALError("init::alGenBuffers:") )
 		return false;
 
+	std::cout << "Number of available sources: " << MAX_AUDIO_BUFFERS;
+
 	// Generate Sources
 	alGenSources( MAX_AUDIO_SOURCES, mAudioSources );
 	if (checkALError( "init::alGenSources :") )
@@ -166,15 +173,19 @@ bool SoundManager::init( void )
 	// Setup the initial listener parameters
 	// -> location
 	alListenerfv( AL_POSITION, position );
+	if(checkALError("Position")) return false;
 
 	// -> velocity
 	alListenerfv( AL_VELOCITY, velocity );
+	if(checkALError("velocity")) return false;
 
 	// -> orientation
 	alListenerfv( AL_ORIENTATION, orientation );
+	if(checkALError("orientation")) return false;
 
 	// Gain
 	alListenerf( AL_GAIN, 1.0 );
+	if(checkALError("gain")) return false;
 
 	// Initialise Doppler
 	alDopplerFactor( 1.2 ); // 1.2 = exaggerate the pitch shift by 20%
@@ -184,7 +195,7 @@ bool SoundManager::init( void )
 	isInitialised = true;
 	isSoundOn = true;
 
-	printf( "SoundManager initialised.\n\n");
+	printf( "\n\nSoundManager initialised.\n\n");
 
 	return true;
 }
@@ -249,6 +260,7 @@ bool SoundManager::checkALError( std::string pMsg )
 			break;
 		case AL_INVALID_OPERATION:
 			sprintf(mStr,"ERROR SoundManager::%s Invalid Operation", pMsg.c_str());
+//			return false;
 			break;
 		case AL_OUT_OF_MEMORY:
 			sprintf(mStr,"ERROR SoundManager::%s Out Of Memory", pMsg.c_str());
@@ -320,6 +332,8 @@ bool SoundManager::loadAudio( std::string filename, unsigned int *audioId,
 	int sourceID = -1;   // Identity of the Source Buffer to use
 
 	alGetError();    // Clear Error Code
+	for(int i = 0; i < 100; i++) alGetError();
+//	if(checkALError("why?")) return false;
 
 	// Check and see if the pSoundFile is already loaded into a buffer
 	bufferID = locateAudioBuffer( filename );
@@ -345,6 +359,10 @@ bool SoundManager::loadAudio( std::string filename, unsigned int *audioId,
 	// Now inform OpenAL of the sound assignment and attach the audio buffer
 	// to the audio source
 	alSourcei( mAudioSources[sourceID], AL_BUFFER, mAudioBuffers[bufferID] );
+	alSourcef(mAudioSources[sourceID], AL_PITCH, 1.0f);
+	alSourcef(mAudioSources[sourceID], AL_GAIN, 1.0f);
+	alSourcefv(mAudioSources[sourceID], AL_POSITION, position);
+	alSourcefv(mAudioSources[sourceID], AL_VELOCITY, velocity);
 
 	// Steven : Not in the original code !!!!!
 	alSourcei( mAudioSources[sourceID], AL_LOOPING, loop );
@@ -387,7 +405,7 @@ int SoundManager::loadAudioInToSystem( std::string filename )
 		printf(" ---> found Wav\n");
 		// When you are here, bufferID now represents a free Audio Buffer slot
 		// Attempt to load the SoundFile into the buffer
-		if ( !loadWAV( filename, mAudioBuffers[ bufferID ] ) ) return -1;
+		if ( !loadWAV( filename, bufferID ) ) return -1;
 	}
 	else if ( filename.find( ".ogg", 0 ) != std::string::npos )
 	{
@@ -412,14 +430,8 @@ int SoundManager::loadAudioInToSystem( std::string filename )
 
 // Function to load a wave file and assigned it to a buffer
 /****************************************************************************/
-bool SoundManager::loadWAV( std::string filename, ALuint pDestAudioBuffer )
+bool SoundManager::loadWAV( std::string filename, int bufferID )
 {
-	ALenum      format;         //for the buffer format
-	ALsizei      size;         //the bit depth
-	ALsizei      freq;         //for the frequency of the buffer
-	ALboolean   loop;         //looped
-	ALvoid*      data;         //data for the buffer
-
 	std::string mFullPath = mAudioPath;
 
 	alGetError();   // Clear Error Code
@@ -427,26 +439,21 @@ bool SoundManager::loadWAV( std::string filename, ALuint pDestAudioBuffer )
 	// Load in the WAV file from disk
 	//mFullPath += "\\";
 	mFullPath += filename;
-
-#ifndef MACINTOSH_AL
-	alutLoadWAVFile( (ALbyte*)mFullPath.c_str(), &format, &data, &size, &freq, &loop);
-#else
-	alutLoadWAVFile( (ALbyte*)mFullPath.c_str(), &format, &data, &size, &freq);
-#endif
-
-	if ( checkALError("loadWAV::alutLoadWAVFile: ") )
+	mAudioBuffers[bufferID] = alutCreateBufferFromFile(filename.c_str());
+	if ( checkALError("loadWAV::alutCreateBufferFromFile: ") )
 		return false;
 
-	// Copy the new WAV data into the buffer
-	alBufferData(pDestAudioBuffer, format, data, size, freq);
-	if ( checkALError("loadWAV::alBufferData: ") )
-		return false;
+	return true;
+}
 
-	// Unload the WAV file
-	alutUnloadWAV(format, data, size, freq);
-	if ( checkALError("loadWAV::alutUnloadWAV: ") )
-		return false;
-
+bool SoundManager::testtesttest()
+{
+	ALuint helloBuffer, helloSource;
+//	alutInit (&argc, argv);
+  	helloBuffer = alutCreateBufferHelloWorld ();
+  	alGenSources (1, &helloSource);
+	alSourcei (helloSource, AL_BUFFER, helloBuffer);
+  	alSourcePlay (helloSource);
 	return true;
 }
 
@@ -459,24 +466,51 @@ bool SoundManager::playAudio( unsigned int audioID, bool forceRestart )
 
 	int sourceAudioState = 0;
 
-	alGetError();
+	if(!alIsSource(mAudioSources[audioID]) == AL_TRUE) return false;
 
+	alGetError();
 	// Are we currently playing the audio source?
 	alGetSourcei( mAudioSources[audioID], AL_SOURCE_STATE, &sourceAudioState );
 
 	if ( sourceAudioState == AL_PLAYING )
 	{
+		printf("Currently playing!\n");
 		if ( forceRestart )
 			stopAudio( audioID );
 		else
 			return false; // Not forced, so we don't do anything
 	}
-
 	alSourcePlay( mAudioSources[ audioID ] );
 	if ( checkALError( "playAudio::alSourcePlay: ") )
 		return false;
-
+	alGetSourcei( mAudioSources[audioID], AL_SOURCE_STATE, &sourceAudioState );
+	if(sourceAudioState == AL_PLAYING)
+	{
+		printf("Now playing!\n\n");
+	}
 	return true;
+}
+
+void SoundManager::printState(int sourceAudioState) {
+	switch(sourceAudioState)
+	{
+		case AL_INITIAL:
+			std::cout << "AL_INITIAL\n";
+			break;
+		case AL_PLAYING:
+			std::cout << "AL_PLAYING\n";
+			break;
+		case AL_PAUSED:
+			std::cout << "AL_PAUSED\n";
+			break;
+		case AL_STOPPED:
+			std::cout << "AL_STOPPED\n";
+			break;
+		default:
+			std::cout << "UNKNOWN\n";
+			break;
+
+	}
 }
 
 /****************************************************************************/

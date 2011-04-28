@@ -23,6 +23,7 @@
 #include "components/SoundComponent.h"
 #include "core/SoundManager.h"
 #include "core/GameEntity.h"
+#include "core/InputManager.h"
 
 
 class CarSoundComponent: public SoundComponent
@@ -32,6 +33,7 @@ class CarSoundComponent: public SoundComponent
 		~CarSoundComponent();
 		virtual bool tick(FrameData &fd);
 		virtual void init();
+		virtual void honk(bool honk);
 	protected:
 
 	private:

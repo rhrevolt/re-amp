@@ -18,6 +18,7 @@
  */
 
 #include "components/CarSoundComponent.h"
+bool doHonk = false;
 
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
@@ -28,12 +29,36 @@ CarSoundComponent::~CarSoundComponent() {
 
 bool CarSoundComponent::tick(FrameData &fd)
 {
-	pSoundManager->playAudio(audioFiles["HONK"], true);
+	if(doHonk) {
+		printf("HONK!\n");
+		if(!pSoundManager->playAudio(audioFiles["HONK"], false))
+			printf("Failed to play sound\n");
+	}
+	else {
+		if(!pSoundManager->stopAudio(audioFiles["HONK"])) {
+			printf("Failed to stop sound\n");
+		}
+	}
+	return true;
+}
+
+void CarSoundComponent::updatePositions()
+{
+//	TODO: Get position from CarOgreComponent? or CarPhysicsComponent
+	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
+//		pSoundManager->setSoundPosition(pair->second, position);
+	}
+}
+
+void CarSoundComponent::honk(bool honk)
+{
+	doHonk = honk;
 }
 
 void CarSoundComponent::init()
 {
 	pSoundManager = SoundManager::getInstance();
+	InputManager::getInstance()->signal_honk.connect(boost::bind(&CarSoundComponent::honk,this, _1));
 	unsigned int honkId = 0;
 	pSoundManager->loadAudio("honka.wav", &honkId, false);
 	pSoundManager->registerComponent(this);

@@ -51,6 +51,8 @@ friend class Singleton<SoundManager>;
 		unsigned int mAudioSources[ MAX_AUDIO_SOURCES ];
 		bool         mAudioSourceInUse[ MAX_AUDIO_SOURCES ];
 
+		void printState(int sourceAudioState);
+
 		// Audio buffers
 		unsigned int mAudioBuffersInUseCount;
 		unsigned int mAudioBuffers[ MAX_AUDIO_BUFFERS ];
@@ -60,7 +62,7 @@ friend class Singleton<SoundManager>;
 		// Function to check if the soundFile is already loaded into a buffer
 		int locateAudioBuffer( std::string filename );
 		int loadAudioInToSystem( std::string filename );
-		bool loadWAV( std::string filename, ALuint pDestAudioBuffer );
+		bool loadWAV( std::string filename, int bufferID );
 		bool loadOGG( std::string filename, ALuint pDestAudioBuffer );
 		// TODO bool loadAU( std::string filename, ALuint pDestAudioBuffer );
 
@@ -73,7 +75,7 @@ friend class Singleton<SoundManager>;
 		static SoundManager* mSoundManager;
 
 		bool tick(FrameData &fd);
-
+		bool testtesttest(void);
 		SoundManager( void );
 		virtual ~SoundManager( void );
 		void selfDestruct( void );
