@@ -5,11 +5,13 @@ material Ground/Grid
 	{
 		pass
 		{
-			lighting off
+
+//			lighting off
 			texture_unit
 			{				
 				texture grid.png
-				scale .05 .05
+				scale .005 .005
+				filtering anisotropic
 			}
 		}
 	}
@@ -20,9 +22,11 @@ material Sky/Stars
 	technique
 	{
 		pass
-		{
+		{	
+			lighting off
 			texture_unit
-			{				
+			{	
+				filtering anisotropic			
 				texture space_154.gif
 			}
 		}

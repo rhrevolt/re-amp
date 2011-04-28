@@ -1,6 +1,6 @@
 material Wheel
 {
-	receive_shadows off
+//	receive_shadows off
 	technique
 	{
 		pass

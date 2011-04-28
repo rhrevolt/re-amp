@@ -50,27 +50,49 @@ void TerrainOgreComponent::init()
 	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
 	// Copy-pasted from the tutorials, need to tweak
-	sMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+	sMgr->setAmbientLight(Ogre::ColourValue(0.0, 0.0, 0.0));
 	sMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+/*
+	Ogre::Entity* entNinja = sMgr->createEntity("Ninja", "chassis.mesh");
+    entNinja->setCastShadows(true);
+    Ogre::SceneNode* ninjaNode = sMgr->getRootSceneNode()->createChildSceneNode();
+//    ninjaNode->setScale(20, 20, 20);
+	ninjaNode->setPosition(0, 2, 2);
+    ninjaNode->attachObject(entNinja);
+*/
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			plane, 150, 150, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+			plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
-	Ogre::Entity* entGround =sMgr->createEntity("GroundEntity", "ground");
+	Ogre::Entity* entGround = sMgr->createEntity("GroundEntity", "ground");
 	sMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
 
-	entGround->setCastShadows(false);
 	entGround->setMaterialName("Ground/Grid");
-
-
+	entGround->setCastShadows(false);
+/*
 	Ogre::Light* pointLight = sMgr->createLight("pointLight");
-	pointLight->setType(Ogre::Light::LT_POINT);
-	pointLight->setPosition(Ogre::Vector3(0, 150, 250));
+    pointLight->setType(Ogre::Light::LT_POINT);
+    pointLight->setPosition(Ogre::Vector3(0, 50, 0));
+    pointLight->setDiffuseColour(1.0, 1.0, 1.0);
+    pointLight->setSpecularColour(1.0, 1.0, 1.0);
+*/
 
-	pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-	pointLight->setSpecularColour(1.0, 0.0, 0.0);
+    Ogre::Light* directionalLight = sMgr->createLight("directionalLight");
+    directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
+    directionalLight->setDiffuseColour(Ogre::ColourValue(.1, .1, .1));
+    directionalLight->setSpecularColour(Ogre::ColourValue(.1, .1, .1));
+    directionalLight->setDirection(Ogre::Vector3( 0, -1, .3));
+
+    Ogre::Light* spotLight = sMgr->createLight("spotLight");
+    spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
+    spotLight->setDiffuseColour(1.0, 1.0, 1.0);
+    spotLight->setSpecularColour(1.0, 1.0, 1.0);
+    spotLight->setDirection(-1, -1, 0);
+    spotLight->setPosition(Ogre::Vector3(30, 30, 0));
+    spotLight->setSpotlightRange(Ogre::Degree(10), Ogre::Degree(50));
 
 	sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
 

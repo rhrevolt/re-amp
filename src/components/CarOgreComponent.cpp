@@ -34,7 +34,7 @@ void CarOgreComponent::init()
 	mChassis = mSceneMgr->createEntity(
 			"chassis" + Ogre::StringConverter::toString(numEntitiesInstanced++),
 			"chassis.mesh");
-	mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
+	//mChassis->setQueryFlags(GEOMETRY_QUERY_MASK);
 	mChassis->setCastShadows(true);
 
 	mChassisNode = mRootNode->createChildSceneNode();
@@ -47,10 +47,22 @@ void CarOgreComponent::init()
 				"wheel" + Ogre::StringConverter::toString(numEntitiesInstanced++),
 				"wheel.mesh");
 
-		mWheels[i]->setQueryFlags (GEOMETRY_QUERY_MASK);
+		//mWheels[i]->setQueryFlags (GEOMETRY_QUERY_MASK);
 		mWheels[i]->setCastShadows(true);
 
 		mWheelNodes[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		mWheelNodes[i]->attachObject (mWheels[i]);
 	}
+	
+	// Lights
+	/*
+	Ogre::Light* spotLight = mSceneMgr->createLight("leftFrontLight");
+    spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
+    spotLight->setDiffuseColour(1.0, 0.0, 0.0);
+    spotLight->setSpecularColour(1.0, 0.0, 0.0);
+    spotLight->setDirection(0, -1, 0);
+    spotLight->setPosition(Ogre::Vector3(0, 3, 0));
+    spotLight->setSpotlightRange(Ogre::Degree(10), Ogre::Degree(30));
+    mChassisNode->attachObject(spotLight);
+    */
 }
