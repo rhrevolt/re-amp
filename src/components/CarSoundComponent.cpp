@@ -17,9 +17,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "components/CarSoundComponent.h"
-bool doHonk = false;
+#include <boost/foreach.hpp>
 
+#include "core/SoundManager.h"
+#include "core/InputManager.h"
+#include "components/CarSoundComponent.h"
+
+bool doHonk = false;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
 }
@@ -45,14 +49,15 @@ bool CarSoundComponent::tick(FrameData &fd)
 void CarSoundComponent::updatePositions()
 {
 //	TODO: Get position from CarOgreComponent? or CarPhysicsComponent
-	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
+//	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
 //		pSoundManager->setSoundPosition(pair->second, position);
-	}
+//	}
 }
 
 void CarSoundComponent::honk(bool honk)
 {
 	doHonk = honk;
+	printf("Honking!!\n");
 }
 
 void CarSoundComponent::init()

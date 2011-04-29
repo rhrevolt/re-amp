@@ -62,10 +62,10 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
 	gWheelWidth = 0.4f;
 
 	gWheelFriction = 1000.0f;//1000;//1e30f;
-	gSuspensionStiffness = 20.f;
+	gSuspensionStiffness = 8.f;
 	gSuspensionDamping = 2.3f;
 	gSuspensionCompression = 4.4f;
-	gRollInfluence = 0.3f;//1.0f;
+	gRollInfluence = 0.8f;//1.0f;
 	gSuspensionRestLength = 0.6;
 	gMaxSuspensionTravelCm = 500.0;
 	gFrictionSlip = 10.5;
@@ -159,7 +159,7 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 }
 
 void CarPhysicsComponent::init() {
-    
+
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
 	createVehicle(chassisShift);
@@ -201,7 +201,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 1800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, 2800, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();

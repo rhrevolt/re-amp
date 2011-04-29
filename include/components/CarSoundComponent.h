@@ -34,6 +34,7 @@ class CarSoundComponent: public SoundComponent
 		virtual bool tick(FrameData &fd);
 		virtual void init();
 		virtual void honk(bool honk);
+		virtual void updatePositions();
 	protected:
 
 	private:
