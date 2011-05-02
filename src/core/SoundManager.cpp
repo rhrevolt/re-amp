@@ -157,10 +157,11 @@ bool SoundManager::init( void )
 	// Test if Ogg Vorbis extension is present
 	isOggExtensionPresent();
 
+    // Don't need this, now
 	// Create the Audio Buffers
-	alGenBuffers( MAX_AUDIO_BUFFERS, mAudioBuffers );
-	if (checkALError("init::alGenBuffers:") )
-		return false;
+	//alGenBuffers( MAX_AUDIO_BUFFERS, mAudioBuffers );
+	//if (checkALError("init::alGenBuffers:") )
+		//return false;
 
 	std::cout << "Number of available sources: " << MAX_AUDIO_BUFFERS;
 
@@ -439,8 +440,7 @@ bool SoundManager::loadWAV( std::string filename, int bufferID )
 	// Load in the WAV file from disk
 	//mFullPath += "\\";
 	mFullPath += filename;
-	mAudioBuffers[bufferID] = alutCreateBufferFromFile(filename.c_str());
-	if ( checkALError("loadWAV::alutCreateBufferFromFile: ") )
+	if( (mAudioBuffers[bufferID] = alutCreateBufferFromFile(filename.c_str())) == 0);
 		return false;
 
 	return true;
