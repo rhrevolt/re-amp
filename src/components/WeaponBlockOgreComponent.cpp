@@ -29,16 +29,16 @@ int numBlocks = 0;
 void WeaponBlockOgreComponent::init()
 {		
     OgreComponent::init();
-	blockShift = Ogre::Vector3(10, 1.8, 0);
+	blockShift = Ogre::Vector3(10, .6, 0);
 
 	mBlock = mSceneMgr->createEntity(
 			"block" + Ogre::StringConverter::toString(numBlocks++),
-			"chassis.mesh");
+			"ogrehead.mesh");
 	mBlock->setQueryFlags(GEOMETRY_QUERY_MASK);
 	mBlock->setCastShadows(true);
 
 	mBlockNode = mRootNode->createChildSceneNode();
 	mBlockNode->attachObject (mBlock);
+	mBlockNode->scale(.04, .04, .04);
 	mBlockNode->setPosition (blockShift);
-
 }
