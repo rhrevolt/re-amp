@@ -8,6 +8,8 @@
 
 typedef std::pair<std::string, std::ifstream*> ConfigFilePair;
 
+const std::string DEFAULT_CONFIG_PREFIX("../../config");
+
 class ConfigurationManager: public Singleton<ConfigurationManager>
 {
 	friend class Singleton<ConfigurationManager>;

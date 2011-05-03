@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//#include <boost/foreach.hpp>
+#include <boost/foreach.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 #include "core/ConfigurationManager.h"
@@ -29,15 +29,12 @@ ConfigurationManager::ConfigurationManager()
 ConfigurationManager::~ConfigurationManager()
 {
 	// Close all of the currently open files
-	//	BOOST_FOREACH(ConfigFilePair fh, fhCache) {
-	//		fh.second.close();
-	//	}
+	BOOST_FOREACH(ConfigFilePair fh, fhCache) {
+		fh.second->close();
+	}
 }
 
 void ConfigurationManager::init() {
-	// Open the main, which includes paths to other configuration files
-	const char* configurationName = "config.ini";
-	fh.open(configurationName);
 }
 
 /*
@@ -57,7 +54,7 @@ bool ConfigurationManager::openConfiguration(std::string configurationFile) {
 		return true;
 
 	// Open the file, if it exists
-	std::ifstream configFile(configurationFile.c_str());
+	std::ifstream configFile((DEFAULT_CONFIG_PREFIX + configurationFile).c_str());
 	if (configFile.is_open()) {
 		// Push into the table
 		fhCache.insert(ConfigFilePair(prepareString(configurationFile), &configFile));
