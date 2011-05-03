@@ -17,6 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//#include <boost/foreach.hpp>
+#include <boost/algorithm/string/replace.hpp>
+
 #include "core/ConfigurationManager.h"
 
 ConfigurationManager::ConfigurationManager()
@@ -25,6 +28,10 @@ ConfigurationManager::ConfigurationManager()
 
 ConfigurationManager::~ConfigurationManager()
 {
+	// Close all of the currently open files
+	//	BOOST_FOREACH(ConfigFilePair fh, fhCache) {
+	//		fh.second.close();
+	//	}
 }
 
 void ConfigurationManager::init() {
@@ -33,8 +40,31 @@ void ConfigurationManager::init() {
 	fh.open(configurationName);
 }
 
-void ConfigurationManager::openConfiguration(std::string configurationFile) {
-	// TODO: Look in the configuration cache. If the file isn't open, go
-	// ahead and search the main config paths for the file, open it and put 
-	// it in the file handle cache
+/*
+   Cleans up the string - removes the file suffix and changes / into .s
+ */
+std::string prepareString(std::string fileName) 
+{
+	boost::algorithm::replace_all(fileName, ".ini", "");
+	boost::algorithm::replace_all(fileName, "/", ".");
+}
+
+bool ConfigurationManager::openConfiguration(std::string configurationFile) {
+	// Try to find the string within the file handle cache. 
+	std::map<std::string, std::ifstream*>::iterator iter = fhCache.find(prepareString(configurationFile));
+	// If the value exists, bail out. 
+	if (iter != fhCache.end())
+		return true;
+
+	// Open the file, if it exists
+	std::ifstream configFile(configurationFile.c_str());
+	if (configFile.is_open()) {
+		// Push into the table
+		fhCache.insert(ConfigFilePair(prepareString(configurationFile), &configFile));
+		return true;
+	}
+
+	// The operation must've failed. Close the file and return an error
+	configFile.close();
+	return false;
 }

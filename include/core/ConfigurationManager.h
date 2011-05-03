@@ -6,7 +6,7 @@
 
 #include "core/Singleton.h"
 
-typedef std::pair<std::string, std::ifstream> ConfigFilePair;
+typedef std::pair<std::string, std::ifstream*> ConfigFilePair;
 
 class ConfigurationManager: public Singleton<ConfigurationManager>
 {
@@ -15,9 +15,9 @@ class ConfigurationManager: public Singleton<ConfigurationManager>
 	ConfigurationManager();
 	~ConfigurationManager();
 	void init();
-	void openConfiguration(std::string);
+	bool openConfiguration(std::string);
 	protected:
-	std::map<std::string, std::ifstream> fhCache;
+	std::map<std::string, std::ifstream*> fhCache;
 	std::ifstream fh;
 };	
 #endif
