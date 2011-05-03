@@ -43,7 +43,7 @@ SoundManager::SoundManager( void )
 	mSoundDevice = 0;
 	mSoundContext = 0;
 
-	mAudioPath = "..\\media\\sound";
+	mAudioPath = "../media/sound/";
 
 	// Initial position of the listener
 	position[0] = 0.0;
@@ -124,7 +124,8 @@ bool SoundManager::init( void )
 {
 	// It's an error to initialise twice OpenAl
 	if ( isInitialised ) return true;
-
+	if(!alutInit(0, NULL))
+		return false;
 
 	// Open an audio device
 	mSoundDevice = alcOpenDevice( NULL ); // TODO ((ALubyte*) "DirectSound3D");
@@ -440,9 +441,12 @@ bool SoundManager::loadWAV( std::string filename, int bufferID )
 	// Load in the WAV file from disk
 	//mFullPath += "\\";
 	mFullPath += filename;
-	if( (mAudioBuffers[bufferID] = alutCreateBufferFromFile(filename.c_str())) == 0);
+	std::cout << "Trying to load from " << mFullPath.c_str() << "\n";
+	mAudioBuffers[bufferID] = alutCreateBufferFromFile(mFullPath.c_str());
+	if(mAudioBuffers[bufferID]==0) {
+		std::cout << alutGetErrorString(alutGetError()) << "\n";
 		return false;
-
+	}
 	return true;
 }
 

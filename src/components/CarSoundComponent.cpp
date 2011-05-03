@@ -24,6 +24,7 @@
 #include "components/CarSoundComponent.h"
 
 bool doHonk = false;
+bool doFire = false;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
 }
@@ -38,11 +39,7 @@ bool CarSoundComponent::tick(FrameData &fd)
 		if(!pSoundManager->playAudio(audioFiles["HONK"], false))
 			printf("Failed to play sound\n");
 	}
-	else {
-		if(!pSoundManager->stopAudio(audioFiles["HONK"])) {
-			printf("Failed to stop sound\n");
-		}
-	}
+	
 	return true;
 }
 
@@ -52,6 +49,12 @@ void CarSoundComponent::updatePositions()
 //	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
 //		pSoundManager->setSoundPosition(pair->second, position);
 //	}
+}
+
+void CarSoundComponent::fire()
+{
+	if(!pSoundManager->playAudio(audioFiles["FIRE"], false))
+		printf("Failed to play sound\n");
 }
 
 void CarSoundComponent::honk(bool honk)
@@ -64,8 +67,13 @@ void CarSoundComponent::init()
 {
 	pSoundManager = SoundManager::getInstance();
 	InputManager::getInstance()->signal_honk.connect(boost::bind(&CarSoundComponent::honk,this, _1));
-	unsigned int honkId = 0;
-	pSoundManager->loadAudio("honka.wav", &honkId, false);
+	InputManager::getInstance()->signal_weapon.connect(boost::bind(&CarSoundComponent::fire,this));
+	unsigned int honkId = 0, fireId=0;
+	if(!pSoundManager->loadAudio("honk.wav", &honkId, false))
+		printf("Failed to load audio!\n");
+	if(!pSoundManager->loadAudio("fire.wav", &fireId, false))
+		printf("Failed to load audio!\n");
 	pSoundManager->registerComponent(this);
 	audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
+	audioFiles.insert(std::pair<std::string, unsigned int>("FIRE", fireId));
 }
