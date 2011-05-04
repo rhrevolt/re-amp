@@ -34,7 +34,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		void createVehicle(Ogre::Vector3 chassisShift);
 		virtual void init();
 		virtual void handleVector(Ogre::Vector2 vec);
-
+		
 		// BOOST signals
 		/*
 		   signal_speedUpdated - fires when the speed of the vehicle 
@@ -42,7 +42,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		   - one param - the new speed (in km/h)
 		 */
 		boost::signal<void (float speed)> signal_speedUpdated;
-
+		
 	protected:
 
 	private:

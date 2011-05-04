@@ -41,10 +41,10 @@ class PhysicsComponent: public GameComponent
 		virtual ComponentType getType() {return COMPONENT_PHYSICS;};
 
 	protected:
-
-	private:
-        OgreBulletDynamics::RigidBody* rigidBody;
+		OgreBulletDynamics::RigidBody* rigidBody;
         OgreBulletCollisions::CollisionShape* shape;
+	private:
+        
 };
 
 #endif // _PHYSICSCOMPONENT_H_
