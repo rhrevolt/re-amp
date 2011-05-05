@@ -52,7 +52,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		float	gSteeringClamp ;
 		float	gSteeringDecayRate;
 
-		float gAcceleration;
+		float   gAcceleration;
 		float	gWheelRadius ;
 		float	gWheelWidth ;
 		float	gEngineDecayRate;
