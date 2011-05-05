@@ -44,7 +44,8 @@ class CarPhysicsComponent: public PhysicsComponent
 		boost::signal<void (float speed)> signal_speedUpdated;
 		
 	protected:
-
+		void loadPhysicsConstants(const std::string &filename);
+		
 	private:
 		float	gMaxEngineForce;
 		float	gBrakingIncrement;

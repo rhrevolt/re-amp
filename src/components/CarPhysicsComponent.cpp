@@ -20,6 +20,9 @@
 #include <stdio.h>
 #include <algorithm>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
 #include "components/CarPhysicsComponent.h"
 #include "components/OgreComponent.h"
 #include "components/CarOgreComponent.h"
@@ -188,7 +191,7 @@ void CarPhysicsComponent::init()
 	mSteering = 0;
 }
 
-void loadPhysicsConstants(const std::string &filename)
+void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 {
 	using boost::property_tree::ptree;
 	
@@ -196,7 +199,7 @@ void loadPhysicsConstants(const std::string &filename)
 	// Load from XML
 	read_xml(filename, pTree);
 	// TODO: Load the constants
-	gAcceleration = pTree.get("physics.gAcceleration");
+	gAcceleration = pTree.get<float>("physics.gAcceleration");
 	//...
 }
 
