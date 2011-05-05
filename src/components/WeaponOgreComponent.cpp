@@ -63,4 +63,8 @@ void WeaponOgreComponent::init()
 		//mWheelNodes[i] = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
 		//mWheelNodes[i]->attachObject (mWheels[i]);
 	//}
+	
+	
 }
+
+

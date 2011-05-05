@@ -29,18 +29,20 @@ class WeaponOgreComponent: public OgreComponent
 		~WeaponOgreComponent() {};
 		void init();
 		
+		
+		
 		//Ogre::Vector3 chassisShift;
 		//Ogre::SceneNode *carNode;
 		//Ogre::SceneNode *mWheelNodes[4];
 		//
-		//virtual Ogre::SceneNode* getNode() { return mCarNode; };
+		virtual Ogre::SceneManager* getSceneMgr() { return mSceneMgr; };
+		virtual Ogre::Entity* getEntity() { return mEntity; };
 
 	protected:
 
 	private:
-		//Ogre::Entity    *mChassis;
-		//Ogre::Entity    *mWheels[4];
-		//Ogre::SceneManager *mSceneMgr;
+		Ogre::Entity    *mEntity;
+		Ogre::SceneManager *mSceneMgr;
 };
 
 #endif // _WEAPONOGRECOMPONENT_H_

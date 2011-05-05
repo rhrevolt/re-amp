@@ -34,13 +34,14 @@ class WeaponPhysicsComponent: public PhysicsComponent
 		~WeaponPhysicsComponent();
 		virtual bool tick(FrameData &fd);
 		void init();
-		void createMissile(CarOgreComponent source);
+		void createMissile(CarOgreComponent *source);
 
 		// BOOST signals
 		boost::signal<void (CarOgreComponent source)> signal_targetHit;
 	protected:
 
 	private:
+		Ogre::Vector3 direction;
 };
 
 #endif // _WEAPONPHYSICSCOMPONENT_H_

@@ -31,6 +31,7 @@ class CarOgreComponent: public OgreComponent
 		virtual void init();
 
 		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
+		Ogre::SceneNode* getSceneNode() {return mChassisNode; };
 
 	protected:
 

@@ -21,6 +21,7 @@
 #include "core/EntityFactory.h"
 #include "core/GameEntity.h"
 #include "core/PhysicsManager.h"
+#include "core/GameComponent.h"
 
 #include "components/InputComponent.h"
 #include "components/CarOgreComponent.h"
@@ -56,6 +57,8 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->initializeComponents();
+		Ogre::Vector3 vec(40,40,40);
+		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
 
 	} else if (name == "weapon block") {
 		WeaponBlockOgreComponent* blockOgre = new WeaponBlockOgreComponent(0);
