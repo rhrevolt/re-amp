@@ -22,3 +22,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/${RESOURCES_PATH}
         RENAME resources.cfg
 )
 
+install(FILES ${CMAKE_SOURCE_DIR}/car_config.xml
+		DESTINATION bin
+		CONFIGURATIONS Release RelWithDebInfo Debug
+)
