@@ -158,7 +158,10 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 	}
 }
 
-void CarPhysicsComponent::init() {
+void CarPhysicsComponent::init()
+{
+	// Load physics constants
+	loadPhysicsConstants("car_config.xml");
 
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
@@ -185,6 +188,18 @@ void CarPhysicsComponent::init() {
 	mSteering = 0;
 }
 
+void loadPhysicsConstants(const std::string &filename)
+{
+	using boost::property_tree::ptree;
+	
+	ptree pTree;
+	// Load from XML
+	read_xml(filename, pTree);
+	// TODO: Load the constants
+	gAcceleration = pTree.get("physics.gAcceleration");
+	//...
+}
+
 void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 {
 	//TODO: Get this value from Ogre Component
@@ -200,7 +215,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 	compound->addChildShape(chassisShape, chassisShift);
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
-	
+
 	float mass = 5000;
 	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, mass, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
