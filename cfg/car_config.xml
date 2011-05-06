@@ -1,3 +1,18 @@
 <physics>
-	<gAcceleration>1500.0</gAcceleration>
+<gAcceleration>1500.0</gAcceleration>
+<gMaxEngineForce>3000.0</gMaxEngineForce>
+<gBrakingIncrement>1500.0</gBrakingIncrement>
+<gSteeringIncrement>0.024</gSteeringIncrement>
+<gSteeringClamp>0.5</gSteeringClamp>
+<gSteeringDecayRate>0.05</gSteeringDecayRate>
+<gWheelRadius>0.5</gWheelRadius>
+<gWheelWidth>0.4</gWheelWidth>
+<gWheelFriction>1000.0</gWheelFriction>
+<gSuspensionStiffness>8.0</gSuspensionStiffness>
+<gSuspensionDamping>2.3</gSuspensionDamping>
+<gSuspensionCompression>4.4</gSuspensionCompression>
+<gRollInfluence>0.1</gRollInfluence>
+<gSuspensionRestLength>0.6</gSuspensionRestLength>
+<gMaxSuspensionTravel>500.0</gMaxSuspensionTravel>
+<gFrictionSlip>10.5</gFrictionSlip>
 </physics>
