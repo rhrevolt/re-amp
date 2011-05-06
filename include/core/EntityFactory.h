@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+	
 #ifndef _ENTITYFACTORY_H_
 #define _ENTITYFACTORY_H_
 
@@ -27,7 +27,6 @@ class EntityFactory
 {
 	public:
 		static GameEntity* create(std::string name);
-
 	protected:
 
 	private:

@@ -47,6 +47,7 @@
 
 void TerrainOgreComponent::init()
 {
+	OgreComponent::init();
 	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
 	// Copy-pasted from the tutorials, need to tweak
@@ -94,7 +95,7 @@ void TerrainOgreComponent::init()
     spotLight->setPosition(Ogre::Vector3(30, 30, 0));
     spotLight->setSpotlightRange(Ogre::Degree(10), Ogre::Degree(50));
 
-	sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
+	//sMgr->setSkyDome(true, "Sky/Stars", 5, 8);
 
 	/* Consider: weirnc: Add fog in the future? Can't get the 2nd line to work
 	   Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);

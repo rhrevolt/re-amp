@@ -34,11 +34,12 @@ void WeaponBlockOgreComponent::init()
 	mBlock = mSceneMgr->createEntity(
 			"block" + Ogre::StringConverter::toString(numBlocks++),
 			"ogrehead.mesh");
-	mBlock->setQueryFlags(GEOMETRY_QUERY_MASK);
+	//mBlock->setQueryFlags(GEOMETRY_QUERY_MASK);
 	mBlock->setCastShadows(true);
 
 	mBlockNode = mRootNode->createChildSceneNode();
 	mBlockNode->attachObject (mBlock);
 	mBlockNode->scale(.04, .04, .04);
 	mBlockNode->setPosition (blockShift);
+	
 }

@@ -48,7 +48,8 @@ private:
 	InputManager* inputManager;
 	PhysicsManager* physicsManager;
 	SoundManager* soundManager;
-
+	
+	virtual void pushNewEntityToList(std::string entityName);
 };
 
 #endif // _INGAMESTATE_H_

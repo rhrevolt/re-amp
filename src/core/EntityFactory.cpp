@@ -38,7 +38,6 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 
-
 GameEntity* EntityFactory::create(std::string name)
 {
 	GameEntity* ent = new(GameEntity);
@@ -80,19 +79,27 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent(physicsComp);
 		physicsComp->addCollisionShape(Shape);
 		physicsComp->addRigidBody(defaultPlaneBody);
-		defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+		defaultPlaneBody->setStaticShape(Shape, +0.1, 0.8);// (shape, restitution, friction)
 		ent->initializeComponents();
 
 	} else if (name == "firework") {
-		WeaponOgreComponent* fireworkOgre = new WeaponOgreComponent(0);
-		ent->addComponent((GameComponent*) fireworkOgre);
-		fireworkOgre->init();
+		ent->addComponent((GameComponent*) new WeaponOgreComponent(0));
 		WeaponPhysicsComponent* weaponPhysics = new WeaponPhysicsComponent(0);
-		ent->addComponent((GameComponent*) weaponPhysics);
-		weaponPhysics->init();
+		//weaponPhysics->createMissile(
+		//ent->addComponent((GameComponent*) new WeaponPhysicsComponent);
+		ent->initializeComponents();
+		
+		Ogre::Vector3 vec(0, 10, 0);
+		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
 	}
 
 	return ent;
 }
+
+CarOgreComponent* getCarOgreComponent()
+{
+	
+}
+
 
 

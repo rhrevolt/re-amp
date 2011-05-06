@@ -54,8 +54,15 @@ void InGameState::start()
 	entityList.push_back(EntityFactory::create("playerCar"));
 	entityList.push_back(EntityFactory::create("car"));
 	entityList.push_back(EntityFactory::create("weapon block"));
-}
+	
+	// CONSIDER: weirnc: Not sure where else to put this... seems like a good place? I'm stupid
+	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework"));
+} 
 
+void InGameState::pushNewEntityToList(std::string entityName)
+{
+	entityList.push_back(EntityFactory::create(entityName));
+}
 
 void InGameState::tick(FrameData &fd)
 {
