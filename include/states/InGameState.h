@@ -37,7 +37,7 @@ public:
 
 	virtual void tick(FrameData &fd);
 	virtual void start();
-
+	
 	virtual Ogre::SceneManager* getSceneMgr();
 
 protected:

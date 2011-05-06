@@ -26,6 +26,8 @@
 #include "states/InGameState.h"
 #include <OgreRoot.h>
 
+
+
 InGameState::InGameState()
 {
 	// Initialize our SceneManager

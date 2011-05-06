@@ -33,6 +33,7 @@ typedef enum {
 	COMPONENT_TERRAINOGRE,
 	COMPONENT_WEAPON,
 	COMPONENT_CAMERA,
+	COMPONENT_HUD,
 } ComponentType;
 
 class GameEntity; // forward declaration
