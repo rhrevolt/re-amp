@@ -40,6 +40,7 @@ class WeaponBlockCollisionComponent: public PhysicsComponent
 	protected:
 
 	private:
+		OgreBulletDynamics::RigidBody *mBox;
 };
 
 #endif // _WEAPONBLOCKCOLLISIONCOMPONENT

@@ -21,7 +21,7 @@
 
 #include "components/WeaponBlockCollisionComponent.h"
 #include "components/OgreComponent.h"
-#include "components/CarOgreComponent.h"
+#include "components/WeaponBlockOgreComponent.h"
 
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 
@@ -34,9 +34,10 @@
 #include <OgreSceneQuery.h>
 
 
-//TODO: What does these do?
 #define CUBE_HALF_EXTENTS 0.5
 #define GEOMETRY_QUERY_MASK 0
+
+int numberBlocks = 0;
 
 using namespace Ogre;
 using namespace OgreBulletCollisions;
@@ -51,7 +52,6 @@ WeaponBlockCollisionComponent::~WeaponBlockCollisionComponent() {
 
 bool WeaponBlockCollisionComponent::tick(FrameData &fd)
 {
-	// TODO: Apply forces to the missile
 	return true;
 }
 
@@ -60,11 +60,23 @@ void WeaponBlockCollisionComponent::init() {
 
 void WeaponBlockCollisionComponent::pickupWeapon()
 {
-	// TODO: Grab the direction of the car and create a new missile
-	// as well as timer
 }
 
 void WeaponBlockCollisionComponent::createBlock()
 {
+	WeaponBlockOgreComponent* ogreComp = (WeaponBlockOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
+	Ogre::SceneNode* weaponBlockRootNode = ogreComp->getNode();
+
+	assert(weaponBlockRootNode);
+
+	BoxCollisionShape* blockShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
 	//BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
+
+	mBox = new RigidBody("boxPhysics" + Ogre::StringConverter::toString(numberBlocks++), PhysicsManager::getInstance()->getWorld());
+
+	mBox->setShape(weaponBlockRootNode, blockShape, .8, .8, 0, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mBox->setDamping(.2, .2);
+
+	mBox->disableDeactivation ();
 }
+

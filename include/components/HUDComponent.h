@@ -17,39 +17,35 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _INGAMESTATE_H_
-#define _INGAMESTATE_H_
+#ifndef _HUDCOMPONENT_H_
+#define _HUDCOMPONENT_H_
 
-#include "core/GameState.h"
-#include "core/PhysicsManager.h"
-#include "core/InputManager.h"
-#include "core/SoundManager.h"
 
-const int INGAMESTATE_ID = 1;
+#include <OgreTextAreaOverlayElement.h>
+#include <OgreFontManager.h>
+#include "core/GameComponent.h"
+#include <Ogre.h>
 
-class InGameState: public GameState 
+class HUDComponent: public GameComponent 
 {
 public:
-	InGameState();
-	~InGameState();
+	HUDComponent(int ID);
+	~HUDComponent();
 
-	virtual int returnStateID();
-
-	virtual void tick(FrameData &fd);
-	virtual void start();
-	
-	virtual Ogre::SceneManager* getSceneMgr();
+	virtual bool tick(FrameData &fd);
+	virtual void init();
+	virtual void updateSpeed(FrameData &fd);
+	virtual ComponentType getType() {return COMPONENT_HUD;};
 
 protected:
-
+	Ogre::Timer *timer;
 private:
-	Ogre::SceneManager* GameSceneMgr;
+	Ogre::TextAreaOverlayElement* textArea;
+	Ogre::TextAreaOverlayElement* textArea2;
+	float time;
 	
-	InputManager* inputManager;
-	PhysicsManager* physicsManager;
-	SoundManager* soundManager;
-	
-	virtual void pushNewEntityToList(std::string entityName);
+;
+
 };
 
-#endif // _INGAMESTATE_H_
+#endif 

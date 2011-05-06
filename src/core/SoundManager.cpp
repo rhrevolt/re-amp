@@ -13,7 +13,7 @@ SoundManager* SoundManager::mSoundManager = NULL;
 /****************************************************************************/
 bool SoundManager::tick(FrameData &fd)
 {
-    BOOST_FOREACH(SoundComponent* comp, componentList) {
+	BOOST_FOREACH(SoundComponent* comp, componentList) {
 		comp->tick(fd);
 	}
 }
@@ -158,11 +158,11 @@ bool SoundManager::init( void )
 	// Test if Ogg Vorbis extension is present
 	isOggExtensionPresent();
 
-    // Don't need this, now
+	// Don't need this, now
 	// Create the Audio Buffers
 	//alGenBuffers( MAX_AUDIO_BUFFERS, mAudioBuffers );
 	//if (checkALError("init::alGenBuffers:") )
-		//return false;
+	//return false;
 
 	std::cout << "Number of available sources: " << MAX_AUDIO_BUFFERS;
 
@@ -203,10 +203,10 @@ bool SoundManager::init( void )
 }
 
 /****************************************************************************/
- void SoundManager::changePitch(float pitch, unsigned int audioId)
- {
-    alSourcef(mAudioSources[audioId], AL_PITCH, pitch);
- }
+void SoundManager::changePitch(float pitch, unsigned int audioId)
+{
+	alSourcef(mAudioSources[audioId], AL_PITCH, pitch);
+}
 
 /****************************************************************************/
 bool SoundManager::checkALError( void )
@@ -262,7 +262,7 @@ bool SoundManager::checkALError( std::string pMsg )
 			break;
 		case AL_INVALID_OPERATION:
 			sprintf(mStr,"ERROR SoundManager::%s Invalid Operation", pMsg.c_str());
-//			return false;
+			//			return false;
 			break;
 		case AL_OUT_OF_MEMORY:
 			sprintf(mStr,"ERROR SoundManager::%s Out Of Memory", pMsg.c_str());
@@ -335,7 +335,7 @@ bool SoundManager::loadAudio( std::string filename, unsigned int *audioId,
 
 	alGetError();    // Clear Error Code
 	for(int i = 0; i < 100; i++) alGetError();
-//	if(checkALError("why?")) return false;
+	//	if(checkALError("why?")) return false;
 
 	// Check and see if the pSoundFile is already loaded into a buffer
 	bufferID = locateAudioBuffer( filename );
@@ -453,11 +453,11 @@ bool SoundManager::loadWAV( std::string filename, int bufferID )
 bool SoundManager::testtesttest()
 {
 	ALuint helloBuffer, helloSource;
-//	alutInit (&argc, argv);
-  	helloBuffer = alutCreateBufferHelloWorld ();
-  	alGenSources (1, &helloSource);
+	//	alutInit (&argc, argv);
+	helloBuffer = alutCreateBufferHelloWorld ();
+	alGenSources (1, &helloSource);
 	alSourcei (helloSource, AL_BUFFER, helloBuffer);
-  	alSourcePlay (helloSource);
+	alSourcePlay (helloSource);
 	return true;
 }
 
@@ -878,7 +878,7 @@ bool SoundManager::loadOGG( std::string filename, ALuint pDestAudioBuffer )
 	isVorbis = true; // !!! TODO this should be used in
 	// an update() fct if the Vorbis is looped !
 
-*/
+	 */
 
 	return true;
 }

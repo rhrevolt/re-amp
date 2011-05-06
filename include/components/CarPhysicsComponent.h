@@ -34,6 +34,10 @@ class CarPhysicsComponent: public PhysicsComponent
 		void createVehicle(Ogre::Vector3 chassisShift);
 		virtual void init();
 		virtual void handleVector(Ogre::Vector2 vec);
+
+		OgreBulletDynamics::RaycastVehicle* getVehicle() {return mVehicle;};
+
+		virtual float getCurrentSpeed();
 		
 		// BOOST signals
 		/*
