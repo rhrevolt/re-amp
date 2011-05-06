@@ -51,27 +51,25 @@ using namespace OgreBulletDynamics;
 
 int numPhysicsInstanced = 0;
 
-CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID){
-	gAcceleration = 120.0f;
-	gMaxEngineForce = 3000.0f;
-	gEngineDecayRate = 400.0f;
-	gBrakingIncrement = 1500.0f;
-
-	gSteeringIncrement = 0.024f;
-	gSteeringClamp = 0.5f;
-	gSteeringDecayRate = 0.05f;
-
-	gWheelRadius = 0.5f;
-	gWheelWidth = 0.4f;
-
-	gWheelFriction = 1000.0f;//1000;//1e30f;
-	gSuspensionStiffness = 8.f;
-	gSuspensionDamping = 2.3f;
-	gSuspensionCompression = 4.4f;
-	gRollInfluence = 0.1f;//1.0f;
-	gSuspensionRestLength = 0.6;
-	gMaxSuspensionTravelCm = 500.0;
-	gFrictionSlip = 10.5;
+CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID), 
+	gAcceleration(0.0f),
+	gMaxEngineForce(0.0f),
+	gEngineDecayRate(0.0f),
+	gBrakingIncrement(0.0f),
+	gSteeringIncrement(0.0f),
+	gSteeringClamp(0.0f),
+	gSteeringDecayRate(0.0f),
+	gWheelRadius(0.0f),
+	gWheelWidth(0.0f),
+	gWheelFriction(0.0f),
+	gSuspensionStiffness(0.0f),
+	gSuspensionDamping(0.0f),
+	gSuspensionCompression(0.0f),
+	gRollInfluence(0.0f),
+	gSuspensionRestLength(0.0f),
+	gMaxSuspensionTravelCm(0.0f),
+	gFrictionSlip(0.0f)
+{
 };
 
 CarPhysicsComponent::~CarPhysicsComponent() {
@@ -198,9 +196,24 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	ptree pTree;
 	// Load from XML
 	read_xml(filename, pTree);
-	// TODO: Load the constants
 	gAcceleration = pTree.get<float>("physics.gAcceleration");
-	//...
+	gMaxEngineForce = pTree.get<float>("physics.gMaxEngineForce");
+	gEngineDecayRate = pTree.get<float>("physics.gEngineDecayRate");
+	gBrakingIncrement = pTree.get<float>("physics.gBrakingIncrement");
+	gSteeringIncrement = pTree.get<float>("physics.gSteeringIncrement");
+	gSteeringClamp = pTree.get<float>("physics.gSteeringClamp");
+	gSteeringDecayRate = pTree.get<float>("physics.gSteeringDecayRate");
+	gWheelRadius = pTree.get<float>("physics.gWheelRadius");
+	gWheelWidth = pTree.get<float>("physics.gWheelWidth");
+	gWheelFriction = pTree.get<float>("physics.gWheelFriction");
+	gSuspensionStiffness = pTree.get<float>("physics.gSuspensionStiffness");
+	gSuspensionDamping = pTree.get<float>("physics.gSuspensionDamping");
+	gSuspensionCompression = pTree.get<float>("physics.gSuspensionCompression");
+	gRollInfluence = pTree.get<float>("physics.gRollInfluence");
+	gSuspensionRestLength = pTree.get<float>("physics.gSuspensionRestLength");
+	gMaxSuspensionTravelCm = pTree.get<float>("physics.gMaxSuspensionTravel");
+	gFrictionSlip = pTree.get<float>("physics.gFrictionSlip");
+
 }
 
 void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
