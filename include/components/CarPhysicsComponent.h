@@ -70,6 +70,8 @@ class CarPhysicsComponent: public PhysicsComponent
 		float   gSuspensionRestLength;
 		float   gMaxSuspensionTravelCm;
 		float   gFrictionSlip;
+		float	gEngineZeroThreshold;
+		float	gSteeringZeroThreshold;
 
 		OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
 		OgreBulletDynamics::VehicleTuning	        *mTuning;

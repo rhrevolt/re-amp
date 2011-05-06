@@ -68,7 +68,9 @@ CarPhysicsComponent::CarPhysicsComponent(int ID): PhysicsComponent(ID),
 	gRollInfluence(0.0f),
 	gSuspensionRestLength(0.0f),
 	gMaxSuspensionTravelCm(0.0f),
-	gFrictionSlip(0.0f)
+	gFrictionSlip(0.0f),
+	gEngineZeroThreshold(0.0f),
+	gSteeringZeroThreshold(0.0f)
 {
 };
 
@@ -86,11 +88,21 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		mEngineForce = std::min(0.0f, mEngineForce + gEngineDecayRate);
 	}
 
+	// Check if the engine force is close enough to zero
+	if (abs(mEngineForce) < gEngineZeroThreshold) {
+		mEngineForce = 0;
+	}
+
 	// Decay the steering 
 	if (mSteering > 0) {
 		mSteering = std::max(0.0f, mSteering - gSteeringDecayRate);
 	} else if (mSteering < 0) {
 		mSteering = std::min(0.0f, mSteering + gSteeringDecayRate);
+	}
+
+	// Check if the steering force is close enough to zero
+	if (abs(mSteering) < gSteeringZeroThreshold) {
+		mSteering = 0;
 	}
 
 	//printf("%f\n", fd.timeSinceLastFrame);
@@ -172,23 +184,6 @@ void CarPhysicsComponent::init()
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
 	createVehicle(chassisShift);
 
-	for (int i = 0; i < 4; i++)
-	{
-		mWheelsEngine[i] = 0;
-		mWheelsSteerable[i] = 0;
-	}
-	mWheelsEngineCount = 4;
-	mWheelsEngine[0] = 0;
-	mWheelsEngine[1] = 1;
-	mWheelsEngine[2] = 2;
-	mWheelsEngine[3] = 3;
-
-	mWheelsSteerableCount = 4;
-	mWheelsSteerable[0] = 0;
-	mWheelsSteerable[1] = 1;
-	mWheelsSteerable[2] = 2;
-	mWheelsSteerable[3] = 3;
-
 	mEngineForce = 0;
 	mSteering = 0;
 }
@@ -217,7 +212,50 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gSuspensionRestLength = pTree.get<float>("physics.gSuspensionRestLength");
 	gMaxSuspensionTravelCm = pTree.get<float>("physics.gMaxSuspensionTravel");
 	gFrictionSlip = pTree.get<float>("physics.gFrictionSlip");
+	gEngineZeroThreshold = pTree.get<float>("physics.gEngineZeroThreshold");
+	gSteeringZeroThreshold = pTree.get<float>("physics.gSteeringZeroThreshold");
 
+	// Setup the drive and steering mechanism
+	for (int i = 0; i < 4; i++)
+	{
+		mWheelsEngine[i] = 0;
+		mWheelsSteerable[i] = 0;
+	}
+
+	switch (pTree.get<int>("physics.gEngineForceConfiguration")) {
+		case 0: // front wheel drive
+			mWheelsEngineCount = 2;
+			mWheelsEngine[0] = 0;
+			mWheelsEngine[1] = 1;
+			break;
+		case 1: // rear wheel drive
+			mWheelsEngineCount = 2;
+			mWheelsEngine[0] = 2;
+			mWheelsEngine[1] = 3;
+			break;
+		case 2: // all wheel drive
+			mWheelsEngineCount = 4;
+			mWheelsEngine[0] = 0;
+			mWheelsEngine[1] = 1;
+			mWheelsEngine[2] = 2;
+			mWheelsEngine[3] = 3;
+			break;
+	}
+
+	switch (pTree.get<int>("physics.gSteeringConfiguration")) {
+		case 0: // front wheel steering
+			mWheelsSteerableCount = 2;
+			mWheelsSteerable[0] = 0;
+			mWheelsSteerable[1] = 1;
+			break;
+		case 1: // all-wheel steering
+			mWheelsSteerableCount = 4;
+			mWheelsSteerable[0] = 0;
+			mWheelsSteerable[1] = 1;
+			mWheelsSteerable[2] = 2;
+			mWheelsSteerable[3] = 3;
+			break;
+	}
 }
 
 void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
