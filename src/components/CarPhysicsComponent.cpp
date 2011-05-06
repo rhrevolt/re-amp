@@ -125,6 +125,10 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	return true;
 }
 
+float CarPhysicsComponent::getCurrentSpeed() {
+	return mVehicle->getBulletVehicle()->getCurrentSpeedKmHour();
+}
+
 void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 {
 	// Check if the x (steering) component of the vector is non-zero
