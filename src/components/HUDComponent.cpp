@@ -53,6 +53,12 @@ void HUDComponent::init(){
 	panel->setMetricsMode(Ogre::GMM_PIXELS);
 	panel->setPosition(10, 10);
 	panel->setDimensions(100, 100);
+	
+	Ogre::OverlayContainer* panel2 = static_cast<Ogre::OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "PanelName2"));
+	panel2->setMetricsMode(Ogre::GMM_PIXELS);
+	panel2->setPosition(575, 10);
+	panel2->setDimensions(100, 100);
 	//panel->setMaterialName("MaterialName"); // Optional background material
 
 	// Create a text area
@@ -66,14 +72,26 @@ void HUDComponent::init(){
 	textArea->setFontName("BlueHigh");
 	textArea->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
 	textArea->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
+	
+	textArea2 = static_cast<Ogre::TextAreaOverlayElement*>(
+		overlayManager.createOverlayElement("TextArea", "TextAreaName2"));
+	textArea2->setMetricsMode(Ogre::GMM_PIXELS);
+	textArea2->setPosition(70, 10);
+	textArea2->setDimensions(100, 100);
+	textArea2->setCaption("Hello, World!");
+	textArea2->setCharHeight(32);
+	textArea2->setFontName("BlueHigh");
+	textArea2->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
+	textArea2->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
 
 	// Create an overlay, and add the panel
 	Ogre::Overlay* overlay = overlayManager.create("OverlayName");
 	overlay->add2D(panel);
+	overlay->add2D(panel2);
 
 	// Add the text area to the panel
 	panel->addChild(textArea);
-
+	panel2->addChild(textArea2);
 	// Show the overlay
 	overlay->show();
 	overlay->setZOrder(500);
@@ -88,11 +106,12 @@ void HUDComponent::updateSpeed(FrameData &fd){
 
      std::string speedString = ss.str();
      speedString.append(" km/h");
-     
+     std::stringstream ss2 (std::stringstream::in | std::stringstream::out);
      time = timer->getMilliseconds()/1000.0f;
-     speedString.append("                    ");
-     ss << abs(time);
-     std::string timeString = ss.str();
-     speedString.append(timeString);
+     //speedString.append("                     ");
+     ss2 << abs(time);
+     std::string timeString = ss2.str();
+     //speedString.append(timeString);
 	 textArea->setCaption(speedString);
+	 textArea2->setCaption(timeString);
 }

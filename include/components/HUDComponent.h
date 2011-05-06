@@ -41,6 +41,7 @@ protected:
 	Ogre::Timer *timer;
 private:
 	Ogre::TextAreaOverlayElement* textArea;
+	Ogre::TextAreaOverlayElement* textArea2;
 	float time;
 	
 ;
