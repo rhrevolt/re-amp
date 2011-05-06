@@ -35,6 +35,7 @@
 #include "components/WeaponSoundComponent.h"
 #include "components/WeaponBlockOgreComponent.h"
 #include "components/WeaponBlockCollisionComponent.h"
+#include "components/HUDComponent.h"
 
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
@@ -51,6 +52,7 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new CameraComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->addComponent((GameComponent*) new InputComponent(0));
+		ent->addComponent((GameComponent*) new HUDComponent(0));
 		ent->initializeComponents();
         
     } else if (name == "car") {
