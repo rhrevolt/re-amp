@@ -1,6 +1,7 @@
 <physics>
 <gAcceleration>1500.0</gAcceleration>
 <gMaxEngineForce>3000.0</gMaxEngineForce>
+<gEngineDecay>400.0</gEngineDecay>
 <gBrakingIncrement>1500.0</gBrakingIncrement>
 <gSteeringIncrement>0.024</gSteeringIncrement>
 <gSteeringClamp>0.5</gSteeringClamp>
