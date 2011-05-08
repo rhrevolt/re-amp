@@ -107,11 +107,25 @@ void HUDComponent::updateSpeed(FrameData &fd){
      std::string speedString = ss.str();
      speedString.append(" km/h");
      std::stringstream ss2 (std::stringstream::in | std::stringstream::out);
+     std::stringstream ss3 (std::stringstream::in | std::stringstream::out);
      time = timer->getMilliseconds()/1000.0f;
+     int minutes = (int)time / 60;
+     float seconds = (int)time % 60;
+     std::string colon = ":";
      //speedString.append("                     ");
-     ss2 << abs(time);
-     std::string timeString = ss2.str();
+     ss2 << abs(minutes);
+     ss3 << abs(seconds);
+     std::string minString = ss2.str();
+     std::string secString = ss3.str();
+     if(minString=="0")
+		minString = " ";
+     minString.append(colon);
+     if(seconds < 10){
+		std::string zero = "0";
+		secString = zero.append(secString);
+	}
+     minString.append(secString);
      //speedString.append(timeString);
 	 textArea->setCaption(speedString);
-	 textArea2->setCaption(timeString);
+	 textArea2->setCaption(minString);
 }
