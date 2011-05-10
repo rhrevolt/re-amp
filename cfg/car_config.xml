@@ -1,29 +1,31 @@
 <physics>
+	<gVehicleMass>500.0</gVehicleMass>
+
 	<!-- 0 = front wheel drive; 1 = rear wheel drive; 2 = all-wheel drive-->
 	<gEngineForceConfiguration>2</gEngineForceConfiguration>
-	<gAcceleration>1500.0</gAcceleration>
-	<gMaxEngineForce>8000.0</gMaxEngineForce>
+	<gAcceleration>15.0</gAcceleration>
+	<gMaxEngineForce>300.0</gMaxEngineForce>
 	<gEngineDecayRate>400.0</gEngineDecayRate>
-	<gBrakingIncrement>1500.0</gBrakingIncrement>
+	<gBrakingIncrement>250.0</gBrakingIncrement>
 	<gEngineZeroThreshold>10.0</gEngineZeroThreshold>
 
 	<!-- 0 = 2 wheel steering; 1 = 4 wheel steering -->
 	<gSteeringConfiguration>0</gSteeringConfiguration>
-	<gSteeringIncrement>0.024</gSteeringIncrement>
+	<gSteeringIncrement>0.04</gSteeringIncrement>
 	<gSteeringClamp>0.5</gSteeringClamp>
 	<gSteeringDecayRate>0.05</gSteeringDecayRate>
 	<gSteeringZeroThreshold>0.0</gSteeringZeroThreshold>
 
 	<gWheelRadius>0.5</gWheelRadius>
 	<gWheelWidth>0.4</gWheelWidth>
-	<gWheelFriction>1000.0</gWheelFriction>
+	<gWheelFriction>10000000000000000.0</gWheelFriction>
 
-	<gSuspensionStiffness>8.0</gSuspensionStiffness>
+	<gSuspensionStiffness>20.0</gSuspensionStiffness>
 	<gSuspensionDamping>2.3</gSuspensionDamping>
 	<gSuspensionCompression>4.4</gSuspensionCompression>
 	<gRollInfluence>0.1</gRollInfluence>
 	<gSuspensionRestLength>0.6</gSuspensionRestLength>
 	<gMaxSuspensionTravel>500.0</gMaxSuspensionTravel>
 	<gFrictionSlip>10.5</gFrictionSlip>
-
+	
 </physics>
