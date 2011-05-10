@@ -57,7 +57,7 @@ void PhysicsManager::init()
 {
 	//TODO: Change if necessary
 	AxisAlignedBox* bounds = new AxisAlignedBox();
-	Vector3 *gravityVector = new Vector3(0, -1, 0);
+	Vector3 *gravityVector = new Vector3(0, -9.81, 0);
 
 	mNumEntitiesInstanced = 0; // how many shapes are created
 	mSceneMgr = StateManager::getCurrentState()->getSceneMgr();

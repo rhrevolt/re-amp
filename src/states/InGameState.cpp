@@ -61,6 +61,15 @@ void InGameState::start()
 	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework"));
 } 
 
+void InGameState::loadFromXML(const std::string &fileName)
+{
+	using boost::property_tree::ptree;
+	ptree pTree;
+	// Load the XML file
+	read_xml(fileName, pTree);
+	// TODO: Parse the tree into map entities
+}
+
 void InGameState::pushNewEntityToList(std::string entityName)
 {
 	entityList.push_back(EntityFactory::create(entityName));

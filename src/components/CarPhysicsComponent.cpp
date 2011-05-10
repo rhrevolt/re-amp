@@ -99,7 +99,7 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	} else if (mSteering < 0) {
 		mSteering = std::min(0.0f, mSteering + gSteeringDecayRate);
 	}
-
+	printf("msteering: %f\n", mSteering); 
 	// Check if the steering force is close enough to zero
 	if (abs(mSteering) < gSteeringZeroThreshold) {
 		mSteering = 0;
@@ -214,6 +214,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gFrictionSlip = pTree.get<float>("physics.gFrictionSlip");
 	gEngineZeroThreshold = pTree.get<float>("physics.gEngineZeroThreshold");
 	gSteeringZeroThreshold = pTree.get<float>("physics.gSteeringZeroThreshold");
+	gVehicleMass = pTree.get<float>("physics.gVehicleMass");
 
 	// Setup the drive and steering mechanism
 	for (int i = 0; i < 4; i++)
@@ -274,8 +275,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
 
-	float mass = 5000;
-	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, mass, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();

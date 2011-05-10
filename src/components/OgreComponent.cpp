@@ -23,9 +23,7 @@
 
 bool OgreComponent::tick(FrameData &fd)
 {
-	//printf("Render\n");
 }
-
 void OgreComponent::init()
 {
 	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();

@@ -53,8 +53,8 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new InputComponent(0));
 		ent->addComponent((GameComponent*) new HUDComponent(0));
 		ent->initializeComponents();
-        
-    } else if (name == "car") {
+
+	} else if (name == "car") {
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
@@ -73,7 +73,7 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->addComponent((GameComponent*) new TerrainOgreComponent(0));
 		OgreBulletCollisions::CollisionShape *Shape;
 		Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
-		
+
 		/* CONSIDER weirnc-comment: Should the below be put in some type of "TerrainPhysicsComponent" class? 
 		 * This seems like a weird place to put it.*/
 
@@ -93,18 +93,12 @@ GameEntity* EntityFactory::create(std::string name)
 		//weaponPhysics->createMissile(
 		//ent->addComponent((GameComponent*) new WeaponPhysicsComponent);
 		ent->initializeComponents();
-		
+
 		Ogre::Vector3 vec(0, 10, 0);
 		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
 	}
 
 	return ent;
 }
-
-CarOgreComponent* getCarOgreComponent()
-{
-	
-}
-
 
 
