@@ -41,10 +41,8 @@ class GameEntity; // forward declaration
 class GameComponent : public boost::signals::trackable
 {
 	public:
-		GameComponent(int componentID, int priority = 0);
+		GameComponent(int componentID);
 		~GameComponent(void);
-		bool recieveMessage(int message);
-		int getPriority(void);
 		bool setParentEntity(GameEntity* parent);
 
 		virtual bool tick(FrameData &fd) = 0;
@@ -52,14 +50,13 @@ class GameComponent : public boost::signals::trackable
 		virtual ComponentType getType() = 0;
 
 		virtual void init() = 0;
-		
+
 	protected:
 		GameEntity* parentEntity;
 		int componentID;
 
 	private:
-		int priority; //TODO: Remove?
-		
+
 };
 
 #endif // __GameComponent_h__

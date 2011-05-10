@@ -22,9 +22,9 @@
 #include "core/GameComponent.h"
 #include <cstdlib>
 
-GameEntity::GameEntity(int entityID, std::list<GameComponent*> comps) : entityID(entityID), initialized(false)
+GameEntity::GameEntity(int entityID, boost::property_tree::ptree* inTree) : entityID(entityID), initialized(false)
 {
-	// Empty
+	pTree = inTree;
 }
 
 GameEntity::~GameEntity(void)

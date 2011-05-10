@@ -53,12 +53,14 @@ InGameState::~InGameState()
 void InGameState::start()
 {
 	physicsManager->init();
-	
-	entityList.push_back(EntityFactory::create("terrain"));
+	// TODO: get map file name from somewhere else..
+	loadFromXML("maps/map_01.xml");
+
+	/*entityList.push_back(EntityFactory::create("terrain"));
 	entityList.push_back(EntityFactory::create("playerCar"));
 	entityList.push_back(EntityFactory::create("car"));
 	entityList.push_back(EntityFactory::create("weapon block"));
-	
+	*/
 	// CONSIDER: weirnc: Not sure where else to put this... seems like a good place? I'm stupid
 	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework"));
 } 
@@ -70,6 +72,9 @@ void InGameState::loadFromXML(const std::string &fileName)
 	// Load the XML file
 	read_xml(fileName, pTree);
 	// TODO: Parse the tree into map entities
+	BOOST_FOREACH(ptree::value_type &v, pTree.get_child("map")) {
+		printf("got object\n");
+	}
 }
 
 void InGameState::pushNewEntityToList(std::string entityName)
