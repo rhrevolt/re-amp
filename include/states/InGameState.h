@@ -37,7 +37,9 @@ public:
 
 	virtual void tick(FrameData &fd);
 	virtual void start();
-	
+
+	virtual void loadFromXML(const std::string &fileName);
+
 	virtual Ogre::SceneManager* getSceneMgr();
 
 protected:
