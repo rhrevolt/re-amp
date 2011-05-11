@@ -33,7 +33,7 @@ class GameEntity
 	public:
 		GameEntity(int entityID = 0, boost::property_tree::ptree* pTree = NULL);
 		~GameEntity(void);
-		
+
 		bool tick(FrameData &fd);
 		bool receiveMessage(ComponentType comp, int message);
 			
@@ -46,7 +46,9 @@ class GameEntity
 		boost::property_tree::ptree* getProperties() {
 			return pTree;
 		};
-
+		void setPropertyTree(boost::property_tree::ptree* tree) {
+			pTree = tree;
+		}
 		GameComponent* getComponent(ComponentType type);
 	private:
 		int entityID;

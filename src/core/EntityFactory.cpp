@@ -40,10 +40,10 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 
-GameEntity* EntityFactory::create(std::string name)
+GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree* pTree)
 {
-	GameEntity* ent = new(GameEntity);
-
+	GameEntity* ent = new (GameEntity);
+	ent->setPropertyTree(pTree);
 	// TODO: Perhaps this should be generated from a file?
 	if (name == "playerCar") {
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));

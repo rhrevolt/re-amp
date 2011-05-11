@@ -20,13 +20,15 @@
 #ifndef _ENTITYFACTORY_H_
 #define _ENTITYFACTORY_H_
 
+#include <boost/property_tree/ptree.hpp>
+
 #include "core/GameEntity.h"
 #include <string>
 
 class EntityFactory
 {
 	public:
-		static GameEntity* create(std::string name);
+		static GameEntity* create(std::string name, boost::property_tree::ptree*);
 	protected:
 
 	private:
