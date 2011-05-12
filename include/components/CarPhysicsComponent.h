@@ -31,7 +31,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		CarPhysicsComponent(int ID);
 		~CarPhysicsComponent();
 		virtual bool tick(FrameData &fd);
-		void createVehicle(Ogre::Vector3 chassisShift);
+		void createVehicle(Ogre::Vector3 chassisShift, Ogre::Vector3 initial);
 		virtual void init();
 		virtual void handleVector(Ogre::Vector2 vec);
 
@@ -74,6 +74,12 @@ class CarPhysicsComponent: public PhysicsComponent
 		float	gSteeringZeroThreshold;
 
 		float	gVehicleMass;
+		float	gVehicleSpeedCap;
+		float	gVehicleSpeedCapForce;
+		float	gReverseSpeedCap;
+		float	gReverseSpeedCapForce;
+		float	gReverseAcceleration;
+
 		OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
 		OgreBulletDynamics::VehicleTuning	        *mTuning;
 		OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;

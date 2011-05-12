@@ -57,6 +57,8 @@ void InGameState::start()
 	entityList.push_back(EntityFactory::create("terrain"));
 	GameEntity* playerCar = EntityFactory::create("playerCar");
 	entityList.push_back(playerCar);
+	// TODO: get map file name from somewhere else..
+	loadFromXML("maps/map_01.xml");
 	entityList.push_back(EntityFactory::create("car"));
 	entityList.push_back(EntityFactory::create("weapon block"));
 	
@@ -71,11 +73,22 @@ void InGameState::loadFromXML(const std::string &fileName)
 	// Load the XML file
 	read_xml(fileName, pTree);
 	// TODO: Parse the tree into map entities
+	BOOST_FOREACH(ptree::value_type &v, pTree.get_child("map")) {
+		ptree branch = (ptree) (v.second);
+		if (v.first == "entity")  {
+			entityList.push_back(EntityFactory::create(branch.get<std::string>("<xmlattr>.type"), &branch));
+			printf("Created %s object\n", branch.get<std::string>("<xmlattr>.type").c_str());
+		}
+	}
 }
 
 void InGameState::pushNewEntityToList(std::string entityName, GameEntity* source)
 {
+<<<<<<< HEAD
 	entityList.push_back(EntityFactory::create(entityName, source));
+=======
+	entityList.push_back(EntityFactory::create(entityName, NULL));
+>>>>>>> 2df9abe9abbab875ac78fe35db5852ce141052ee
 }
 
 void InGameState::tick(FrameData &fd)
@@ -84,7 +97,7 @@ void InGameState::tick(FrameData &fd)
 	inputManager->tick(fd);
 	physicsManager->tick(fd);
 	soundManager->tick(fd);
-	
+
 	BOOST_FOREACH(GameEntity* ent, entityList) {
 		ent->tick(fd);
 	}

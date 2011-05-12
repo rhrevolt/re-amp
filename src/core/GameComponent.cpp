@@ -19,8 +19,8 @@
 
 #include "core/GameComponent.h"
 
-GameComponent::GameComponent(int componentID, int priority) : 
-	componentID(componentID), priority(priority)
+GameComponent::GameComponent(int componentID) : 
+	componentID(componentID)
 {
 
 }
@@ -28,11 +28,6 @@ GameComponent::GameComponent(int componentID, int priority) :
 GameComponent::~GameComponent(void) 
 {
 
-}
-
-int GameComponent::getPriority(void)
-{
-	return priority;
 }
 
 bool GameComponent::setParentEntity(GameEntity* parent)

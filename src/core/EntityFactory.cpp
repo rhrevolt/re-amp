@@ -40,10 +40,10 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 
-GameEntity* EntityFactory::create(std::string name, GameEntity* source)
+GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree* pTree)
 {
-	GameEntity* ent = new(GameEntity);
-
+	GameEntity* ent = new (GameEntity);
+	ent->setPropertyTree(pTree);
 	// TODO: Perhaps this should be generated from a file?
 	if (name == "playerCar") {
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
@@ -60,7 +60,7 @@ GameEntity* EntityFactory::create(std::string name, GameEntity* source)
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->initializeComponents();
-		Ogre::Vector3 vec(40,40,40);
+		Ogre::Vector3 vec(40,40,0);
 		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
 */
 	} else if (name == "weapon block") {

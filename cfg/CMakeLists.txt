@@ -26,3 +26,8 @@ install(FILES ${CMAKE_SOURCE_DIR}/cfg/car_config.xml
 		DESTINATION bin
 		CONFIGURATIONS Release RelWithDebInfo Debug
 )
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/cfg/maps
+		DESTINATION bin
+		CONFIGURATIONS Release RelWithDebInfo Debug
+	   )

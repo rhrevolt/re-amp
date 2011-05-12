@@ -21,6 +21,8 @@
 #define __GameEntity_h__
 
 #include <list> 
+#include <boost/property_tree/ptree.hpp>
+
 #include "core/GameComponent.h"
 #include "core/FrameData.h"
 
@@ -29,10 +31,9 @@ bool compareComponents(GameComponent* first, GameComponent* second);
 class GameEntity
 {
 	public:
-		GameEntity(int entityID = 0, std::list<GameComponent*> comps = 
-		           (std::list<GameComponent*>)NULL);
+		GameEntity(int entityID = 0, boost::property_tree::ptree* pTree = NULL);
 		~GameEntity(void);
-		
+
 		bool tick(FrameData &fd);
 		bool receiveMessage(ComponentType comp, int message);
 			
@@ -42,11 +43,18 @@ class GameEntity
 
 		void initializeComponents();
 		
+		boost::property_tree::ptree* getProperties() {
+			return pTree;
+		};
+		void setPropertyTree(boost::property_tree::ptree* tree) {
+			pTree = tree;
+		}
 		GameComponent* getComponent(ComponentType type);
 	private:
 		int entityID;
 		bool initialized;
 		std::list<GameComponent*> componentList;
+		boost::property_tree::ptree* pTree;
 };
 
 #endif // __GameEntity_h__

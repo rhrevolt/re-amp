@@ -29,7 +29,7 @@ int numBlocks = 0;
 void WeaponBlockOgreComponent::init()
 {		
     OgreComponent::init();
-	blockShift = Ogre::Vector3(10, .6, 0);
+	blockShift = Ogre::Vector3(parentEntity->getProperties()->get<float>("<xmlattr>.pos_x"), parentEntity->getProperties()->get<float>("<xmlattr>.pos_z"), parentEntity->getProperties()->get<float>("<xmlattr>.pos_y"));
 
 	mBlock = mSceneMgr->createEntity(
 			"block" + Ogre::StringConverter::toString(numBlocks++),

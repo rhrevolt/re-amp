@@ -105,16 +105,23 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		mSteering = 0;
 	}
 
-	//printf("%f\n", fd.timeSinceLastFrame);
 
 	// apply steering and engine force on wheels
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
 	{
-		// Try to scale the force
-		if (fd.timeSinceLastFrame > 0)
+		// Check if we're hitting the set speed cap. 
+		float vehicleSpeed = mVehicle->getBulletVehicle()->getCurrentSpeedKmHour();
+
+		if ((vehicleSpeed > 0 && vehicleSpeed < gVehicleSpeedCap) || (vehicleSpeed < 0 && vehicleSpeed > -gReverseSpeedCap)) {
 			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
-		else
-			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
+		} else {
+			printf("Hitting speed cap...\n");
+			if (vehicleSpeed > 0) {
+				mVehicle->applyEngineForce(-gVehicleSpeedCapForce, mWheelsEngine[i]);
+			} else {
+				mVehicle->applyEngineForce(gReverseSpeedCapForce, mWheelsEngine[i]);
+			}
+		}
 	}
 
 	for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
@@ -169,10 +176,11 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 			if (bufferedVector.y > 0)
 				mEngineForce = std::min(gMaxEngineForce, mEngineForce + gAcceleration + gEngineDecayRate);
 			else
-				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gAcceleration - gEngineDecayRate);
+				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gReverseAcceleration - gEngineDecayRate);
 		}
 
 	}
+
 }
 
 void CarPhysicsComponent::init()
@@ -182,7 +190,11 @@ void CarPhysicsComponent::init()
 
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
-	createVehicle(chassisShift);
+	Ogre::Vector3 initial;
+	initial.x = parentEntity->getProperties()->get<float>("<xmlattr>.pos_x");
+	initial.y = parentEntity->getProperties()->get<float>("<xmlattr>.pos_y");
+	initial.z = parentEntity->getProperties()->get<float>("<xmlattr>.pos_z");
+	createVehicle(chassisShift, initial);
 
 	mEngineForce = 0;
 	mSteering = 0;
@@ -191,11 +203,12 @@ void CarPhysicsComponent::init()
 void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 {
 	using boost::property_tree::ptree;
-	
+
 	ptree pTree;
 	// Load from XML
 	read_xml(filename, pTree);
 	gAcceleration = pTree.get<float>("physics.gAcceleration");
+	gReverseAcceleration = pTree.get<float>("physics.gReverseAcceleration");
 	gMaxEngineForce = pTree.get<float>("physics.gMaxEngineForce");
 	gEngineDecayRate = pTree.get<float>("physics.gEngineDecayRate");
 	gBrakingIncrement = pTree.get<float>("physics.gBrakingIncrement");
@@ -215,7 +228,10 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gEngineZeroThreshold = pTree.get<float>("physics.gEngineZeroThreshold");
 	gSteeringZeroThreshold = pTree.get<float>("physics.gSteeringZeroThreshold");
 	gVehicleMass = pTree.get<float>("physics.gVehicleMass");
-
+	gVehicleSpeedCap = pTree.get<float>("physics.gVehicleSpeedCap");
+	gReverseSpeedCap = pTree.get<float>("physics.gReverseSpeedCap");
+	gReverseSpeedCapForce = pTree.get<float>("physics.gReverseSpeedCapForce");
+	gVehicleSpeedCapForce = pTree.get<float>("physics.gVehicleSpeedCapForce");
 	// Setup the drive and steering mechanism
 	for (int i = 0; i < 4; i++)
 	{
@@ -259,7 +275,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	}
 }
 
-void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
+void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vector3 initialPosition )
 {
 	//TODO: Get this value from Ogre Component
 	float connectionHeight = 0.7f;
@@ -275,7 +291,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, initialPosition, Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();
