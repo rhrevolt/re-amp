@@ -29,9 +29,9 @@ int numWeaponsInstanced = 0;
 void WeaponOgreComponent::init()
 {
 	OgreComponent::init();
-	Ogre::SceneManager* sMgr = StateManager::getInstance()->inGameState->getSceneMgr();
+	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
-	mEntity = sMgr->createEntity("boxEntity" + Ogre::StringConverter::toString(numWeaponsInstanced++), "ogrehead.mesh");
+	mEntity = mSceneMgr->createEntity("boxEntity" + Ogre::StringConverter::toString(numWeaponsInstanced++), "ogrehead.mesh");
 	//mBlock->setQueryFlags(GEOMETRY_QUERY_MASK);
 	//mEntity->setCastShadows(true);
 

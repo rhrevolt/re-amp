@@ -55,12 +55,13 @@ void InGameState::start()
 	physicsManager->init();
 	
 	entityList.push_back(EntityFactory::create("terrain"));
-	entityList.push_back(EntityFactory::create("playerCar"));
+	GameEntity* playerCar = EntityFactory::create("playerCar");
+	entityList.push_back(playerCar);
 	entityList.push_back(EntityFactory::create("car"));
 	entityList.push_back(EntityFactory::create("weapon block"));
 	
 	// CONSIDER: weirnc: Not sure where else to put this... seems like a good place? I'm stupid
-	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework"));
+	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework", playerCar));
 } 
 
 void InGameState::loadFromXML(const std::string &fileName)
@@ -72,9 +73,9 @@ void InGameState::loadFromXML(const std::string &fileName)
 	// TODO: Parse the tree into map entities
 }
 
-void InGameState::pushNewEntityToList(std::string entityName)
+void InGameState::pushNewEntityToList(std::string entityName, GameEntity* source)
 {
-	entityList.push_back(EntityFactory::create(entityName));
+	entityList.push_back(EntityFactory::create(entityName, source));
 }
 
 void InGameState::tick(FrameData &fd)

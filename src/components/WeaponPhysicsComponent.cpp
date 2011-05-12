@@ -55,30 +55,35 @@ WeaponPhysicsComponent::~WeaponPhysicsComponent() {
 
 bool WeaponPhysicsComponent::tick(FrameData &fd)
 {
+	/*
 	rigidBody->applyForce(direction * 2.0, rigidBody->getCenterOfMassPosition()); //initial guess for force to missile
 	return true;
+	*/
 }
 
 void WeaponPhysicsComponent::init() {
   			
  }
 
-void WeaponPhysicsComponent::createMissile(CarOgreComponent *source)
+void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 {
     WeaponOgreComponent* ogreComp = (WeaponOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);	
     Entity *entity = ogreComp->getEntity();
     SceneManager *mSceneMgr = ogreComp->getSceneMgr();
     assert(entity);
     assert(mSceneMgr);
+    
 	Vector3 size = Vector3::ZERO;	// size of the box
 	// starting position of the box
-	Vector3 position = (source->getSceneNode()->getPosition() * Vector3::UNIT_Z);
-	direction = source->getSceneNode()->getOrientation() * Vector3::UNIT_Z;
-	// create an ordinary, Ogre mesh 
-	entity = mSceneMgr->createEntity(
-			"Box" ,
-			"cube.mesh");			    
-	entity->setCastShadows(true);
+	
+	fprintf(stderr, "before");
+	Ogre::SceneNode* blah = source->getSceneNode();
+	int a = (int)blah->getPosition().x;
+	fprintf(stderr, "after");
+	//Vector3 position = (source->getSceneNode()->getPosition() * Vector3::UNIT_Z);
+	//direction = source->getSceneNode()->getOrientation() * Vector3::UNIT_Z;
+
+/*
 	// we need the bounding box of the box to be able to set the size of the Bullet-box
 	AxisAlignedBox boundingB = entity->getBoundingBox();
 	size = boundingB.getSize(); size /= 2.0f; // only the half needed
@@ -104,4 +109,5 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent *source)
 				Quaternion(0,0,0,1));// orientation of the box			
 
 	rigidBody->setLinearVelocity(direction * 7.0f ); // shooting speed, initial value guess
+	*/
 }

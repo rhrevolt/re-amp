@@ -51,7 +51,7 @@ private:
 	PhysicsManager* physicsManager;
 	SoundManager* soundManager;
 	
-	virtual void pushNewEntityToList(std::string entityName);
+	virtual void pushNewEntityToList(std::string entityName,  GameEntity* source = NULL);
 };
 
 #endif // _INGAMESTATE_H_

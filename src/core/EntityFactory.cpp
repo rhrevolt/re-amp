@@ -40,7 +40,7 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 
-GameEntity* EntityFactory::create(std::string name)
+GameEntity* EntityFactory::create(std::string name, GameEntity* source)
 {
 	GameEntity* ent = new(GameEntity);
 
@@ -55,13 +55,14 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->initializeComponents();
 
 	} else if (name == "car") {
+		/*
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->initializeComponents();
 		Ogre::Vector3 vec(40,40,40);
 		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
-
+*/
 	} else if (name == "weapon block") {
 		WeaponBlockOgreComponent* blockOgre = new WeaponBlockOgreComponent(0);
 		ent->addComponent((GameComponent*) blockOgre);
@@ -88,14 +89,13 @@ GameEntity* EntityFactory::create(std::string name)
 		ent->initializeComponents();
 
 	} else if (name == "firework") {
+		/*
 		ent->addComponent((GameComponent*) new WeaponOgreComponent(0));
 		WeaponPhysicsComponent* weaponPhysics = new WeaponPhysicsComponent(0);
-		//weaponPhysics->createMissile(
-		//ent->addComponent((GameComponent*) new WeaponPhysicsComponent);
+		ent->addComponent(weaponPhysics);
 		ent->initializeComponents();
-
-		Ogre::Vector3 vec(0, 10, 0);
-		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
+		weaponPhysics->createMissile((CarOgreComponent*)source);
+		*/
 	}
 
 	return ent;

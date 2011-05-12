@@ -26,7 +26,7 @@
 class EntityFactory
 {
 	public:
-		static GameEntity* create(std::string name);
+		static GameEntity* create(std::string name,  GameEntity* source = NULL);
 	protected:
 
 	private:
