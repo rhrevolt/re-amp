@@ -105,16 +105,17 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 		mSteering = 0;
 	}
 
-	//printf("%f\n", fd.timeSinceLastFrame);
 
 	// apply steering and engine force on wheels
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
 	{
-		// Try to scale the force
-		if (fd.timeSinceLastFrame > 0)
+		// Check if we're hitting the set speed cap. 
+		if (mVehicle->getBulletVehicle()->getCurrentSpeedKmHour() < gVehicleSpeedCap) {
 			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
-		else
-			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
+		} else {
+			printf("Hitting speed cap...\n");
+			mVehicle->applyEngineForce(-gEngineDecayRate, mWheelsEngine[i]);
+		}
 	}
 
 	for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
@@ -173,6 +174,7 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 		}
 
 	}
+
 }
 
 void CarPhysicsComponent::init()
@@ -195,7 +197,7 @@ void CarPhysicsComponent::init()
 void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 {
 	using boost::property_tree::ptree;
-	
+
 	ptree pTree;
 	// Load from XML
 	read_xml(filename, pTree);
@@ -219,6 +221,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gEngineZeroThreshold = pTree.get<float>("physics.gEngineZeroThreshold");
 	gSteeringZeroThreshold = pTree.get<float>("physics.gSteeringZeroThreshold");
 	gVehicleMass = pTree.get<float>("physics.gVehicleMass");
+	gVehicleSpeedCap = pTree.get<float>("physics.gVehicleSpeedCap");
 
 	// Setup the drive and steering mechanism
 	for (int i = 0; i < 4; i++)

@@ -74,6 +74,8 @@ class CarPhysicsComponent: public PhysicsComponent
 		float	gSteeringZeroThreshold;
 
 		float	gVehicleMass;
+		float	gVehicleSpeedCap;
+
 		OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
 		OgreBulletDynamics::VehicleTuning	        *mTuning;
 		OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
