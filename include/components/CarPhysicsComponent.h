@@ -77,6 +77,7 @@ class CarPhysicsComponent: public PhysicsComponent
 		float	gVehicleSpeedCap;
 		float	gVehicleSpeedCapForce;
 		float	gReverseSpeedCap;
+		float	gReverseSpeedCapForce;
 		float	gReverseAcceleration;
 
 		OgreBulletDynamics::WheeledRigidBody        *mCarChassis;

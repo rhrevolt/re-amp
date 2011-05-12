@@ -2,10 +2,11 @@
 	<gVehicleMass>500.0</gVehicleMass>
 	<gVehicleSpeedCap>200.0</gVehicleSpeedCap> <!-- km/h -->
 	<gReverseSpeedCap>40.0</gReverseSpeedCap>
-	<gVehicleSpeedCapForce>200.0</gVehicleSpeedCapForce>
+	<gVehicleSpeedCapForce>-1500.0</gVehicleSpeedCapForce>
+	<gReverseSpeedCapForce>200.0</gReverseSpeedCapForce>
 	<!-- 0 = front wheel drive; 1 = rear wheel drive; 2 = all-wheel drive-->
 	<gEngineForceConfiguration>2</gEngineForceConfiguration>
-	<gAcceleration>15.0</gAcceleration>
+	<gAcceleration>12.0</gAcceleration>
 	<gReverseAcceleration>15.0</gReverseAcceleration>
 	<gMaxEngineForce>3000.0</gMaxEngineForce>
 	<gEngineDecayRate>400.0</gEngineDecayRate>

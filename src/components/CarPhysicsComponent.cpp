@@ -119,7 +119,7 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 			if (vehicleSpeed > 0) {
 				mVehicle->applyEngineForce(-gVehicleSpeedCapForce, mWheelsEngine[i]);
 			} else {
-				mVehicle->applyEngineForce(gVehicleSpeedCapForce, mWheelsEngine[i]);
+				mVehicle->applyEngineForce(gReverseSpeedCapForce, mWheelsEngine[i]);
 			}
 		}
 	}
@@ -230,6 +230,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gVehicleMass = pTree.get<float>("physics.gVehicleMass");
 	gVehicleSpeedCap = pTree.get<float>("physics.gVehicleSpeedCap");
 	gReverseSpeedCap = pTree.get<float>("physics.gReverseSpeedCap");
+	gReverseSpeedCapForce = pTree.get<float>("physics.gReverseSpeedCapForce");
 	gVehicleSpeedCapForce = pTree.get<float>("physics.gVehicleSpeedCapForce");
 	// Setup the drive and steering mechanism
 	for (int i = 0; i < 4; i++)
