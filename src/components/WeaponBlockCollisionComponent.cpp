@@ -74,7 +74,8 @@ void WeaponBlockCollisionComponent::createBlock()
 
 	mBox = new RigidBody("boxPhysics" + Ogre::StringConverter::toString(numberBlocks++), PhysicsManager::getInstance()->getWorld());
 
-	mBox->setShape(weaponBlockRootNode, blockShape, .8, .8, 0, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	Ogre::Vector3 initialPosition = Ogre::Vector3(parentEntity->getProperties()->get<float>("<xmlattr>.pos_x"), parentEntity->getProperties()->get<float>("<xmlattr>.pos_y"), 0.5);
+	mBox->setShape(weaponBlockRootNode, blockShape, .8, .8, 0, initialPosition, Quaternion::IDENTITY);
 	mBox->setDamping(.2, .2);
 
 	mBox->disableDeactivation ();

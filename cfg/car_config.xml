@@ -12,7 +12,7 @@
 	<!-- 0 = 2 wheel steering; 1 = 4 wheel steering -->
 	<gSteeringConfiguration>0</gSteeringConfiguration>
 	<gSteeringIncrement>0.04</gSteeringIncrement>
-	<gSteeringClamp>0.5</gSteeringClamp>
+	<gSteeringClamp>0.3</gSteeringClamp>
 	<gSteeringDecayRate>0.05</gSteeringDecayRate>
 	<gSteeringZeroThreshold>0.0</gSteeringZeroThreshold>
 

@@ -182,7 +182,11 @@ void CarPhysicsComponent::init()
 
 	//Construct the physics basis for the vehicle
 	const Ogre::Vector3 chassisShift(0, 1.0f, 0);
-	createVehicle(chassisShift);
+	Ogre::Vector3 initial;
+	initial.x = parentEntity->getProperties()->get<float>("<xmlattr>.pos_x");
+	initial.y = parentEntity->getProperties()->get<float>("<xmlattr>.pos_y");
+	initial.z = 0;
+	createVehicle(chassisShift, initial);
 
 	mEngineForce = 0;
 	mSteering = 0;
@@ -259,7 +263,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	}
 }
 
-void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
+void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vector3 initialPosition )
 {
 	//TODO: Get this value from Ogre Component
 	float connectionHeight = 0.7f;
@@ -275,7 +279,7 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift )
 
 	mCarChassis = new WheeledRigidBody("carChassisPhysics" + Ogre::StringConverter::toString(numPhysicsInstanced++), PhysicsManager::getInstance()->getWorld());
 
-	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, Ogre::Vector3(0, 3, 0), Quaternion::IDENTITY);
+	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, initialPosition, Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
 
 	mCarChassis->disableDeactivation ();
