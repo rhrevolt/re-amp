@@ -74,8 +74,10 @@ void InGameState::loadFromXML(const std::string &fileName)
 	// TODO: Parse the tree into map entities
 	BOOST_FOREACH(ptree::value_type &v, pTree.get_child("map")) {
 		ptree branch = (ptree) (v.second);
-		entityList.push_back(EntityFactory::create(branch.get<std::string>("<xmlattr>.type"), &branch));
-		printf("Created %s object\n", branch.get<std::string>("<xmlattr>.type").c_str());
+		if (v.first == "entity")  {
+			entityList.push_back(EntityFactory::create(branch.get<std::string>("<xmlattr>.type"), &branch));
+			printf("Created %s object\n", branch.get<std::string>("<xmlattr>.type").c_str());
+		}
 	}
 }
 
@@ -90,7 +92,7 @@ void InGameState::tick(FrameData &fd)
 	inputManager->tick(fd);
 	physicsManager->tick(fd);
 	soundManager->tick(fd);
-	
+
 	BOOST_FOREACH(GameEntity* ent, entityList) {
 		ent->tick(fd);
 	}
