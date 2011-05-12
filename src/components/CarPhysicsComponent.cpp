@@ -185,7 +185,7 @@ void CarPhysicsComponent::init()
 	Ogre::Vector3 initial;
 	initial.x = parentEntity->getProperties()->get<float>("<xmlattr>.pos_x");
 	initial.y = parentEntity->getProperties()->get<float>("<xmlattr>.pos_y");
-	initial.z = 0;
+	initial.z = parentEntity->getProperties()->get<float>("<xmlattr>.pos_z");
 	createVehicle(chassisShift, initial);
 
 	mEngineForce = 0;

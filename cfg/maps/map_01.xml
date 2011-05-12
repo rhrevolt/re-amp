@@ -1,6 +1,6 @@
 <map>
 	<entity type="terrain" texture="generic_terrain.png" />
-	<entity type="playerCar" pos_x='0' pos_y='0' />
-	<entity type="car" pos_x='100' pos_y='0' />
-	<entity type="weapon block" weapon_type="head" pos_x='200' pos_y='200' />
+	<entity type="playerCar" pos_x='0' pos_y='0' pos_z='0' />
+	<entity type="car" pos_x='3' pos_y='0' pos_z='0'/>
+	<entity type="weapon block" weapon_type="head" pos_x='0' pos_y='10' pos_z='0'/>
 </map>
