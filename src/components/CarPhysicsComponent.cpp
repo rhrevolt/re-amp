@@ -110,11 +110,17 @@ bool CarPhysicsComponent::tick(FrameData &fd)
 	for (int i = mWheelsEngine[0]; i < mWheelsEngineCount; i++)
 	{
 		// Check if we're hitting the set speed cap. 
-		if (mVehicle->getBulletVehicle()->getCurrentSpeedKmHour() < gVehicleSpeedCap) {
+		float vehicleSpeed = mVehicle->getBulletVehicle()->getCurrentSpeedKmHour();
+
+		if ((vehicleSpeed > 0 && vehicleSpeed < gVehicleSpeedCap) || (vehicleSpeed < 0 && vehicleSpeed > -gReverseSpeedCap)) {
 			mVehicle->applyEngineForce(mEngineForce, mWheelsEngine[i]);
 		} else {
 			printf("Hitting speed cap...\n");
-			mVehicle->applyEngineForce(-gEngineDecayRate, mWheelsEngine[i]);
+			if (vehicleSpeed > 0) {
+				mVehicle->applyEngineForce(-gVehicleSpeedCapForce, mWheelsEngine[i]);
+			} else {
+				mVehicle->applyEngineForce(gVehicleSpeedCapForce, mWheelsEngine[i]);
+			}
 		}
 	}
 
@@ -170,7 +176,7 @@ void CarPhysicsComponent::handleVector(Ogre::Vector2 bufferedVector)
 			if (bufferedVector.y > 0)
 				mEngineForce = std::min(gMaxEngineForce, mEngineForce + gAcceleration + gEngineDecayRate);
 			else
-				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gAcceleration - gEngineDecayRate);
+				mEngineForce = std::max(-gMaxEngineForce, mEngineForce - gReverseAcceleration - gEngineDecayRate);
 		}
 
 	}
@@ -202,6 +208,7 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	// Load from XML
 	read_xml(filename, pTree);
 	gAcceleration = pTree.get<float>("physics.gAcceleration");
+	gReverseAcceleration = pTree.get<float>("physics.gReverseAcceleration");
 	gMaxEngineForce = pTree.get<float>("physics.gMaxEngineForce");
 	gEngineDecayRate = pTree.get<float>("physics.gEngineDecayRate");
 	gBrakingIncrement = pTree.get<float>("physics.gBrakingIncrement");
@@ -222,7 +229,8 @@ void CarPhysicsComponent::loadPhysicsConstants(const std::string &filename)
 	gSteeringZeroThreshold = pTree.get<float>("physics.gSteeringZeroThreshold");
 	gVehicleMass = pTree.get<float>("physics.gVehicleMass");
 	gVehicleSpeedCap = pTree.get<float>("physics.gVehicleSpeedCap");
-
+	gReverseSpeedCap = pTree.get<float>("physics.gReverseSpeedCap");
+	gVehicleSpeedCapForce = pTree.get<float>("physics.gVehicleSpeedCapForce");
 	// Setup the drive and steering mechanism
 	for (int i = 0; i < 4; i++)
 	{
