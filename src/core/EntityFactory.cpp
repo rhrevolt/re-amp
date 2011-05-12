@@ -55,14 +55,12 @@ GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree*
 		ent->initializeComponents();
 
 	} else if (name == "car") {
-		/*
 		ent->addComponent((GameComponent*) new CarOgreComponent(0));
 		ent->addComponent((GameComponent*) new CarPhysicsComponent(0));
 		ent->addComponent((GameComponent*) new CarSoundComponent(0));
 		ent->initializeComponents();
 		Ogre::Vector3 vec(40,40,0);
 		((OgreComponent*)ent->getComponent(COMPONENT_OGRE))->setInitialPosition(vec);
-*/
 	} else if (name == "weapon block") {
 		WeaponBlockOgreComponent* blockOgre = new WeaponBlockOgreComponent(0);
 		ent->addComponent((GameComponent*) blockOgre);
@@ -93,7 +91,7 @@ GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree*
 		WeaponPhysicsComponent* weaponPhysics = new WeaponPhysicsComponent(0);
 		ent->addComponent(weaponPhysics);
 		ent->initializeComponents();
-		weaponPhysics->createMissile((CarOgreComponent*)source);
+		weaponPhysics->createMissile((CarOgreComponent*) (source->getComponent(COMPONENT_OGRE)));
 	}
 
 	return ent;
