@@ -54,41 +54,48 @@ void InGameState::start()
 {
 	physicsManager->init();
 	
+	loadFromXML("maps/map_01.xml");
+	
+	/*
 	entityList.push_back(EntityFactory::create("terrain"));
 	GameEntity* playerCar = EntityFactory::create("playerCar");
 	entityList.push_back(playerCar);
 	// TODO: get map file name from somewhere else..
-	loadFromXML("maps/map_01.xml");
+	
 	entityList.push_back(EntityFactory::create("car"));
 	entityList.push_back(EntityFactory::create("weapon block"));
 	
 	// CONSIDER: weirnc: Not sure where else to put this... seems like a good place? I'm stupid
-	InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework", playerCar));
+	//InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework"));
+	*/
 } 
 
 void InGameState::loadFromXML(const std::string &fileName)
 {
 	using boost::property_tree::ptree;
 	ptree pTree;
+	GameEntity* currentEntity;
 	// Load the XML file
 	read_xml(fileName, pTree);
 	// TODO: Parse the tree into map entities
 	BOOST_FOREACH(ptree::value_type &v, pTree.get_child("map")) {
 		ptree branch = (ptree) (v.second);
 		if (v.first == "entity")  {
-			entityList.push_back(EntityFactory::create(branch.get<std::string>("<xmlattr>.type"), &branch));
+			currentEntity = EntityFactory::create(branch.get<std::string>("<xmlattr>.type"), &branch);
+			entityList.push_back(currentEntity);
 			printf("Created %s object\n", branch.get<std::string>("<xmlattr>.type").c_str());
+			
+			// weirnc: Yes, this is a hack, I know. :(
+			if (branch.get<std::string>("<xmlattr>.type") == "playerCar") {
+				InputManager::getInstance()->signal_weapon.connect(boost::bind(&InGameState::pushNewEntityToList, this, "firework", &branch, currentEntity));
+			}
 		}
 	}
 }
 
-void InGameState::pushNewEntityToList(std::string entityName, GameEntity* source)
+void InGameState::pushNewEntityToList(std::string entityName, boost::property_tree::ptree* pTree, GameEntity* entity)
 {
-<<<<<<< HEAD
-	entityList.push_back(EntityFactory::create(entityName, source));
-=======
-	entityList.push_back(EntityFactory::create(entityName, NULL));
->>>>>>> 2df9abe9abbab875ac78fe35db5852ce141052ee
+	entityList.push_back(EntityFactory::create(entityName, pTree, entity));
 }
 
 void InGameState::tick(FrameData &fd)

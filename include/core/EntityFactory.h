@@ -28,7 +28,7 @@
 class EntityFactory
 {
 	public:
-		static GameEntity* create(std::string name, boost::property_tree::ptree*);
+		static GameEntity* create(std::string name, boost::property_tree::ptree*, GameEntity* source = NULL);
 	protected:
 
 	private:

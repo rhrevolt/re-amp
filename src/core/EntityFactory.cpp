@@ -40,7 +40,7 @@
 #include "OgreBulletDynamicsRigidBody.h"				 // for OgreBullet
 #include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 
-GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree* pTree)
+GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree* pTree, GameEntity* source)
 {
 	GameEntity* ent = new (GameEntity);
 	ent->setPropertyTree(pTree);
@@ -89,13 +89,11 @@ GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree*
 		ent->initializeComponents();
 
 	} else if (name == "firework") {
-		/*
 		ent->addComponent((GameComponent*) new WeaponOgreComponent(0));
 		WeaponPhysicsComponent* weaponPhysics = new WeaponPhysicsComponent(0);
 		ent->addComponent(weaponPhysics);
 		ent->initializeComponents();
 		weaponPhysics->createMissile((CarOgreComponent*)source);
-		*/
 	}
 
 	return ent;
