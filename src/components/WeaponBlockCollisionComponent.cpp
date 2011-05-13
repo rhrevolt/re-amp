@@ -86,6 +86,8 @@ bool WeaponBlockCollisionComponent::tick(FrameData &fd)
                                             //btVector3(1e30,1e30,1e30));
 			
         //} // movA==1
+		//CALL PICKUP WEAPON
+		//PhysicsManager::getInstance()->getWorld()->getDispatcher()->clearManifold(contactManifold);
 
     //}  // for i
 	return true;
