@@ -72,6 +72,17 @@ void PhysicsManager::init()
 	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
 
 	initialized = true;
+
+	/*****BEGIN GREG******/
+
+	btVector3 worldMin(-1000,-1000,-1000);
+	btVector3 worldMax(1000,1000,1000);
+	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+	btBroadphaseInterface* pairCache = new btAxisSweep3(worldMin,worldMax);
+	btConstraintSolver* constraintSolver = new btSequentialImpulseConstraintSolver();
+
+	/*****END GREG******/
 }
 
 bool PhysicsManager::tick(FrameData &fd)
