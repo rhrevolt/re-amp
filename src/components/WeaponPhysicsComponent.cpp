@@ -68,30 +68,22 @@ void WeaponPhysicsComponent::init() {
 void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 {
     WeaponOgreComponent* ogreComp = (WeaponOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);	
-    Entity *entity = ogreComp->getEntity();
+    Ogre::Entity *entity = ogreComp->getEntity();
     SceneManager *mSceneMgr = ogreComp->getSceneMgr();
     assert(entity);
     assert(mSceneMgr);
     
 	Vector3 size = Vector3::ZERO;	// size of the box
-	// starting position of the box
-	
-	fprintf(stderr, "before");
-	Ogre::SceneNode* blah = source->getSceneNode();
-	int a = (int)blah->getPosition().x;
-	fprintf(stderr, "after");
-	//Vector3 position = (source->getSceneNode()->getPosition() * Vector3::UNIT_Z);
-	//direction = source->getSceneNode()->getOrientation() * Vector3::UNIT_Z;
+	direction = source->getChassisNode()->getOrientation() * Vector3::UNIT_Z;
+	Vector3 position = (source->getNode()->getPosition() * Vector3::UNIT_SCALE);
 
-/*
 	// we need the bounding box of the box to be able to set the size of the Bullet-box
 	AxisAlignedBox boundingB = entity->getBoundingBox();
 	size = boundingB.getSize(); size /= 2.0f; // only the half needed
 	size *= 0.95f;	// Bullet margin is a bit bigger so we need a smaller size
 	//entity->setMaterialName("Examples/BumpyMetal");
-	SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	node->attachObject(entity);
-	node->scale(0.05f, 0.05f, 0.05f);	// the cube is too big for us
+	SceneNode *node = ogreComp->getNode();
+	node->scale(0.5f, 0.5f, 0.5f);	// the cube is too big for us
 	size *= 0.05f;						// don't forget to scale down the Bullet-box too
 	
 	// after that create the Bullet shape with the calculated size
@@ -105,9 +97,9 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 				0.6f,			// dynamic body restitution
 				0.6f,			// dynamic body friction
 				1.0f, 			// dynamic bodymass
-				position,		// starting position of the box
+				position + Vector3(0,5,0),		// starting position of the box
 				Quaternion(0,0,0,1));// orientation of the box			
 
 	rigidBody->setLinearVelocity(direction * 7.0f ); // shooting speed, initial value guess
-	*/
+	
 }

@@ -31,7 +31,8 @@ class OgreComponent: public GameComponent
 
 		virtual void init();
 
-        virtual Ogre::SceneNode* getNode() { return mRootNode; };
+        Ogre::SceneNode* getNode() { return mRootNode; };
+        Ogre::SceneManager* getSceneMgr() { return mSceneMgr; };
         virtual void setInitialPosition(Ogre::Vector3& pos);
 
 		virtual ComponentType getType() {return COMPONENT_OGRE;};

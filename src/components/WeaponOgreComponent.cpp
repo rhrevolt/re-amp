@@ -29,15 +29,13 @@ int numWeaponsInstanced = 0;
 void WeaponOgreComponent::init()
 {
 	OgreComponent::init();
-	mSceneMgr = StateManager::getInstance()->inGameState->getSceneMgr();
 
 	mEntity = mSceneMgr->createEntity("boxEntity" + Ogre::StringConverter::toString(numWeaponsInstanced++), "ogrehead.mesh");
 	//mBlock->setQueryFlags(GEOMETRY_QUERY_MASK);
 	//mEntity->setCastShadows(true);
 
-	Ogre::SceneNode* node = mRootNode->createChildSceneNode();
-	node->attachObject (mEntity);
-	node->scale(.04, .04, .04);
+	mRootNode->attachObject (mEntity);
+	mRootNode->scale(.04, .04, .04);
 }
 
 

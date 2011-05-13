@@ -44,6 +44,7 @@ class GameComponent : public boost::signals::trackable
 		GameComponent(int componentID);
 		~GameComponent(void);
 		bool setParentEntity(GameEntity* parent);
+		GameEntity* getParentEntity(){ return parentEntity; };
 
 		virtual bool tick(FrameData &fd) = 0;
 
