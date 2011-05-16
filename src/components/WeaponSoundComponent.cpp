@@ -18,6 +18,7 @@
  */
 
 #include "components/WeaponSoundComponent.h"
+bool stillFlying = false;
 
 
 WeaponSoundComponent::WeaponSoundComponent(int ID) : SoundComponent(ID) {
@@ -28,14 +29,27 @@ WeaponSoundComponent::~WeaponSoundComponent() {
 
 bool WeaponSoundComponent::tick(FrameData &fd)
 {
-	//pSoundManager->playAudio(audioFiles["HONK"], true);
+    if(stillFlying) {
+        pSoundManager->playAudio(audioFiles["SCREECH"], false);
+    }
+}
+
+void WeaponSoundComponent::explode()
+{
+    stillFlying = false;
+    pSoundManager->stopAudio(audioFiles["SCREECH"]);
+    pSoundManager->playAudio(audioFiles["EXPLODE"]);
 }
 
 void WeaponSoundComponent::init()
 {
 	pSoundManager = SoundManager::getInstance();
-	//unsigned int honkId = 0;
-	//pSoundManager->loadAudio("honka.wav", &honkId, false);
+    //TODO: Register the explode callback with whatever signal will be fired
+	unsigned int weaponScreech = 0, explode = 0;
+	pSoundManager->loadAudio("weapon.wav", &weaponScreech, false);
+    pSoundMangaer->loadAdutio("explode.wav", &explode, false);
 	pSoundManager->registerComponent(this);
-	//audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
+	audioFiles.insert(std::pair<std::string, unsigned int>("SCREECH", weaponScreech));
+    audioFiles.insert(std::pair<std::string, unsigned int>("EXPLODE", explode));
+    stillPlaying = true;
 }

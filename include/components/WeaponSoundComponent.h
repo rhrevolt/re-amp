@@ -31,6 +31,7 @@ public:
     WeaponSoundComponent(int id);
     ~WeaponSoundComponent();
     virtual bool tick(FrameData &fd);
+    virtual void explode();
     void init();
     void setParentEntity(GameEntity* pParentCar);
 protected:

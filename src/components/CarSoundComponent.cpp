@@ -30,6 +30,7 @@ float THRESHOLD = 0.5;
 float MAXSPEED = 20;
 float MID = 15;
 float LOW = 10;
+CarPhysicsComponent* carOgre;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
 }
@@ -67,10 +68,11 @@ bool CarSoundComponent::tick(FrameData &fd)
 
 void CarSoundComponent::updatePositions()
 {
-//	TODO: Get position from CarOgreComponent? or CarPhysicsComponent
-//	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
-//		pSoundManager->setSoundPosition(pair->second, position);
-//	}
+	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
+    Ogre::Vector3 position = carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE)
+	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
+		pSoundManager->setSoundPosition(pair->second, position);
+	}
 }
 
 void CarSoundComponent::fire()
@@ -87,6 +89,7 @@ void CarSoundComponent::honk(bool honk)
 
 void CarSoundComponent::init()
 {
+    carOgre = (CarOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
 	pSoundManager = SoundManager::getInstance();
 	InputManager::getInstance()->signal_honk.connect(boost::bind(&CarSoundComponent::honk,this, _1));
 	InputManager::getInstance()->signal_weapon.connect(boost::bind(&CarSoundComponent::fire,this));
