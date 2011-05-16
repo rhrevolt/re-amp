@@ -35,6 +35,7 @@ class SoundComponent: public GameComponent
 
 	protected:
         std::map<std::string, unsigned int> audioFiles;
+        unsigned int audioIDs[];
 
 	private:
 
