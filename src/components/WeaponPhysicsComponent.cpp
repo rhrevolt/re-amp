@@ -58,9 +58,8 @@ WeaponPhysicsComponent::~WeaponPhysicsComponent() {
 bool WeaponPhysicsComponent::tick(FrameData &fd)
 {
 	direction = carComponent->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
-	float speed = 2.0 * carComponent->getSpeed() + 3.0;
 	
-	rigidBody->applyForce(direction * speed, rigidBody->getCenterOfMassPosition()); 
+	rigidBody->applyForce(direction * weaponSpeed, rigidBody->getCenterOfMassPosition()); 
 	return true;
 	
 }
@@ -82,6 +81,9 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 	direction = source->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
 	//direction = source->mRootNode->getOrientation() * Vector3::UNIT_Z;
 	Vector3 position = (source->getNode()->getPosition() * Vector3::UNIT_SCALE);
+	
+	// Set the speed based on the vehicle speed
+	weaponSpeed = 2.0 * abs(carComponent->getSpeed()) + 3.0;
 
 	// we need the bounding box of the box to be able to set the size of the Bullet-box
 	AxisAlignedBox boundingB = entity->getBoundingBox();
@@ -103,9 +105,9 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 				0.6f,			// dynamic body restitution
 				0.6f,			// dynamic body friction
 				1.0f, 			// dynamic bodymass
-				position + Vector3(0,5,0),		// starting position of the weapon
+				position + Vector3(0,3,-0.1),		// starting position of the weapon
 				Quaternion(0,0,0,1));// orientation of the weapon			
 
-	rigidBody->setLinearVelocity(direction * (2.0f * source->getSpeed()+3.0) ); // shooting speed, initial value guess
+	rigidBody->setLinearVelocity(direction * weaponSpeed); // shooting speed, initial value guess
 	
 }

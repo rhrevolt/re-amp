@@ -98,6 +98,12 @@ void InGameState::pushNewEntityToList(std::string entityName, boost::property_tr
 	entityList.push_back(EntityFactory::create(entityName, pTree, entity));
 }
 
+void InGameState::deleteEntity(GameEntity* entity)
+{
+	entityList.remove(entity);
+	delete entity;
+}
+
 void InGameState::tick(FrameData &fd)
 {
 	inputManager->capture();
