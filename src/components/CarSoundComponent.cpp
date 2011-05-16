@@ -23,6 +23,8 @@
 #include "core/InputManager.h"
 #include "components/CarSoundComponent.h"
 #include "components/CarPhysicsComponent.h"
+#include "components/CarOgreComponent.h"
+
 
 bool doHonk = false;
 bool doFire = false;
@@ -30,7 +32,7 @@ float THRESHOLD = 0.5;
 float MAXSPEED = 20;
 float MID = 15;
 float LOW = 10;
-CarPhysicsComponent* carOgre;
+CarOgreComponent* carOgre;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
 }
@@ -70,7 +72,8 @@ void CarSoundComponent::updatePositions()
 {
 	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
     Ogre::Vector3 position = carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE)
-	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
+    std::pair<std::string, unsigned int>* pair;
+	BOOST_FOREACH(pair, audioFiles) {
 		pSoundManager->setSoundPosition(pair->second, position);
 	}
 }
