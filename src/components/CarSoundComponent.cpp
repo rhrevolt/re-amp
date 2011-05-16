@@ -23,6 +23,8 @@
 #include "core/InputManager.h"
 #include "components/CarSoundComponent.h"
 #include "components/CarPhysicsComponent.h"
+#include "components/CarOgreComponent.h"
+
 
 bool doHonk = false;
 bool doFire = false;
@@ -30,6 +32,8 @@ float THRESHOLD = 0.5;
 float MAXSPEED = 20;
 float MID = 15;
 float LOW = 10;
+int numSounds = 3;
+CarOgreComponent* carOgre;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
 }
@@ -67,10 +71,11 @@ bool CarSoundComponent::tick(FrameData &fd)
 
 void CarSoundComponent::updatePositions()
 {
-//	TODO: Get position from CarOgreComponent? or CarPhysicsComponent
-//	BOOST_FOREACH(std::pair<std::string, unsigned int>* pair, audioFiles) {
-//		pSoundManager->setSoundPosition(pair->second, position);
-//	}
+	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
+    Ogre::Vector3 position = (carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE);
+    for(int i = 0; i < numSounds; i++) {
+        pSoundManager->setSoundPosition(audioIDs[i], position);
+    }
 }
 
 void CarSoundComponent::fire()
@@ -87,6 +92,7 @@ void CarSoundComponent::honk(bool honk)
 
 void CarSoundComponent::init()
 {
+    carOgre = (CarOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
 	pSoundManager = SoundManager::getInstance();
 	InputManager::getInstance()->signal_honk.connect(boost::bind(&CarSoundComponent::honk,this, _1));
 	InputManager::getInstance()->signal_weapon.connect(boost::bind(&CarSoundComponent::fire,this));
@@ -98,6 +104,9 @@ void CarSoundComponent::init()
 	if(!pSoundManager->loadAudio("engine.wav", &engineId, true))
 		printf("Failed to load audio!\n");
 	pSoundManager->registerComponent(this);
+    audioIDs[0]=honkId;
+    audioIDs[1]=fireId;
+    audioIDs[2]=engineId;
 	audioFiles.insert(std::pair<std::string, unsigned int>("HONK", honkId));
 	audioFiles.insert(std::pair<std::string, unsigned int>("FIRE", fireId));
 	audioFiles.insert(std::pair<std::string, unsigned int>("ENGINE", engineId));
