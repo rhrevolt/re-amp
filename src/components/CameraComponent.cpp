@@ -69,6 +69,9 @@ void CameraComponent::createViewports(void)
 	// Alter the camera aspect ratio to match the viewport
 	mCamera->setAspectRatio(
 		Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+		
+	StateManager::getInstance()->height = vp->getActualHeight();
+	StateManager::getInstance()->width = vp->getActualWidth();
 }
 
 bool CameraComponent::tick(FrameData &fd)

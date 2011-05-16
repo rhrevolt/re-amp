@@ -25,6 +25,7 @@
 CarWeaponComponent::CarWeaponComponent(int ID): GameComponent(ID)
 {
 	srand(time(NULL));
+	numWeapons = 0;
 }
 
 CarWeaponComponent::~CarWeaponComponent()

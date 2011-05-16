@@ -51,6 +51,8 @@ class StateManager: public Singleton<StateManager>
 
 	// BOOST signals
 	boost::signal<void (int oldState, int newState)> signal_stateChanged;
+	
+	int width, height;
 
 	protected:
 	static int		currentEntityID;

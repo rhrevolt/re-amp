@@ -85,3 +85,11 @@ GameState* StateManager::getCurrentState()
 	return StateManager::getInstance()->currentState;
 }
 
+/* TODO: Hi Mike
+static bool gContactProcessedCallback(btManifoldPoint& cp, const btCollisionObject* car, const btCollisionObject* weapon)
+{
+	//signal_explosion(weapon->getPosition(), weapon->getDirection());
+	return false;
+}
+
+*/

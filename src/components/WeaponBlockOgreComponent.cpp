@@ -41,5 +41,4 @@ void WeaponBlockOgreComponent::init()
 	mBlockNode->attachObject (mBlock);
 	mBlockNode->scale(.04, .04, .04);
 	mBlockNode->setPosition (blockShift);
-	
 }

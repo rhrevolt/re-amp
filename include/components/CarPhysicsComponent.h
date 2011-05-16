@@ -46,6 +46,12 @@ class CarPhysicsComponent: public PhysicsComponent
 		   - one param - the new speed (in km/h)
 		 */
 		boost::signal<void (float speed)> signal_speedUpdated;
+
+		/*
+		   signal_epxlosion - fires when the missile collides with the vehicle 
+		   params - position and direction
+		 */
+		boost::signal<void (Ogre::Vector3 pos, Ogre::Vector3 dir)> signal_explosion;
 		
 	protected:
 		void loadPhysicsConstants(const std::string &filename);
