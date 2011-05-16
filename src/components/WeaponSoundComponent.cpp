@@ -38,7 +38,7 @@ void WeaponSoundComponent::explode()
 {
     stillFlying = false;
     pSoundManager->stopAudio(audioFiles["SCREECH"]);
-    pSoundManager->playAudio(audioFiles["EXPLODE"]);
+    pSoundManager->playAudio(audioFiles["EXPLODE"], false);
 }
 
 void WeaponSoundComponent::init()
@@ -47,7 +47,7 @@ void WeaponSoundComponent::init()
     //TODO: Register the explode callback with whatever signal will be fired
 	unsigned int weaponScreech = 0, explode = 0;
 	pSoundManager->loadAudio("weapon.wav", &weaponScreech, false);
-    pSoundMangaer->loadAdutio("explode.wav", &explode, false);
+    pSoundManager->loadAdutio("explode.wav", &explode, false);
 	pSoundManager->registerComponent(this);
 	audioFiles.insert(std::pair<std::string, unsigned int>("SCREECH", weaponScreech));
     audioFiles.insert(std::pair<std::string, unsigned int>("EXPLODE", explode));
