@@ -21,8 +21,10 @@
 #include "components/HUDComponent.h"
 
 #include "components/CarPhysicsComponent.h"
+#include "components/CarWeaponComponent.h"
 #include <iostream>
 #include <sstream>
+#include "core/StateManager.h"
 
 HUDComponent::HUDComponent(int ID): GameComponent(ID)
 {
@@ -57,8 +59,14 @@ void HUDComponent::init(){
 	Ogre::OverlayContainer* panel2 = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "PanelName2"));
 	panel2->setMetricsMode(Ogre::GMM_PIXELS);
-	panel2->setPosition(575, 10);
+	panel2->setPosition(StateManager::getInstance()->width/2, 10);
 	panel2->setDimensions(100, 100);
+	
+	Ogre::OverlayContainer* panel3 = static_cast<Ogre::OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "PanelName3"));
+	panel3->setMetricsMode(Ogre::GMM_PIXELS);
+	panel3->setPosition(10, StateManager::getInstance()->height-40);
+	panel3->setDimensions(100, 100);
 	//panel->setMaterialName("MaterialName"); // Optional background material
 
 	// Create a text area
@@ -83,15 +91,28 @@ void HUDComponent::init(){
 	textArea2->setFontName("BlueHigh");
 	textArea2->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
 	textArea2->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
+	
+	textArea3 = static_cast<Ogre::TextAreaOverlayElement*>(
+		overlayManager.createOverlayElement("TextArea", "TextAreaName3"));
+	textArea3->setMetricsMode(Ogre::GMM_PIXELS);
+	textArea3->setPosition(10, 10);
+	textArea3->setDimensions(100, 100);
+	textArea3->setCaption("Hello, World!");
+	textArea3->setCharHeight(32);
+	textArea3->setFontName("BlueHigh");
+	textArea3->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
+	textArea3->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
 
 	// Create an overlay, and add the panel
 	Ogre::Overlay* overlay = overlayManager.create("OverlayName");
 	overlay->add2D(panel);
 	overlay->add2D(panel2);
+	overlay->add2D(panel3);
 
 	// Add the text area to the panel
 	panel->addChild(textArea);
 	panel2->addChild(textArea2);
+	panel3->addChild(textArea3);
 	// Show the overlay
 	overlay->show();
 	overlay->setZOrder(500);
@@ -125,7 +146,20 @@ void HUDComponent::updateSpeed(FrameData &fd){
 		secString = zero.append(secString);
 	}
      minString.append(secString);
+     
+     int numWeap;
+     CarWeaponComponent* weapComp = ((CarWeaponComponent*)parentEntity->getComponent(COMPONENT_WEAPON));
+     if(weapComp == NULL)
+		numWeap = 0;
+		else
+      numWeap = weapComp->getNumWeapons();
+     std::stringstream ss4 (std::stringstream::in | std::stringstream::out);
+     ss4 << numWeap;
+     std::string weaponsString = ss4.str();
+     std::string w = "Weapons: ";
+     w.append(weaponsString);
      //speedString.append(timeString);
 	 textArea->setCaption(speedString);
 	 textArea2->setCaption(minString);
+	 textArea3->setCaption(w);
 }

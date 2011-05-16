@@ -42,6 +42,7 @@ protected:
 private:
 	Ogre::TextAreaOverlayElement* textArea;
 	Ogre::TextAreaOverlayElement* textArea2;
+	Ogre::TextAreaOverlayElement* textArea3;
 	float time;
 	
 ;
