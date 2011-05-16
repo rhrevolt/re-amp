@@ -42,6 +42,7 @@ class WeaponPhysicsComponent: public PhysicsComponent
 
 	private:
 		Ogre::Vector3 direction;
+		CarOgreComponent *carComponent;
 };
 
 #endif // _WEAPONPHYSICSCOMPONENT_H_

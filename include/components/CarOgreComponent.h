@@ -31,7 +31,8 @@ class CarOgreComponent: public OgreComponent
 		virtual void init();
 
 		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
-		Ogre::SceneNode* getChassisNode() { if (!mChassisNode) { printf("got a chassis node"); } else { printf("wtf?!");} return mChassisNode; };		
+		Ogre::SceneNode* getChassisNode() { if (mChassisNode) { printf("got a chassis node"); } else { printf("wtf?!");} return mChassisNode; };		
+		float getSpeed();
 
 	protected:
 

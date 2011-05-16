@@ -46,6 +46,8 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
+int numberOfWeapons = 0;
+
 WeaponPhysicsComponent::WeaponPhysicsComponent(int ID): PhysicsComponent(ID){
 };
 
@@ -55,10 +57,12 @@ WeaponPhysicsComponent::~WeaponPhysicsComponent() {
 
 bool WeaponPhysicsComponent::tick(FrameData &fd)
 {
-	/*
-	rigidBody->applyForce(direction * 2.0, rigidBody->getCenterOfMassPosition()); //initial guess for force to missile
+	direction = carComponent->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
+	float speed = 2.0 * carComponent->getSpeed() + 3.0;
+	
+	rigidBody->applyForce(direction * speed, rigidBody->getCenterOfMassPosition()); 
 	return true;
-	*/
+	
 }
 
 void WeaponPhysicsComponent::init() {
@@ -67,6 +71,7 @@ void WeaponPhysicsComponent::init() {
 
 void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 {
+	carComponent = source;
     WeaponOgreComponent* ogreComp = (WeaponOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);	
     Ogre::Entity *entity = ogreComp->getEntity();
     SceneManager *mSceneMgr = ogreComp->getSceneMgr();
@@ -74,7 +79,8 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
     assert(mSceneMgr);
     
 	Vector3 size = Vector3::ZERO;	// size of the box
-	direction = source->getChassisNode()->getOrientation() * Vector3::UNIT_Z;
+	direction = source->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
+	//direction = source->mRootNode->getOrientation() * Vector3::UNIT_Z;
 	Vector3 position = (source->getNode()->getPosition() * Vector3::UNIT_SCALE);
 
 	// we need the bounding box of the box to be able to set the size of the Bullet-box
@@ -90,16 +96,16 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 	OgreBulletCollisions::BoxCollisionShape *sceneBoxShape = new OgreBulletCollisions::BoxCollisionShape(size);
 	// and the Bullet rigid body
 	rigidBody = new OgreBulletDynamics::RigidBody(
-			"defaultBoxRigid" , 
+			"defaultBoxRigid" + Ogre::StringConverter::toString(numberOfWeapons++), 
 			PhysicsManager::getInstance()->getWorld());
 	rigidBody->setShape(	node,
 				sceneBoxShape,
 				0.6f,			// dynamic body restitution
 				0.6f,			// dynamic body friction
 				1.0f, 			// dynamic bodymass
-				position + Vector3(0,5,0),		// starting position of the box
-				Quaternion(0,0,0,1));// orientation of the box			
+				position + Vector3(0,5,0),		// starting position of the weapon
+				Quaternion(0,0,0,1));// orientation of the weapon			
 
-	rigidBody->setLinearVelocity(direction * 7.0f ); // shooting speed, initial value guess
+	rigidBody->setLinearVelocity(direction * (2.0f * source->getSpeed()+3.0) ); // shooting speed, initial value guess
 	
 }
