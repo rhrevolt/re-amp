@@ -29,8 +29,10 @@ WeaponSoundComponent::~WeaponSoundComponent() {
 
 bool WeaponSoundComponent::tick(FrameData &fd)
 {
+    // TODO: Get the current position of the weapon
     if(stillFlying) {
         pSoundManager->playAudio(audioFiles["SCREECH"], false);
+        //pSoundManager->setSoundPosition(audioFiles["SCREECH"], position);
     }
 }
 

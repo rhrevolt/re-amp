@@ -32,6 +32,7 @@ float THRESHOLD = 0.5;
 float MAXSPEED = 20;
 float MID = 15;
 float LOW = 10;
+int numSounds = 3;
 CarOgreComponent* carOgre;
 
 CarSoundComponent::CarSoundComponent(int ID) : SoundComponent(ID) {
@@ -72,9 +73,9 @@ void CarSoundComponent::updatePositions()
 {
 	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
     Ogre::Vector3 position = (carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE);
-	BOOST_FOREACH(std::pair<std::string, unsigned int> pair, audioFiles) {
-		pSoundManager->setSoundPosition(pair->second, position);
-	}
+    for(int i = 0; i < numSounds; i++) {
+        pSoundManager->setSoundPosition(audioFiles[i]->second, position);
+    }
 }
 
 void CarSoundComponent::fire()
