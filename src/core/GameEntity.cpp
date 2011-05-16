@@ -85,3 +85,7 @@ GameComponent* GameEntity::getComponent(ComponentType type)
 		}
 	}
 }
+
+void GameEntity::destroy(){
+	
+}
