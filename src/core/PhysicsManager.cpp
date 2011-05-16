@@ -67,22 +67,19 @@ void PhysicsManager::init()
 	assert(mSceneMgr != NULL);
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
+	// enable if you want to see bounding boxes
+	mWorld->setShowDebugShapes(true);
 
 	// Setup the tick callback
 	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
 
 	initialized = true;
 
-	/*****BEGIN GREG******/
+	/* for collision world if necessary
 
-	btVector3 worldMin(-1000,-1000,-1000);
-	btVector3 worldMax(1000,1000,1000);
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-	btBroadphaseInterface* pairCache = new btAxisSweep3(worldMin,worldMax);
-	btConstraintSolver* constraintSolver = new btSequentialImpulseConstraintSolver();
-
-	/*****END GREG******/
+	cWorld = new OgreBulletCollisions::CollisionsWorld(mSceneMgr, *bounds, false, true);
+	cWorld->setShowDebugContactPoints(true);
+	*/
 }
 
 bool PhysicsManager::tick(FrameData &fd)
@@ -116,6 +113,12 @@ bool PhysicsManager::registerComponent(PhysicsComponent* component)
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;
 }
+
+/* 
+OgreBulletCollisions::CollisionsWorld* PhysicsManager::getCollisionWorld(){
+	return cWorld;
+}
+*/
 
 std::deque<OgreBulletDynamics::RigidBody *> * PhysicsManager::getBodies(){
 	return &mBodies;

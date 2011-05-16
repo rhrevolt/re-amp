@@ -37,10 +37,16 @@ class WeaponBlockCollisionComponent: public PhysicsComponent
 		void createBlock();
 
 		// BOOST signals
+		/*
+		 * signal_pickup - fires when the car passes through a weapon block
+		 * params - none
+		 */
+		boost::signal<void ()> signal_pickup;
 	protected:
 
 	private:
 		OgreBulletDynamics::RigidBody *mBox;
+		//OgreBulletCollisions::CollisionsWorld* cWorld;
 };
 
 #endif // _WEAPONBLOCKCOLLISIONCOMPONENT
