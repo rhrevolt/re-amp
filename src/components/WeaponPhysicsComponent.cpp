@@ -60,6 +60,8 @@ bool WeaponPhysicsComponent::tick(FrameData &fd)
 	direction = carComponent->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
 	
 	rigidBody->applyForce(direction * weaponSpeed, rigidBody->getCenterOfMassPosition()); 
+	if(timer->getMilliseconds()/1000.0f > 10.0)
+		parentEntity->destroy();
 	return true;
 	
 }
@@ -109,5 +111,7 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 				Quaternion(0,0,0,1));// orientation of the weapon			
 
 	rigidBody->setLinearVelocity(direction * weaponSpeed); // shooting speed, initial value guess
+	timer = new Ogre::Timer();
+	timer->reset();
 	
 }

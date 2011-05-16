@@ -50,6 +50,8 @@ class GameEntity
 			pTree = tree;
 		}
 		GameComponent* getComponent(ComponentType type);
+		void destroy();
+		
 	private:
 		int entityID;
 		bool initialized;

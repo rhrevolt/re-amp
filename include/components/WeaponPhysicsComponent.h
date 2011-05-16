@@ -44,6 +44,7 @@ class WeaponPhysicsComponent: public PhysicsComponent
 		Ogre::Vector3 direction;
 		CarOgreComponent *carComponent;
 		float weaponSpeed;
+		Ogre::Timer *timer;
 };
 
 #endif // _WEAPONPHYSICSCOMPONENT_H_
