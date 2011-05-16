@@ -71,7 +71,7 @@ bool CarSoundComponent::tick(FrameData &fd)
 void CarSoundComponent::updatePositions()
 {
 	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
-    Ogre::Vector3 position = carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE)
+    Ogre::Vector3 position = carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE);
     std::pair<std::string, unsigned int>* pair;
 	BOOST_FOREACH(pair, audioFiles) {
 		pSoundManager->setSoundPosition(pair->second, position);
