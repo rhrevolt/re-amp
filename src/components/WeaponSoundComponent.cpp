@@ -51,5 +51,5 @@ void WeaponSoundComponent::init()
 	pSoundManager->registerComponent(this);
 	audioFiles.insert(std::pair<std::string, unsigned int>("SCREECH", weaponScreech));
     audioFiles.insert(std::pair<std::string, unsigned int>("EXPLODE", explode));
-    stillPlaying = true;
+    stillFlying = true;
 }
