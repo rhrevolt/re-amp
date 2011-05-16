@@ -464,6 +464,7 @@ bool SoundManager::testtesttest()
 /****************************************************************************/
 bool SoundManager::playAudio( unsigned int audioID, bool forceRestart )
 {
+	printf("MAX_AUDIO_SOURCES: %d\n", MAX_AUDIO_SOURCES);
 	// Make sure the audio source ident is valid and usable
 	if ( audioID >= MAX_AUDIO_SOURCES || !mAudioSourceInUse[audioID])
 		return false;
