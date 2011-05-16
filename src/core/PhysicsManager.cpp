@@ -68,7 +68,7 @@ void PhysicsManager::init()
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
 	// enable if you want to see bounding boxes
-	mWorld->setShowDebugShapes(true);
+	//mWorld->setShowDebugShapes(true);
 
 	// Setup the tick callback
 	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
