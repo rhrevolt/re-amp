@@ -74,7 +74,7 @@ void CarSoundComponent::updatePositions()
 	//TODO: Get position from CarOgreComponent? or CarPhysicsComponent
     Ogre::Vector3 position = (carOgre->getNode()->getPosition() * Ogre::Vector3::UNIT_SCALE);
     for(int i = 0; i < numSounds; i++) {
-        pSoundManager->setSoundPosition(audioFiles[i]->second, position);
+        pSoundManager->setSoundPosition(audioFiles[i].second, position);
     }
 }
 
