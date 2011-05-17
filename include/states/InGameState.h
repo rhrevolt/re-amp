@@ -51,7 +51,7 @@ private:
 	InputManager* inputManager;
 	PhysicsManager* physicsManager;
 	SoundManager* soundManager;
-	
+	std::list<GameEntity*> pendingDeletion;
 	virtual void pushNewEntityToList(std::string entityName, boost::property_tree::ptree* pTree, GameEntity* entity = NULL);
 };
 
