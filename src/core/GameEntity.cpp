@@ -88,6 +88,7 @@ GameComponent* GameEntity::getComponent(ComponentType type)
 			return comp; 
 		}
 	}
+	return NULL;
 }
 
 void GameEntity::destroy(){

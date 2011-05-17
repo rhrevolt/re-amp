@@ -51,19 +51,19 @@ void HUDComponent::init(){
 
 	// Create a panel
 	Ogre::OverlayContainer* panel = static_cast<Ogre::OverlayContainer*>(
-		overlayManager.createOverlayElement("Panel", "PanelName"));
+			overlayManager.createOverlayElement("Panel", "PanelName"));
 	panel->setMetricsMode(Ogre::GMM_PIXELS);
 	panel->setPosition(10, 10);
 	panel->setDimensions(100, 100);
-	
+
 	Ogre::OverlayContainer* panel2 = static_cast<Ogre::OverlayContainer*>(
-		overlayManager.createOverlayElement("Panel", "PanelName2"));
+			overlayManager.createOverlayElement("Panel", "PanelName2"));
 	panel2->setMetricsMode(Ogre::GMM_PIXELS);
 	panel2->setPosition(StateManager::getInstance()->width/2, 10);
 	panel2->setDimensions(100, 100);
-	
+
 	Ogre::OverlayContainer* panel3 = static_cast<Ogre::OverlayContainer*>(
-		overlayManager.createOverlayElement("Panel", "PanelName3"));
+			overlayManager.createOverlayElement("Panel", "PanelName3"));
 	panel3->setMetricsMode(Ogre::GMM_PIXELS);
 	panel3->setPosition(10, StateManager::getInstance()->height-40);
 	panel3->setDimensions(100, 100);
@@ -71,7 +71,7 @@ void HUDComponent::init(){
 
 	// Create a text area
 	textArea = static_cast<Ogre::TextAreaOverlayElement*>(
-		overlayManager.createOverlayElement("TextArea", "TextAreaName"));
+			overlayManager.createOverlayElement("TextArea", "TextAreaName"));
 	textArea->setMetricsMode(Ogre::GMM_PIXELS);
 	textArea->setPosition(10, 10);
 	textArea->setDimensions(100, 100);
@@ -80,9 +80,9 @@ void HUDComponent::init(){
 	textArea->setFontName("BlueHigh");
 	textArea->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
 	textArea->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
-	
+
 	textArea2 = static_cast<Ogre::TextAreaOverlayElement*>(
-		overlayManager.createOverlayElement("TextArea", "TextAreaName2"));
+			overlayManager.createOverlayElement("TextArea", "TextAreaName2"));
 	textArea2->setMetricsMode(Ogre::GMM_PIXELS);
 	textArea2->setPosition(70, 10);
 	textArea2->setDimensions(100, 100);
@@ -91,9 +91,9 @@ void HUDComponent::init(){
 	textArea2->setFontName("BlueHigh");
 	textArea2->setColourBottom(Ogre::ColourValue(0.3, 0.5, 0.3));
 	textArea2->setColourTop(Ogre::ColourValue(0.5, 0.7, 0.5));
-	
+
 	textArea3 = static_cast<Ogre::TextAreaOverlayElement*>(
-		overlayManager.createOverlayElement("TextArea", "TextAreaName3"));
+			overlayManager.createOverlayElement("TextArea", "TextAreaName3"));
 	textArea3->setMetricsMode(Ogre::GMM_PIXELS);
 	textArea3->setPosition(10, 10);
 	textArea3->setDimensions(100, 100);
@@ -116,50 +116,50 @@ void HUDComponent::init(){
 	// Show the overlay
 	overlay->show();
 	overlay->setZOrder(500);
-	
+
 }
 
 void HUDComponent::updateSpeed(FrameData &fd){
 	float speed = ((CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS))->getVehicle()->getBulletVehicle()->getCurrentSpeedKmHour();
-	 std::stringstream ss (std::stringstream::in | std::stringstream::out);
+	std::stringstream ss (std::stringstream::in | std::stringstream::out);
 
-     ss << abs(speed);
+	ss << abs(speed);
 
-     std::string speedString = ss.str();
-     speedString.append(" km/h");
-     std::stringstream ss2 (std::stringstream::in | std::stringstream::out);
-     std::stringstream ss3 (std::stringstream::in | std::stringstream::out);
-     time = timer->getMilliseconds()/1000.0f;
-     int minutes = (int)time / 60;
-     float seconds = (int)time % 60;
-     std::string colon = ":";
-     //speedString.append("                     ");
-     ss2 << abs(minutes);
-     ss3 << abs(seconds);
-     std::string minString = ss2.str();
-     std::string secString = ss3.str();
-     if(minString=="0")
+	std::string speedString = ss.str();
+	speedString.append(" km/h");
+	std::stringstream ss2 (std::stringstream::in | std::stringstream::out);
+	std::stringstream ss3 (std::stringstream::in | std::stringstream::out);
+	time = timer->getMilliseconds()/1000.0f;
+	int minutes = (int)time / 60;
+	float seconds = (int)time % 60;
+	std::string colon = ":";
+	//speedString.append("                     ");
+	ss2 << abs(minutes);
+	ss3 << abs(seconds);
+	std::string minString = ss2.str();
+	std::string secString = ss3.str();
+	if(minString=="0")
 		minString = " ";
-     minString.append(colon);
-     if(seconds < 10){
+	minString.append(colon);
+	if(seconds < 10){
 		std::string zero = "0";
 		secString = zero.append(secString);
 	}
-     minString.append(secString);
-     
-     int numWeap;
-     CarWeaponComponent* weapComp = ((CarWeaponComponent*)parentEntity->getComponent(COMPONENT_WEAPON));
-     if(weapComp == NULL)
+	minString.append(secString);
+
+	int numWeap;
+	CarWeaponComponent* weapComp = ((CarWeaponComponent*)parentEntity->getComponent(COMPONENT_WEAPON));
+	if(weapComp == NULL)
 		numWeap = 0;
-		else
-      numWeap = weapComp->getNumWeapons();
-     std::stringstream ss4 (std::stringstream::in | std::stringstream::out);
-     ss4 << numWeap;
-     std::string weaponsString = ss4.str();
-     std::string w = "Weapons: ";
-     w.append(weaponsString);
-     //speedString.append(timeString);
-	 textArea->setCaption(speedString);
-	 textArea2->setCaption(minString);
-	 textArea3->setCaption(w);
+	else
+		numWeap = weapComp->getNumWeapons();
+	std::stringstream ss4 (std::stringstream::in | std::stringstream::out);
+	ss4 << numWeap;
+	std::string weaponsString = ss4.str();
+	std::string w = "Weapons: ";
+	w.append(weaponsString);
+	//speedString.append(timeString);
+	textArea->setCaption(speedString);
+	textArea2->setCaption(minString);
+	textArea3->setCaption(w);
 }
