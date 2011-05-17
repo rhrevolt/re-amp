@@ -38,6 +38,7 @@ class WeaponPhysicsComponent: public PhysicsComponent
 
 		// BOOST signals
 		boost::signal<void (CarOgreComponent source)> signal_targetHit;
+		Ogre::Vector3 getDirection() {return direction;};
 	protected:
 
 	private:

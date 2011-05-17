@@ -24,6 +24,7 @@
 #include "components/PhysicsComponent.h"
 #include "core/PhysicsManager.h"
 #include "core/InputManager.h"
+#include "components/WeaponPhysicsComponent.h"
 
 class CarPhysicsComponent: public PhysicsComponent
 {
@@ -38,6 +39,8 @@ class CarPhysicsComponent: public PhysicsComponent
 		OgreBulletDynamics::RaycastVehicle* getVehicle() {return mVehicle;};
 
 		virtual float getCurrentSpeed();
+		
+		virtual void applyFirework(WeaponPhysicsComponent* weap);
 		
 		// BOOST signals
 		/*

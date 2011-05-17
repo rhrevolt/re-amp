@@ -384,3 +384,8 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vecto
 	}
 	mVehicle->setWheelsAttached();
 }
+
+void CarPhysicsComponent::applyFirework(WeaponPhysicsComponent* weap){
+	Ogre::Vector3 dir = weap->getDirection();
+	mCarChassis->applyForce(dir * 10.0, mCarChassis->getCenterOfMassPosition());
+}
