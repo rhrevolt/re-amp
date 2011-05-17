@@ -123,10 +123,11 @@ void HUDComponent::updateSpeed(FrameData &fd){
 	float speed = ((CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS))->getVehicle()->getBulletVehicle()->getCurrentSpeedKmHour();
 	std::stringstream ss (std::stringstream::in | std::stringstream::out);
 
-	ss << abs(speed);
+	ss << abs((int)speed);
 
 	std::string speedString = ss.str();
 	speedString.append(" km/h");
+	
 	std::stringstream ss2 (std::stringstream::in | std::stringstream::out);
 	std::stringstream ss3 (std::stringstream::in | std::stringstream::out);
 	time = timer->getMilliseconds()/1000.0f;
