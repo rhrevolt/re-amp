@@ -39,6 +39,7 @@ public:
 	virtual void start();
 
 	virtual void loadFromXML(const std::string &fileName);
+	virtual void deleteEntity(GameEntity* entity);
 
 	virtual Ogre::SceneManager* getSceneMgr();
 
