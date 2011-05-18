@@ -55,14 +55,15 @@ class PhysicsManager: public Singleton<PhysicsManager>
 	;
 
 	private:
+    
 	bool initialized;
-
 
 	Ogre::SceneManager* mSceneMgr;
 	OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
 	//OgreBulletCollisions::CollisionsWorld *cWorld; //OgreBullet Collision World
 	OgreBulletCollisions::DebugDrawer *debugDrawer;
-	int mNumEntitiesInstanced;
+	
+    int mNumEntitiesInstanced;
 
 	std::list<PhysicsComponent*> componentList;
 	std::deque<OgreBulletDynamics::RigidBody *>         mBodies;

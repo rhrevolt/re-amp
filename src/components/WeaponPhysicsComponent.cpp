@@ -67,7 +67,6 @@ bool WeaponPhysicsComponent::tick(FrameData &fd)
 }
 
 void WeaponPhysicsComponent::init() {
-  			
  }
 
 void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
@@ -113,5 +112,7 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 	rigidBody->setLinearVelocity(direction * weaponSpeed); // shooting speed, initial value guess
 	timer = new Ogre::Timer();
 	timer->reset();
-	
+    
+    //Enable collision callbacks for weapons
+    rigidBody->getBulletRigidBody()->setCollisionFlags(rigidBody->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);	
 }

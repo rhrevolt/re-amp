@@ -27,6 +27,10 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
+//Setup our callback function for collision detection
+//When a collision has been detected, this function is called
+extern ContactAddedCallback		gContactAddedCallback;
+
 PhysicsManager::PhysicsManager() : initialized(false)
 {
 }
@@ -53,6 +57,16 @@ PhysicsManager::~PhysicsManager (void)
 	delete mWorld;
 }
 
+static bool weaponCollisionCallback(btManifoldPoint& cp, 
+        const btCollisionObject* colObj0, int partId0, int index0, 
+        const btCollisionObject* colObj1, int partId1, int index1) 
+{
+    btVector3 dir = ((btRigidBody*)colObj0)->getLinearVelocity(); 
+	//((btRigidBody*)colObj1)->applyForce(btVector3(0,0,999), ((btRigidBody*)colObj1)->getCenterOfMassPosition());
+    ((btRigidBody*)colObj0)->setGravity(btVector3(999,0,0));
+    printf("WEAPON COLLISION");
+}
+
 void PhysicsManager::init()
 {
 	//TODO: Change if necessary
@@ -72,6 +86,9 @@ void PhysicsManager::init()
 
 	// Setup the tick callback
 	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
+    
+    //Setup the collision callback
+    gContactAddedCallback = weaponCollisionCallback;
 
 	initialized = true;
 
@@ -102,7 +119,7 @@ void PhysicsManager::btTickCallback(btDynamicsWorld* world, btScalar timeStep)
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
 		comp->tick(fd);
 	}
-}
+}    
 
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
 {

@@ -195,6 +195,9 @@ void CarPhysicsComponent::init()
 	initial.y = parentEntity->getProperties()->get<float>("<xmlattr>.pos_y");
 	initial.z = parentEntity->getProperties()->get<float>("<xmlattr>.pos_z");
 	createVehicle(chassisShift, initial);
+    
+    //Enable collision callbacks for cars
+    mCarChassis->getBulletRigidBody()->setCollisionFlags(mCarChassis->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 
 	mEngineForce = 0;
 	mSteering = 0;
