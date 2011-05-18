@@ -195,9 +195,6 @@ void CarPhysicsComponent::init()
 	initial.y = parentEntity->getProperties()->get<float>("<xmlattr>.pos_y");
 	initial.z = parentEntity->getProperties()->get<float>("<xmlattr>.pos_z");
 	createVehicle(chassisShift, initial);
-    
-    //Enable collision callbacks for cars
-    mCarChassis->getBulletRigidBody()->setCollisionFlags(mCarChassis->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 
 	mEngineForce = 0;
 	mSteering = 0;
@@ -296,6 +293,11 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vecto
 
 	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, initialPosition, Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
+    
+    //Enable collision callbacks for cars
+    mCarChassis->getBulletRigidBody()->setCollisionFlags(mCarChassis->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+    mCarChassis->getBulletRigidBody()->setCompanionId(0);
+
 
 	mCarChassis->disableDeactivation ();
 	mTuning = new VehicleTuning(

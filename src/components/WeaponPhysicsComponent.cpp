@@ -109,6 +109,7 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 				position + Vector3(0,3,-0.1),		// starting position of the weapon
 				Quaternion(0,0,0,1));// orientation of the weapon			
 
+    rigidBody->getBulletRigidBody()->setCompanionId(numberOfWeapons);
 	rigidBody->setLinearVelocity(direction * weaponSpeed); // shooting speed, initial value guess
 	timer = new Ogre::Timer();
 	timer->reset();

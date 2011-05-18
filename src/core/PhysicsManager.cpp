@@ -61,9 +61,12 @@ static bool weaponCollisionCallback(btManifoldPoint& cp,
         const btCollisionObject* colObj0, int partId0, int index0, 
         const btCollisionObject* colObj1, int partId1, int index1) 
 {
-    btVector3 dir = ((btRigidBody*)colObj0)->getLinearVelocity(); 
-	//((btRigidBody*)colObj1)->applyForce(btVector3(0,0,999), ((btRigidBody*)colObj1)->getCenterOfMassPosition());
-    ((btRigidBody*)colObj0)->setGravity(btVector3(999,0,0));
+    //Only handle collisions with the weapons
+    if (colObj0->getCompanionId() == 0 && colObj0->getCompanionId() == 0)
+        return false;
+    
+    btVector3 dir = ((btRigidBody*)colObj1)->getLinearVelocity(); 
+	//((btRigidBody*)colObj0)->applyForce(btVector3(0,0,100), ((btRigidBody*)colObj0)->getCenterOfMassPosition());
     printf("WEAPON COLLISION");
 }
 
