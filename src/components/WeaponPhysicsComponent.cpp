@@ -59,7 +59,7 @@ bool WeaponPhysicsComponent::tick(FrameData &fd)
 {
 	direction = carComponent->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
 	
-	rigidBody->applyForce(direction * weaponSpeed, rigidBody->getCenterOfMassPosition()); 
+	//rigidBody->applyForce(direction * weaponSpeed, rigidBody->getCenterOfMassPosition()); 
 	if(timer->getMilliseconds()/1000.0f > 10.0)
 		parentEntity->destroy();
 	return true;
@@ -79,22 +79,24 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
     assert(mSceneMgr);
     
 	Vector3 size = Vector3::ZERO;	// size of the box
-	direction = source->getChassisNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
+	direction = source->getNode()->_getDerivedOrientation() * Vector3::UNIT_Z;
 	//direction = source->mRootNode->getOrientation() * Vector3::UNIT_Z;
-	Vector3 position = (source->getNode()->getPosition() * Vector3::UNIT_SCALE);
+	Vector3 position = (source->getNode()->getPosition());
 	
 	// Set the speed based on the vehicle speed
-	weaponSpeed = 2.0 * abs(carComponent->getSpeed()) + 3.0;
+	weaponSpeed = abs(carComponent->getSpeed()) + 45.0;
 
 	// we need the bounding box of the box to be able to set the size of the Bullet-box
 	AxisAlignedBox boundingB = entity->getBoundingBox();
-	size = boundingB.getSize(); size /= 2.0f; // only the half needed
-	size *= 0.95f;	// Bullet margin is a bit bigger so we need a smaller size
+	size = boundingB.getSize()/2.0;
+	//size *= 0.95f;	// Bullet margin is a bit bigger so we need a smaller size
 	//entity->setMaterialName("Examples/BumpyMetal");
 	SceneNode *node = ogreComp->getNode();
 	node->scale(0.5f, 0.5f, 0.5f);	// the cube is too big for us
-	size *= 0.05f;						// don't forget to scale down the Bullet-box too
-	
+    //AxisAlignedBox boundingB = node->_getWorldAABB();
+    //size = boundingB.getSize();
+	size *= 0.025f;						// don't forget to scale down the Bullet-box too
+    
 	// after that create the Bullet shape with the calculated size
 	OgreBulletCollisions::BoxCollisionShape *sceneBoxShape = new OgreBulletCollisions::BoxCollisionShape(size);
 	// and the Bullet rigid body
@@ -105,14 +107,17 @@ void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 				sceneBoxShape,
 				0.6f,			// dynamic body restitution
 				0.6f,			// dynamic body friction
-				1.0f, 			// dynamic bodymass
-				position + Vector3(0,3,-0.1),		// starting position of the weapon
+				50.0f, 			// dynamic bodymass
+				position + direction*3,		// starting position of the weapon
 				Quaternion(0,0,0,1));// orientation of the weapon			
 
     rigidBody->getBulletRigidBody()->setCompanionId(numberOfWeapons);
-	rigidBody->setLinearVelocity(direction * weaponSpeed); // shooting speed, initial value guess
+	rigidBody->setLinearVelocity(direction * Vector3(1,0,1) * weaponSpeed); // shooting speed, initial value guess
 	timer = new Ogre::Timer();
 	timer->reset();
+    
+    //disable gravity
+    //rigidBody->getBulletRigidBody()->setGravity(btVector3(0,-1,0));
     
     //Enable collision callbacks for weapons
     rigidBody->getBulletRigidBody()->setCollisionFlags(rigidBody->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);	
