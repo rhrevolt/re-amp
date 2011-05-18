@@ -75,7 +75,7 @@ void WeaponBlockCollisionComponent::createBlock()
 
 	assert(weaponBlockRootNode);
 
-	BoxCollisionShape* blockShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
+	BoxCollisionShape* blockShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,1.f));
 
 	mBox = new RigidBody("boxPhysics" + Ogre::StringConverter::toString(numberBlocks++), PhysicsManager::getInstance()->getWorld());
 

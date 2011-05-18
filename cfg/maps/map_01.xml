@@ -4,6 +4,6 @@
 	<entity type="car" pos_x='3' pos_y='0' pos_z='0'>
 		<waypoint pos_x='10' pos_y='10' />
 	</entity>
-	<entity type="weapon block" weapon_type="head" pos_x='0' pos_y='10' pos_z='0'/>
+	<entity type="weapon block" weapon_type="head" pos_x='5' pos_y='15' pos_z='0'/>
 	<finish pos_x='150' pos_y='110' />
 </map>
