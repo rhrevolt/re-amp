@@ -20,6 +20,9 @@
 #include "core/GameEntity.h"
 #include "boost/foreach.hpp"
 #include "core/GameComponent.h"
+#include "states/InGameState.h"
+#include "core/StateManager.h"
+
 #include <cstdlib>
 
 GameEntity::GameEntity(int entityID, boost::property_tree::ptree* inTree) : entityID(entityID), initialized(false)
@@ -65,7 +68,8 @@ bool GameEntity::tick(FrameData &fd) {
 	if (initialized) {
 		BOOST_FOREACH(GameComponent* comp, componentList)
 		{
-			comp->tick(fd);
+			if (comp)
+				comp->tick(fd);
 		}
 	}
 	return true;
@@ -84,4 +88,11 @@ GameComponent* GameEntity::getComponent(ComponentType type)
 			return comp; 
 		}
 	}
+	return NULL;
+}
+
+void GameEntity::destroy(){
+	// Get the current state and ass-u-me it's an InGameState
+	InGameState* state = (InGameState*)StateManager::getInstance()->getCurrentState();
+	state->deleteEntity(this);
 }

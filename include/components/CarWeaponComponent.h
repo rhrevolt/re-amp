@@ -46,7 +46,8 @@ class CarWeaponComponent: public GameComponent
 		virtual void init();
 		
 		virtual ComponentType getType() {return COMPONENT_WEAPON;};
-
+		
+		virtual int getNumWeapons() { return numWeapons;};
 	protected:
 		void pickupWeapon();
 		void fireWeapon();
@@ -55,6 +56,7 @@ class CarWeaponComponent: public GameComponent
 		// This keeps track of the current weapon
 		int curWeapon;
 		int ID;
+		int numWeapons;
 		InputManager* mInputManager;
 };
 

@@ -26,11 +26,13 @@
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 
 #include "OgreBulletDynamicsWorld.h"
+#include "OgreBulletCollisionsWorld.h"
+#include "OgreBulletCollisionsObject.h"
+#include "Utils/OgreBulletConverter.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
 #include "core/StateManager.h"
-#include "core/PhysicsManager.h"
 
 #include <OgreSceneQuery.h>
 
@@ -53,48 +55,12 @@ WeaponBlockCollisionComponent::~WeaponBlockCollisionComponent() {
 
 bool WeaponBlockCollisionComponent::tick(FrameData &fd)
 {
-	//int numManifolds = PhysicsManager::getInstance()->getWorld()->getDispatcher()->getNumManifolds();
-	//for(int i=0; i<numManifolds; i++) {               
-		//btPersistentManifold* contactManifold = PhysicsManager::getInstance()->getWorld()->getDispatcher()->getManifoldByIndexInternal(i);
-//
-		//btCollisionObject* objA = static_cast<btCollisionObject*>(contactManifold->getBody0());
-		//btCollisionObject* objB = static_cast<btCollisionObject*>(contactManifold->getBody1());
-//
-		//// this makes things not work according to demo
-		////contactManifold->refreshContactPoints(objA->getWorldTransform(),objB->getWorldTransform());
-		//int numContacts = contactManifold->getNumContacts();
-		//printf("contacts: %d\n",numContacts);
-		//if(numContacts==0) continue;
-		////you can un-comment out this line, and then all points are removed
-		////contactManifold->clearManifold();	
-//
-		////printf("%lx %lx , ", objA, objB);fflush(stdout);
-		//void *movA          = objA->getUserPointer();
-		//void *movB          = objB->getUserPointer();
-//
-        //if(movA==(void*)0x1) {	
-                //btConcaveShape *shape=(btConcaveShape*)objA->getCollisionShape();
-                //shape->processAllTriangles(&printtri,
-                                            //btVector3(-1e30,-1e30,-1e30),
-                                            //btVector3(1e30,1e30,1e30));
-			
-        //} // movA==1
-        //if(movB==(void*)0x1) {	
-                //btConcaveShape *shape=(btConcaveShape*)objB->getCollisionShape();
-                //shape->processAllTriangles(&printtri,
-                                            //btVector3(-1e30,-1e30,-1e30),
-                                            //btVector3(1e30,1e30,1e30));
-			
-        //} // movA==1
-		//CALL PICKUP WEAPON
-		//PhysicsManager::getInstance()->getWorld()->getDispatcher()->clearManifold(contactManifold);
 
-    //}  // for i
 	return true;
 }
 
 void WeaponBlockCollisionComponent::init() {
-	//mWorld->addCollisionObject
+	//cWorld = PhysicsManager::getInstance()->getCollisionWorld();
 	createBlock();
 }
 
@@ -109,18 +75,19 @@ void WeaponBlockCollisionComponent::createBlock()
 
 	assert(weaponBlockRootNode);
 
-	BoxCollisionShape* blockShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
-	//BoxCollisionShape* chassisShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,2.1f));
+	BoxCollisionShape* blockShape = new BoxCollisionShape(Ogre::Vector3(1.f,0.75f,1.f));
 
 	mBox = new RigidBody("boxPhysics" + Ogre::StringConverter::toString(numberBlocks++), PhysicsManager::getInstance()->getWorld());
 
 	Ogre::Vector3 initialPosition = Ogre::Vector3(parentEntity->getProperties()->get<float>("<xmlattr>.pos_x"), parentEntity->getProperties()->get<float>("<xmlattr>.pos_z"), parentEntity->getProperties()->get<float>("<xmlattr>.pos_y"));
+
 	mBox->setShape(weaponBlockRootNode, blockShape, .8, .8, 0, initialPosition, Quaternion::IDENTITY);
 	mBox->setDamping(.2, .2);
 
-	// set up a pointer for collision detection
-	//mBox->setUserPointer((void*) 0x2);
-
 	mBox->disableDeactivation ();
+
+	// Set up callback function for collision
+	mBox->getBulletRigidBody()->setCollisionFlags(mBox->getBulletRigidBody()->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+	
 }
 

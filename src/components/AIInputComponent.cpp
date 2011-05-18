@@ -17,34 +17,19 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CAROGRECOMPONENT_H_
-#define _CAROGRECOMPONENT_H_
+#include "components/AIInputComponent.h"
 
-#include "components/OgreComponent.h"
+bool AIInputComponent::tick(FrameData &fd)
+{	
+	Ogre::Vector2 vector(-1, 5);
+	((CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS))->handleVector(vector);
+	return true;
+}
 
-class CarOgreComponent: public OgreComponent 
+void AIInputComponent::init()
 {
-	public:
-		CarOgreComponent(int ID): OgreComponent(ID){};
-		~CarOgreComponent() {};
-
-		virtual void init();
-
-		Ogre::SceneNode** getWheelNodes() { return mWheelNodes; };
-		Ogre::SceneNode* getChassisNode() { return mChassisNode; };		
-		float getSpeed();
-
-	protected:
-
-	private:
-		
-		Ogre::Vector3 chassisShift;
-		
-		Ogre::SceneNode *mChassisNode;
-		Ogre::SceneNode *mWheelNodes[4];
-		
-		Ogre::Entity    *mChassis;
-		Ogre::Entity    *mWheels[4];
+	mInputManager = InputManager::getInstance();
+	
+	// AI input, so don't respond to the user's inputs.
 };
 
-#endif // _CAROGRECOMPONENT_H_

@@ -21,6 +21,7 @@
 #include "core/StateManager.h"
 #include <OgreSceneQuery.h>
 #include "components/CarOgreComponent.h"
+#include "components/CarPhysicsComponent.h"
 
 #define GEOMETRY_QUERY_MASK 0
 
@@ -65,4 +66,9 @@ void CarOgreComponent::init()
     spotLight->setSpotlightRange(Ogre::Degree(10), Ogre::Degree(30));
     mChassisNode->attachObject(spotLight);
     */
+}
+
+float CarOgreComponent::getSpeed(){
+	float speed = ((CarPhysicsComponent*)parentEntity->getComponent(COMPONENT_PHYSICS))->getVehicle()->getBulletVehicle()->getCurrentSpeedKmHour();
+	return speed;
 }

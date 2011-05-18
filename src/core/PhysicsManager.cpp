@@ -27,6 +27,10 @@ using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 
+//Setup our callback function for collision detection
+//When a collision has been detected, this function is called
+extern ContactAddedCallback		gContactAddedCallback;
+
 PhysicsManager::PhysicsManager() : initialized(false)
 {
 }
@@ -53,6 +57,19 @@ PhysicsManager::~PhysicsManager (void)
 	delete mWorld;
 }
 
+static bool weaponCollisionCallback(btManifoldPoint& cp, 
+        const btCollisionObject* colObj0, int partId0, int index0, 
+        const btCollisionObject* colObj1, int partId1, int index1) 
+{
+    //Only handle collisions with the weapons
+    if (colObj0->getCompanionId() == 0 && colObj0->getCompanionId() == 0)
+        return false;
+    
+    btVector3 dir = ((btRigidBody*)colObj1)->getLinearVelocity(); 
+	//((btRigidBody*)colObj0)->applyForce(btVector3(0,0,100), ((btRigidBody*)colObj0)->getCenterOfMassPosition());
+    printf("WEAPON COLLISION");
+}
+
 void PhysicsManager::init()
 {
 	//TODO: Change if necessary
@@ -67,22 +84,22 @@ void PhysicsManager::init()
 	assert(mSceneMgr != NULL);
 
 	mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, *bounds, *gravityVector);
+	// enable if you want to see bounding boxes
+	//mWorld->setShowDebugShapes(true);
 
 	// Setup the tick callback
 	mWorld->getBulletDynamicsWorld()->setInternalTickCallback(&PhysicsManager::btTickCallbackWrapper);
+    
+    //Setup the collision callback
+    gContactAddedCallback = weaponCollisionCallback;
 
 	initialized = true;
 
-	/*****BEGIN GREG******/
+	/* for collision world if necessary
 
-	btVector3 worldMin(-1000,-1000,-1000);
-	btVector3 worldMax(1000,1000,1000);
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-	btBroadphaseInterface* pairCache = new btAxisSweep3(worldMin,worldMax);
-	btConstraintSolver* constraintSolver = new btSequentialImpulseConstraintSolver();
-
-	/*****END GREG******/
+	cWorld = new OgreBulletCollisions::CollisionsWorld(mSceneMgr, *bounds, false, true);
+	cWorld->setShowDebugContactPoints(true);
+	*/
 }
 
 bool PhysicsManager::tick(FrameData &fd)
@@ -105,7 +122,7 @@ void PhysicsManager::btTickCallback(btDynamicsWorld* world, btScalar timeStep)
 	BOOST_FOREACH(PhysicsComponent* comp, componentList) {
 		comp->tick(fd);
 	}
-}
+}    
 
 bool PhysicsManager::registerComponent(PhysicsComponent* component)
 {
@@ -116,6 +133,12 @@ bool PhysicsManager::registerComponent(PhysicsComponent* component)
 OgreBulletDynamics::DynamicsWorld* PhysicsManager::getWorld(){
 	return mWorld;
 }
+
+/* 
+OgreBulletCollisions::CollisionsWorld* PhysicsManager::getCollisionWorld(){
+	return cWorld;
+}
+*/
 
 std::deque<OgreBulletDynamics::RigidBody *> * PhysicsManager::getBodies(){
 	return &mBodies;

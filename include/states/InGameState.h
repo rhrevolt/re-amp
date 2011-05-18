@@ -39,6 +39,7 @@ public:
 	virtual void start();
 
 	virtual void loadFromXML(const std::string &fileName);
+	virtual void deleteEntity(GameEntity* entity);
 
 	virtual Ogre::SceneManager* getSceneMgr();
 
@@ -50,7 +51,7 @@ private:
 	InputManager* inputManager;
 	PhysicsManager* physicsManager;
 	SoundManager* soundManager;
-	
+	std::list<GameEntity*> pendingDeletion;
 	virtual void pushNewEntityToList(std::string entityName, boost::property_tree::ptree* pTree, GameEntity* entity = NULL);
 };
 

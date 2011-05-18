@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * ReAmp
- * Copyright (C)  2011 <>
+ * Copyright (C)  2011 ReAmp Contributors
  *
  * ReAmp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,36 +17,33 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _WEAPONBLOCKCOLLISIONCOMPONENT_H_
-#define _WEAPONBLOCKCOLLISIONCOMPONENT_H_
+#ifndef _AIINPUTCOMPONENT_H_
+#define _AIINPUTCOMPONENT_H_
 
-#include <Ogre.h>
-#include "components/PhysicsComponent.h"
-#include "core/PhysicsManager.h"
+#include <boost/signals.hpp>
+
+#include "core/GameComponent.h"
 #include "core/InputManager.h"
+#include "components/CarPhysicsComponent.h"
 
 
-class WeaponBlockCollisionComponent: public PhysicsComponent
+class AIInputComponent: public GameComponent
 {
 	public:
-		WeaponBlockCollisionComponent(int ID);
-		~WeaponBlockCollisionComponent();
+		AIInputComponent(int ID) : GameComponent(ID) {};
+		~AIInputComponent() {};
+        
+        void doNothing(){};
+        
 		virtual bool tick(FrameData &fd);
-		void init();
-		void pickupWeapon();
-		void createBlock();
+		virtual void init();
 
-		// BOOST signals
-		/*
-		 * signal_pickup - fires when the car passes through a weapon block
-		 * params - none
-		 */
-		boost::signal<void ()> signal_pickup;
-	protected:
+		virtual ComponentType getType() {return COMPONENT_INPUT;};
 
+	
 	private:
-		OgreBulletDynamics::RigidBody *mBox;
-		//OgreBulletCollisions::CollisionsWorld* cWorld;
+		InputManager* mInputManager;
 };
 
-#endif // _WEAPONBLOCKCOLLISIONCOMPONENT
+#endif // _AIINPUTCOMPONENT_H_
+

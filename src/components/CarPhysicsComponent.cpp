@@ -293,6 +293,11 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vecto
 
 	mCarChassis->setShape(carRootNode, compound, 0.8, 0.8, gVehicleMass, initialPosition, Quaternion::IDENTITY);
 	mCarChassis->setDamping(0.2, 0.2);
+    
+    //Enable collision callbacks for cars
+    mCarChassis->getBulletRigidBody()->setCollisionFlags(mCarChassis->getBulletRigidBody()->getCollisionFlags()  | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+    mCarChassis->getBulletRigidBody()->setCompanionId(0);
+
 
 	mCarChassis->disableDeactivation ();
 	mTuning = new VehicleTuning(
@@ -383,4 +388,9 @@ void CarPhysicsComponent::createVehicle( Ogre::Vector3 chassisShift, Ogre::Vecto
 		}
 	}
 	mVehicle->setWheelsAttached();
+}
+
+void CarPhysicsComponent::applyFirework(WeaponPhysicsComponent* weap){
+	Ogre::Vector3 dir = weap->getDirection();
+	mCarChassis->applyForce(dir * 10.0, mCarChassis->getCenterOfMassPosition());
 }

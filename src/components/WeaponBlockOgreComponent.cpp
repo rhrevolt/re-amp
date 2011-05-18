@@ -39,7 +39,7 @@ void WeaponBlockOgreComponent::init()
 
 	mBlockNode = mRootNode->createChildSceneNode();
 	mBlockNode->attachObject (mBlock);
-	mBlockNode->scale(.04, .04, .04);
 	mBlockNode->setPosition (blockShift);
-	
+	mBlockNode->scale(.04, .04, .04);
+	mBlockNode->translate(Ogre::Vector3 (-blockShift));
 }
