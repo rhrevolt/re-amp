@@ -101,7 +101,7 @@ void InGameState::pushNewEntityToList(std::string entityName, boost::property_tr
 void InGameState::deleteEntity(GameEntity* entity)
 {
 	// Remove the entity
-	entityList.remove(entity);
+	//entityList.remove(entity);
 	// Put the entity in a pending-deletion list
 	pendingDeletion.push_back(entity);
 }
@@ -112,11 +112,11 @@ void InGameState::tick(FrameData &fd)
 	inputManager->tick(fd);
 	physicsManager->tick(fd);
 	soundManager->tick(fd);
-	// Clear the pendingDeletion queue
-//	BOOST_FOREACH(GameEntity* toDel, pendingDeletion)
-//	{
-//		delete toDel;
-//	}
+	//Clear the pendingDeletion queue
+	BOOST_FOREACH(GameEntity* toDel, pendingDeletion)
+	{
+		entityList.remove(toDel);
+	}
 	
 	BOOST_FOREACH(GameEntity* ent, entityList) 
 	{
