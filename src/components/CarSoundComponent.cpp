@@ -29,9 +29,9 @@
 bool doHonk = false;
 bool doFire = false;
 float THRESHOLD = 0.5;
-float MAXSPEED = 20;
-float MID = 15;
-float LOW = 10;
+float MAXSPEED = 75;
+float MID = 50;
+float LOW = 20;
 int numSounds = 3;
 CarOgreComponent* carOgre;
 

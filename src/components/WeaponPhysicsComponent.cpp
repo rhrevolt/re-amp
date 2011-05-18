@@ -72,7 +72,7 @@ void WeaponPhysicsComponent::init() {
 void WeaponPhysicsComponent::createMissile(CarOgreComponent* source)
 {
 	carComponent = source;
-    WeaponOgreComponent* ogreComp = (WeaponOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);	
+    WeaponOgreComponent* ogreComp = (WeaponOgreComponent*)parentEntity->getComponent(COMPONENT_OGRE);
     Ogre::Entity *entity = ogreComp->getEntity();
     SceneManager *mSceneMgr = ogreComp->getSceneMgr();
     assert(entity);

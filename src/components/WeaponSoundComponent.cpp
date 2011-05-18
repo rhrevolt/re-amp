@@ -18,7 +18,7 @@
  */
 
 #include "components/WeaponSoundComponent.h"
-bool stillFlying = false;
+bool fire = false;
 
 
 WeaponSoundComponent::WeaponSoundComponent(int ID) : SoundComponent(ID) {
@@ -30,28 +30,28 @@ WeaponSoundComponent::~WeaponSoundComponent() {
 bool WeaponSoundComponent::tick(FrameData &fd)
 {
     // TODO: Get the current position of the weapon
-    if(stillFlying) {
+	printf("\n\nScreeching.\n\n");
+    if(fire) {
         pSoundManager->playAudio(audioFiles["SCREECH"], false);
+		fire = false;
         //pSoundManager->setSoundPosition(audioFiles["SCREECH"], position);
     }
 }
 
-void WeaponSoundComponent::explode()
+void WeaponSoundComponent::fireWeapon()
 {
-    stillFlying = false;
-    pSoundManager->stopAudio(audioFiles["SCREECH"]);
-    pSoundManager->playAudio(audioFiles["EXPLODE"], false);
+	fire = true;
 }
 
 void WeaponSoundComponent::init()
 {
 	pSoundManager = SoundManager::getInstance();
+	InputManager::getInstance()->signal_weapon.connect(boost::bind(&WeaponSoundComponent::fireWeapon,this));
     //TODO: Register the explode callback with whatever signal will be fired
+	printf("\n\nscreech?\n\n");
 	unsigned int weaponScreech = 0, explode = 0;
-	pSoundManager->loadAudio("weapon.wav", &weaponScreech, false);
+	pSoundManager->loadAudio("screech.wav", &weaponScreech, false);
     pSoundManager->loadAudio("explode.wav", &explode, false);
 	pSoundManager->registerComponent(this);
 	audioFiles.insert(std::pair<std::string, unsigned int>("SCREECH", weaponScreech));
-    audioFiles.insert(std::pair<std::string, unsigned int>("EXPLODE", explode));
-    stillFlying = true;
 }

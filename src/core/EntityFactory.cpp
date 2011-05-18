@@ -68,6 +68,7 @@ GameEntity* EntityFactory::create(std::string name, boost::property_tree::ptree*
 		ent->addComponent((GameComponent*) blockOgre);
 		WeaponBlockCollisionComponent* blockCollision = new WeaponBlockCollisionComponent(0);
 		ent->addComponent((GameComponent*) blockCollision);
+		ent->addComponent((GameComponent*) new WeaponSoundComponent(0));
 		ent->initializeComponents();
 
 	} else if (name == "terrain") {

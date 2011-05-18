@@ -22,6 +22,7 @@
 
 #include "components/SoundComponent.h"
 #include "core/SoundManager.h"
+#include "core/InputManager.h"
 #include "core/GameEntity.h"
 
 
@@ -31,7 +32,7 @@ public:
     WeaponSoundComponent(int id);
     ~WeaponSoundComponent();
     virtual bool tick(FrameData &fd);
-    virtual void explode();
+    virtual void fireWeapon();
     void init();
     void setParentEntity(GameEntity* pParentCar);
 protected:
