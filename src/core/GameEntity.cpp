@@ -95,4 +95,5 @@ void GameEntity::destroy(){
 	// Get the current state and ass-u-me it's an InGameState
 	InGameState* state = (InGameState*)StateManager::getInstance()->getCurrentState();
 	state->deleteEntity(this);
+	initialized = false;
 }
